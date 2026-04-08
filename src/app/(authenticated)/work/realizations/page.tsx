@@ -1,55 +1,170 @@
-import { workRealizations, getUserById, getProjectById, formatDate, getStatusColor } from "@/lib/data";
+"use client";
+
+import { useState } from "react";
+import { workRealizations, getUserById, getProjectById, formatDate, getStatusColor, projects } from "@/lib/data";
+import Modal from "@/components/Modal";
+import { CheckCircle2, Clock, Search, MoreVertical, Plus } from "lucide-react";
 
 export default function WorkRealizationsPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredRealizations = workRealizations.filter((wr) => {
+    const user = getUserById(wr.userId);
+    const project = getProjectById(wr.projectId);
+    return (
+        user?.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        project?.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        wr.activities.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  });
+
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-xl font-bold text-slate-900">Work Realizations</h1>
-        <p className="text-sm text-slate-500 mt-0.5">Realisasi kerja harian</p>
+    <div className="space-y-4 w-full animate-in fade-in duration-500">
+      {/* Page header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-xl md:text-2xl font-semibold text-slate-800 tracking-tight">Realisasi Kerja</h1>
+          <p className="text-sm font-medium text-slate-500 mt-1">Laporan pencapaian tugas dan progres harian tim</p>
+        </div>
+        <div className="flex items-center gap-2.5">
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="px-4 py-2 bg-white border border-slate-200 text-slate-600 font-medium text-xs rounded-xl hover:bg-slate-50 transition-colors shadow-sm"
+          >
+            Export Log
+          </button>
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs rounded-xl transition-colors shadow-sm"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            Lapor Realisasi
+          </button>
+        </div>
       </div>
-      <div className="bg-white border border-slate-200/80 rounded-xl overflow-hidden">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="border-b border-slate-100 bg-slate-50/50">
-              <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500">No.</th>
-              <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500 hidden sm:table-cell">User</th>
-              <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500 hidden md:table-cell">Project</th>
-              <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500">Activities</th>
-              <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500">Progress</th>
-              <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {workRealizations.map((wr) => {
-              const user = getUserById(wr.userId);
-              const project = getProjectById(wr.projectId);
-              const sc = getStatusColor(wr.status);
-              return (
-                <tr key={wr.id} className="border-b border-slate-50 last:border-0 hover:bg-slate-50/50 transition-colors">
-                  <td className="py-3 px-4 font-mono text-xs text-slate-700 font-medium">{wr.realizationNumber}</td>
-                  <td className="py-3 px-4 text-slate-600 hidden sm:table-cell">{user?.name || "-"}</td>
-                  <td className="py-3 px-4 text-slate-500 text-xs hidden md:table-cell">{project?.name || "-"}</td>
-                  <td className="py-3 px-4 text-slate-600 max-w-xs truncate">{wr.activities}</td>
-                  <td className="py-3 px-4">
-                    <div className="flex items-center gap-2">
-                      <div className="w-16 h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                        <div className="h-full bg-blue-500 rounded-full" style={{ width: `${wr.progress}%` }} />
+
+      {/* Content table */}
+      <div className="bg-white border border-slate-100 rounded-xl overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.02)] mt-2">
+        <div className="p-5 border-b border-slate-50 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <h2 className="text-base font-semibold text-slate-800">Daftar Capaian Harian</h2>
+          <div className="relative group min-w-[300px]">
+            <Search className="absolute left-3 top-2.5 w-3.5 h-3.5 text-slate-400 group-focus-within:text-indigo-500" />
+            <input
+              type="text"
+              placeholder="Cari aktivitas, personel, atau proyek..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-100 rounded-xl text-xs focus:outline-none focus:border-indigo-300 focus:bg-white transition-all font-medium"
+            />
+          </div>
+        </div>
+
+        <div className="overflow-x-auto scrollbar-hide">
+          <table className="w-full text-xs">
+            <thead>
+              <tr className="bg-slate-50/50 border-b border-slate-100 font-semibold text-slate-500 uppercase tracking-widest text-[10px]">
+                <th className="text-left py-3.5 px-6">Pelaksana</th>
+                <th className="text-left py-3.5 px-4">Proyek & Aktivitas</th>
+                <th className="text-left py-3.5 px-4 hidden md:table-cell">Kecepatan (Velocity)</th>
+                <th className="text-center py-3.5 px-4 whitespace-nowrap">Status</th>
+                <th className="text-right py-3.5 px-6">Opsi</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-50">
+              {filteredRealizations.map((wr) => {
+                const user = getUserById(wr.userId);
+                const project = getProjectById(wr.projectId);
+                const sc = getStatusColor(wr.status);
+                
+                return (
+                  <tr key={wr.id} className="group hover:bg-slate-50/50 transition-colors">
+                    <td className="py-3.5 px-6">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center text-[10px] font-bold text-slate-600 border border-slate-200">
+                          {user?.name?.charAt(0) || "?"}
+                        </div>
+                        <div>
+                          <p className="font-bold text-slate-800 leading-none mb-1">{user?.name || "-"}</p>
+                          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-tight">{formatDate(wr.realizationDate)}</p>
+                        </div>
                       </div>
-                      <span className="text-xs text-slate-500">{wr.progress}%</span>
-                    </div>
-                  </td>
-                  <td className="py-3 px-4">
-                    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${sc.bg} ${sc.text} border ${sc.border}`}>
-                      <span className={`w-1.5 h-1.5 rounded-full ${sc.dot}`} />
-                      {wr.status}
-                    </span>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                    </td>
+                    <td className="py-3.5 px-4">
+                        <div className="flex flex-col">
+                            <span className="font-bold text-indigo-600 text-[12px] uppercase tracking-[0.1em] mb-0.5">{project?.name || "-"}</span>
+                            <span className="text-slate-600 font-semibold truncate max-w-[200px]">{wr.activities}</span>
+                        </div>
+                    </td>
+                    <td className="py-2.5 px-4 hidden md:table-cell">
+                        <div className="flex flex-col gap-1.5 w-32">
+                           <div className="flex items-center justify-between text-[10px] text-slate-400 font-medium">
+                               <span>Efficiency</span>
+                               <span>{wr.progress}%</span>
+                           </div>
+                           <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                               <div className="h-full bg-indigo-500 rounded-full" style={{ width: `${wr.progress}%` }} />
+                           </div>
+                        </div>
+                    </td>
+                    <td className="py-3.5 px-4 text-center font-bold">
+                      <span className={`inline-flex px-2 py-0.5 rounded-lg text-[12px] font-black uppercase tracking-wider border cursor-default ${sc.bg} ${sc.text} ${sc.border}`}>
+                        {wr.status}
+                      </span>
+                    </td>
+                    <td className="py-3.5 px-6 text-right">
+                        <button className="p-2 text-slate-400 hover:text-indigo-600 transition-colors bg-white hover:bg-indigo-50 border border-slate-100 hover:border-indigo-100 rounded-lg shadow-sm font-bold text-[10px] uppercase">
+                            Detail
+                        </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
+
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Input Realisasi Kerja"
+        size="md"
+        footer={
+          <>
+            <button onClick={() => setIsModalOpen(false)} className="px-5 py-2.5 text-xs font-medium text-slate-500 hover:text-slate-900 transition-colors">Batal</button>
+            <button onClick={() => setIsModalOpen(false)} className="px-5 py-2.5 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-all shadow-sm">Kirim Laporan</button>
+          </>
+        }
+      >
+        <div className="space-y-4">
+          <div className="space-y-1.5">
+            <label className="text-xs font-medium text-slate-700">Proyek Terkait</label>
+            <select className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 transition-all font-medium appearance-none">
+              <option value="">Pilih Proyek</option>
+              {projects.map(p => (
+                <option key={p.id} value={p.id}>{p.name}</option>
+              ))}
+            </select>
+          </div>
+          <div className="space-y-1.5">
+            <label className="text-xs font-medium text-slate-700">Deskripsi Aktivitas</label>
+            <textarea rows={3} placeholder="Apa yang Anda kerjakan hari ini?" className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 transition-all resize-none shadow-sm"></textarea>
+          </div>
+          <div className="space-y-1.5">
+            <div className="flex items-center justify-between mb-1">
+                <label className="text-xs font-medium text-slate-700">Persentase Target (Velocity)</label>
+                <span className="text-xs font-bold text-indigo-600">85%</span>
+            </div>
+            <input type="range" min="0" max="100" defaultValue="85" className="w-full h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-indigo-600" />
+            <div className="flex justify-between text-[10px] text-slate-400 font-medium">
+                <span>0%</span>
+                <span>50%</span>
+                <span>100%</span>
+            </div>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }

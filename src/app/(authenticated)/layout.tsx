@@ -22,6 +22,7 @@ export default async function DashboardLayout({
         role: u.role ?? "user",
         department: u.department ?? "",
         position: u.position ?? "",
+        modules: u.modules ?? [],
       }}
     >
       {children}

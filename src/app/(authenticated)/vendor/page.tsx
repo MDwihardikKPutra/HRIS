@@ -3,16 +3,17 @@
 import { useState, useMemo } from "react";
 import { useSession } from "next-auth/react";
 import { 
-  spds, 
+  vendorPayments, 
   getUserById,
+  getVendorById,
   formatCurrency, formatDate, getStatusColor, 
 } from "@/lib/data";
 import Modal from "@/components/Modal";
 import { 
-  Plane, Search, Printer, Edit, Trash2, CheckCircle2
+  CreditCard, Search, Printer, Edit, Trash2, CheckCircle2
 } from "lucide-react";
 
-export default function SPDPage() {
+export default function VendorPaymentPage() {
   const { data: session } = useSession();
   const userId = session?.user?.id ? parseInt(session.user.id) : null;
 
@@ -21,13 +22,13 @@ export default function SPDPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const currentData = useMemo(() => {
-    return spds.filter((item: any) => {
+    return vendorPayments.filter((item: any) => {
       // 1. Strict filter: Modul is ONLY for individual user requests
       if (item.userId !== userId) return false;
 
       const matchStatus = filterStatus === "Semua" || item.status.toLowerCase() === filterStatus.toLowerCase();
-      const matchSearch = item.spdNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          item.destination.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchSearch = item.paymentNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          item.description.toLowerCase().includes(searchQuery.toLowerCase());
       return matchStatus && matchSearch;
     });
   }, [filterStatus, searchQuery, userId]);
@@ -38,9 +39,9 @@ export default function SPDPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-xl md:text-2xl font-semibold text-slate-800 tracking-tight flex items-center gap-2">
-            <Plane className="w-6 h-6 text-indigo-600" /> Perjalanan Dinas (SPD)
+            <CreditCard className="w-6 h-6 text-indigo-600" /> Pembayaran Vendor
           </h1>
-          <p className="text-sm font-medium text-slate-500 mt-1">Daftar pengajuan Surat Perjalanan Dinas Anda</p>
+          <p className="text-sm font-medium text-slate-500 mt-1">Daftar pengajuan pembayaran terhadap pihak ketiga</p>
         </div>
         <button
           onClick={() => setIsModalOpen(true)}
@@ -73,7 +74,7 @@ export default function SPDPage() {
               <Search className="absolute left-3 top-2 w-3.5 h-3.5 text-slate-400" />
               <input
                   type="text"
-                  placeholder="Cari referensi atau tujuan..."
+                  placeholder="Cari referensi atau deskripsi..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-9 pr-4 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium shadow-sm"
@@ -88,8 +89,8 @@ export default function SPDPage() {
           <table className="w-full text-xs">
             <thead>
               <tr className="bg-slate-50/50 border-b border-slate-100 font-semibold text-slate-500 uppercase tracking-wider text-[10px]">
-                <th className="text-left py-3.5 px-6">Referensi SPD</th>
-                <th className="text-left py-3.5 px-4 hidden sm:table-cell">Tujuan</th>
+                <th className="text-left py-3.5 px-6">Ref Pengajuan</th>
+                <th className="text-left py-3.5 px-4 hidden sm:table-cell">Target Vendor</th>
                 <th className="text-left py-3.5 px-4 hidden sm:table-cell">Nominal</th>
                 <th className="text-center py-3.5 px-4">Status</th>
                 <th className="text-right py-3.5 px-6">Aksi</th>
@@ -98,26 +99,31 @@ export default function SPDPage() {
             <tbody className="divide-y divide-slate-50">
               {currentData.map((item: any) => {
                 const sc = getStatusColor(item.status);
+                const vendor = item.vendorId ? getVendorById(item.vendorId) : null;
                 
                 return (
                   <tr key={item.id} className="group hover:bg-slate-50/50 transition-colors">
                     <td className="py-3.5 px-6">
                       <div className="flex items-center gap-3">
                         <div className="w-9 h-9 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shrink-0">
-                          <Plane className="w-4 h-4" />
+                          <CreditCard className="w-4 h-4" />
                         </div>
                         <div className="min-w-0">
-                          <p className="font-bold text-slate-800 leading-none mb-1 truncate">{new Date(item.departureDate).toLocaleDateString("id-ID", { day: 'numeric', month: 'short', year: 'numeric'})}</p>
-                          <p className="text-[10px] text-slate-400 font-bold font-sans tracking-tight">#{item.spdNumber}</p>
+                          <p className="font-bold text-slate-800 leading-none mb-1 truncate">{new Date(item.createdAt).toLocaleDateString("id-ID", { day: 'numeric', month: 'short', year: 'numeric'})}</p>
+                          <p className="text-[10px] text-slate-400 font-bold font-sans tracking-tight">#{item.paymentNumber}</p>
                         </div>
                       </div>
                     </td>
                     <td className="py-3.5 px-4 hidden sm:table-cell">
-                      <p className="font-bold text-slate-700 truncate max-w-[150px] lg:max-w-[200px]">{item.destination}</p>
-                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-tight truncate max-w-[150px] lg:max-w-[200px]">{item.purpose}</p>
+                      <p className="font-bold text-slate-700 truncate max-w-[150px] lg:max-w-[200px] mb-0.5">{item.description}</p>
+                      {vendor ? (
+                          <span className="px-1.5 py-0.5 bg-slate-100 text-slate-500 rounded text-[12px] font-black border border-slate-200 uppercase tracking-tighter">{vendor.name}</span>
+                      ) : (
+                          <span className="px-1.5 py-0.5 bg-slate-100 text-slate-400 rounded text-[12px] font-black border border-slate-200 uppercase tracking-tighter">Vendor Khusus</span>
+                      )}
                     </td>
                     <td className="py-3.5 px-4 hidden sm:table-cell">
-                      <p className="font-black text-slate-800 text-[12px] tracking-tighter">{formatCurrency(item.totalCost)}</p>
+                      <p className="font-black text-slate-800 text-[12px] tracking-tighter">{formatCurrency(item.amount)}</p>
                     </td>
                     <td className="py-3.5 px-4 text-center font-bold">
                       <span className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-lg text-[12px] font-black border uppercase tracking-widest bg-transparent ${sc.text} ${sc.border === 'border-slate-200' ? 'border-slate-300' : sc.border}`}>
@@ -149,8 +155,8 @@ export default function SPDPage() {
               {currentData.length === 0 && (
                 <tr>
                   <td colSpan={5} className="py-12 text-center text-slate-400 font-medium text-sm">
-                    <Plane className="w-10 h-10 mx-auto text-slate-200 mb-2" />
-                    Tidak ada pengajuan SPD ditemukan.
+                    <CreditCard className="w-10 h-10 mx-auto text-slate-200 mb-2" />
+                    Tidak ada pengajuan Pembayaran Vendor.
                   </td>
                 </tr>
               )}
@@ -163,7 +169,7 @@ export default function SPDPage() {
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title="Buat Pengajuan SPD Baru"
+        title="Buat Pengajuan Pembayaran Vendor"
         size="md"
         footer={
           <>
@@ -174,26 +180,24 @@ export default function SPDPage() {
       >
         <div className="space-y-4">
           <div className="space-y-1.5">
-            <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Tujuan Dinas</label>
-            <input type="text" placeholder="Kota/Perusahaan tujuan..." className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium shadow-sm" />
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-             <div className="space-y-1.5">
-                <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Tgl Berangkat</label>
-                <input type="date" className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium shadow-sm text-slate-700" />
-             </div>
-             <div className="space-y-1.5">
-                <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Tgl Kembali</label>
-                <input type="date" className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium shadow-sm text-slate-700" />
-             </div>
+            <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Perusahaan Vendor</label>
+            <select className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium appearance-none shadow-sm">
+              <option value="">-- Pilih Vendor Terdaftar --</option>
+              <option value="1">PT Teknologi Maju</option>
+              <option value="2">CV Sarana Mandiri</option>
+            </select>
           </div>
           <div className="space-y-1.5">
-            <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Estimasi Biaya (Rp)</label>
+            <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">No. Invoice Vendor</label>
+            <input type="text" placeholder="INV-2023-XXXX" className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium shadow-sm" />
+          </div>
+          <div className="space-y-1.5">
+            <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Total Tagihan (Rp)</label>
             <input type="number" placeholder="0" className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium shadow-sm" />
           </div>
           <div className="space-y-1.5">
-            <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Catatan/Maksud Perjalanan</label>
-            <textarea rows={3} placeholder="Tujuan spesifik SPD..." className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all resize-none shadow-sm"></textarea>
+            <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Keterangan Pembayaran</label>
+            <textarea rows={3} placeholder="Pembayaran termin 1 untuk pengadaan..." className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all resize-none shadow-sm"></textarea>
           </div>
         </div>
       </Modal>

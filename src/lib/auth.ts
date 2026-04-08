@@ -8,6 +8,7 @@ declare module "next-auth" {
     employeeId?: string;
     department?: string;
     position?: string;
+    modules?: string[];
   }
   interface Session {
     user: {
@@ -18,6 +19,7 @@ declare module "next-auth" {
       employeeId?: string;
       department?: string;
       position?: string;
+      modules?: string[];
     };
   }
 }
@@ -28,6 +30,7 @@ declare module "@auth/core/jwt" {
     employeeId?: string;
     department?: string;
     position?: string;
+    modules?: string[];
   }
 }
 
@@ -53,6 +56,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             employeeId: user.employeeId,
             department: user.department,
             position: user.position,
+            modules: user.modules,
           };
         }
         return null;
@@ -66,6 +70,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.employeeId = user.employeeId;
         token.department = user.department;
         token.position = user.position;
+        token.modules = (user as any).modules;
       }
       return token;
     },
@@ -77,6 +82,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user.employeeId = token.employeeId;
         session.user.department = token.department;
         session.user.position = token.position;
+        session.user.modules = token.modules;
       }
       return session;
     },

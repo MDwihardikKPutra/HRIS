@@ -122,6 +122,26 @@ export interface Vendor {
 }
 
 // ============================================
+// SYSTEM MODULES REGISTRY
+// ============================================
+export const SYSTEM_MODULES = [
+  // Modul category (assignable to users)
+  { key: "work-plan", label: "Rencana Kerja", category: "modul", isDefault: true },
+  { key: "work-realization", label: "Realisasi Kerja", category: "modul", isDefault: true },
+  { key: "leave", label: "Cuti & Izin", category: "modul", isDefault: false },
+  { key: "spd", label: "SPD", category: "modul", isDefault: false },
+  { key: "purchase", label: "Pembelian", category: "modul", isDefault: false },
+  { key: "vendor-payment", label: "Pembayaran Vendor", category: "modul", isDefault: false },
+  // Administrasi category (approval/admin functions)
+  { key: "leave-approval", label: "Daftar Cuti & Izin", category: "administrasi", isDefault: false },
+  { key: "payment-approval", label: "Approval Pembayaran", category: "administrasi", isDefault: false },
+  { key: "project-management", label: "Project Management", category: "administrasi", isDefault: false },
+  { key: "ear", label: "EAR", category: "administrasi", isDefault: false },
+  { key: "user", label: "Manajemen User", category: "administrasi", isDefault: false },
+  { key: "documentation", label: "Dokumentasi", category: "administrasi", isDefault: false },
+];
+
+// ============================================
 // SEED DATA
 // ============================================
 
@@ -311,4 +331,35 @@ export function getStatusColor(status: string) {
     default:
       return { bg: "bg-slate-50", text: "text-slate-700", border: "border-slate-200", dot: "bg-slate-500" };
   }
+}
+export function getPendingApprovalsCount() {
+  const pendingLeaves = leaveRequests.filter(l => l.status === "pending").length;
+  const pendingSpds = spds.filter(s => s.status === "pending").length;
+  const pendingPurchases = purchases.filter(p => p.status === "pending").length;
+  const pendingPayments = vendorPayments.filter(v => v.status === "pending").length;
+  
+  return {
+    leave: pendingLeaves,
+    finance: pendingSpds + pendingPurchases + pendingPayments,
+    total: pendingLeaves + pendingSpds + pendingPurchases + pendingPayments
+  };
+}
+
+export interface ProjectTeam {
+  id: number;
+  projectId: number;
+  userId: number;
+  role: string;
+}
+
+export const projectTeams: ProjectTeam[] = [
+  { id: 1, projectId: 1, userId: 2, role: "Project Manager" },
+  { id: 2, projectId: 1, userId: 3, role: "Lead Engineer" },
+  { id: 3, projectId: 1, userId: 6, role: "Procurement Lead" },
+  { id: 4, projectId: 2, userId: 2, role: "Project Manager" },
+  { id: 5, projectId: 2, userId: 4, role: "Field Engineer" },
+];
+
+export function getProjectTeam(projectId: number): ProjectTeam[] {
+  return projectTeams.filter(pt => pt.projectId === projectId);
 }
