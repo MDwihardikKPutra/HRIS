@@ -125,7 +125,7 @@ export default function Sidebar({ role, userName, modules, open, collapsed, onCl
             <div className={`transition-all duration-300 ${collapsed ? "opacity-0 w-0 -translate-x-4 overflow-hidden pointer-events-none absolute" : "opacity-100 w-auto translate-x-0 relative"}`}>
                <span className="font-bold text-slate-800 text-base tracking-tight whitespace-nowrap block">HRIS Next</span>
                <span className="block text-[11px] text-slate-400 font-bold leading-none whitespace-nowrap">
-                  Creative Studio
+                  Human Resource Integration System
                </span>
             </div>
           </Link>
