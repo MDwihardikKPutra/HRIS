@@ -1,3 +1,5 @@
+"use client";
+
 import {
   users, projects, workPlans,
   leaveRequests, spds, purchases, vendorPayments,
@@ -9,9 +11,11 @@ import {
   CheckCircle2, Clock, ArrowUpRight, Activity, ChevronRight, LayoutGrid
 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { getPendingApprovalsCount } from "@/lib/data";
 
 export default function DashboardPage() {
+  const router = useRouter();
   const pendingCounts = getPendingApprovalsCount();
   const totalPending = pendingCounts.total;
   
@@ -68,7 +72,7 @@ export default function DashboardPage() {
                 <h1 className="text-xl md:text-2xl font-semibold text-white">Hi, Larasati 👋</h1>
                 <p className="text-indigo-100 font-medium text-sm mt-0.5">Anda memiliki {totalPending} pengajuan yang menunggu persetujuan.</p>
               </div>
-              <Link href="/leave" className="px-5 py-2.5 bg-white text-indigo-600 rounded-lg text-sm font-semibold hover:bg-slate-50 transition-colors shadow-sm">
+              <Link href="/leave" className="px-5 py-2.5 bg-white text-indigo-600 rounded-lg text-sm font-semibold hover:bg-slate-50 transition-colors ">
                   Proses Persetujuan
               </Link>
           </div>
@@ -79,7 +83,7 @@ export default function DashboardPage() {
           {stats.map((s) => {
             const Icon = s.icon;
             return (
-              <Link key={s.label} href={s.href} className="bg-white rounded-xl p-3.5 border border-slate-100 shadow-[0_1px_3px_rgba(0,0,0,0.02)] hover:border-indigo-100 hover:shadow-md transition-all group">
+              <Link key={s.label} href={s.href} className="bg-white rounded-xl p-3.5 border border-slate-100  hover:border-indigo-100  transition-all group">
                 <div className="flex items-center gap-2 mb-2">
                   <Icon className="w-4 h-4 text-slate-400 group-hover:text-indigo-500 transition-colors" />
                   <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider group-hover:text-indigo-500 transition-colors">{s.label}</span>
@@ -97,8 +101,8 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Div 2: Recent Activity (Tall, Col 1-4, Row 2-4) */}
-      <div className="col-span-4 row-span-3 row-start-2 bg-white rounded-xl border border-slate-100 shadow-[0_1px_3px_rgba(0,0,0,0.02)] overflow-hidden flex flex-col p-4">
+      {/* Div 2: Recent Activity (Tall, Col 1-4, Row 2-5) */}
+      <div className="col-span-4 row-span-4 row-start-2 bg-white rounded-xl border border-slate-100  overflow-hidden flex flex-col p-4">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-base font-bold text-slate-800 uppercase tracking-tight">Aktivitas Terbaru</h2>
             <Link href="/activity-log" className="text-[10px] font-bold text-indigo-500 hover:text-indigo-700 flex items-center gap-1 transition-colors uppercase">
@@ -119,7 +123,7 @@ export default function DashboardPage() {
                 {recentActivities.map((act, i) => {
                   const sc = getStatusColor(act.status);
                   return (
-                    <Link key={i} href={getActivityHref(act.type)} className="table-row hover:bg-slate-50/80 transition-colors cursor-pointer group">
+                    <tr key={i} onClick={() => router.push(getActivityHref(act.type))} className="hover:bg-slate-50/80 transition-colors cursor-pointer group">
                       <td className="py-2.5">
                         <div className="flex items-center gap-2.5">
                           <div className="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center text-[10px] font-bold text-slate-600 border border-slate-200 group-hover:border-indigo-200 transition-colors">
@@ -139,7 +143,7 @@ export default function DashboardPage() {
                           {act.status}
                         </span>
                       </td>
-                    </Link>
+                    </tr>
                   );
                 })}
               </tbody>
@@ -148,7 +152,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Div 3: Module Overview (Col 5, Row 2-3) */}
-      <div className="col-start-5 row-start-2 row-span-2 bg-white rounded-xl border border-slate-100 shadow-[0_1px_3px_rgba(0,0,0,0.02)] p-4">
+      <div className="col-start-5 row-start-2 row-span-2 bg-white rounded-xl border border-slate-100  p-4">
           <div className="flex items-center justify-between mb-4">
               <h2 className="text-base font-bold text-slate-800 uppercase tracking-tight">Status Modul</h2>
               <Link href="/finance" className="px-2.5 py-1 border border-indigo-100 text-indigo-600 text-[12px] font-bold rounded-lg hover:bg-indigo-50 transition-colors uppercase">
@@ -182,7 +186,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Div 7: Request Composition (Donut Chart) (Col 5, Row 4-5) */}
-      <div className="col-start-5 row-start-4 row-span-2 bg-white rounded-xl border border-slate-100 shadow-[0_1px_3px_rgba(0,0,0,0.02)] p-4 flex flex-col overflow-hidden">
+      <div className="col-start-5 row-start-4 row-span-2 bg-white rounded-xl border border-slate-100  p-4 flex flex-col overflow-hidden">
           <div className="mb-4">
               <h2 className="text-base font-bold text-slate-800 uppercase tracking-tight">Komposisi Request</h2>
               <p className="text-[12px] text-slate-400 font-bold uppercase mt-0.5">Distribusi Tipe Pengajuan</p>
@@ -192,12 +196,12 @@ export default function DashboardPage() {
               <div className="w-28 h-28 relative">
                   <svg className="w-full h-full transform -rotate-90">
                       <circle cx="56" cy="56" r="48" stroke="currentColor" strokeWidth="10" fill="transparent" className="text-slate-50" />
-                      {/* SPD Ring (45%) */}
-                      <circle cx="56" cy="56" r="48" stroke="currentColor" strokeWidth="10" fill="transparent" strokeDasharray="301.59" strokeDashoffset="165.87" className="text-indigo-500 stroke-cap-round" />
+                      {/* SPD Ring (45% of 301.59) */}
+                      <circle cx="56" cy="56" r="48" stroke="currentColor" strokeWidth="10" fill="transparent" strokeDasharray="135.71 165.88" strokeDashoffset="0" className="text-indigo-500" />
                       {/* Purchase Ring (30%) */}
-                      <circle cx="56" cy="56" r="48" stroke="currentColor" strokeWidth="10" fill="transparent" strokeDasharray="301.59" strokeDashoffset="211.11" style={{ transform: 'rotate(162deg)', transformOrigin: 'center' }} className="text-emerald-400" />
+                      <circle cx="56" cy="56" r="48" stroke="currentColor" strokeWidth="10" fill="transparent" strokeDasharray="90.48 211.11" strokeDashoffset="-135.71" className="text-emerald-400" />
                       {/* Vendor Ring (25%) */}
-                      <circle cx="56" cy="56" r="48" stroke="currentColor" strokeWidth="10" fill="transparent" strokeDasharray="301.59" strokeDashoffset="226.19" style={{ transform: 'rotate(270deg)', transformOrigin: 'center' }} className="text-amber-400" />
+                      <circle cx="56" cy="56" r="48" stroke="currentColor" strokeWidth="10" fill="transparent" strokeDasharray="75.40 226.19" strokeDashoffset="-226.19" className="text-amber-400" />
                   </svg>
                   <div className="absolute inset-0 flex flex-col items-center justify-center">
                     <span className="text-lg font-black text-slate-800 tracking-tighter">84</span>
@@ -231,38 +235,7 @@ export default function DashboardPage() {
           </div>
       </div>
 
-      {/* Div 6: Project Distribution (Col 1-4, Row 5) */}
-      <div className="col-span-4 col-start-1 row-start-5 bg-white rounded-xl border border-slate-100 shadow-[0_1px_3px_rgba(0,0,0,0.02)] p-4">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-base font-bold text-slate-800 uppercase tracking-tight">Kapasitas & Alokasi Proyek</h2>
-          <div className="flex items-center gap-4">
-             <div className="flex items-center gap-2">
-                <div className="w-2.5 h-2.5 rounded-full bg-indigo-500" />
-                <span className="text-[12px] font-bold text-slate-400 uppercase">Aktif</span>
-             </div>
-             <div className="flex items-center gap-2">
-                <div className="w-2.5 h-2.5 rounded-full bg-slate-200" />
-                <span className="text-[12px] font-bold text-slate-400 uppercase">Reserv cadangan</span>
-             </div>
-          </div>
-        </div>
-        <div className="flex items-center gap-5">
-          {projects.slice(0, 4).map((p, i) => (
-            <div key={p.id} className="flex-1 space-y-2.5">
-              <div className="flex justify-between items-end">
-                <span className="text-[10px] font-bold text-slate-600 truncate max-w-[100px]">{p.code}</span>
-                <span className="text-[12px] font-bold text-indigo-600">{(80 - (i * 10))}%</span>
-              </div>
-              <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                <div className="h-full bg-indigo-500 rounded-full" style={{ width: `${80 - (i * 10)}%` }} />
-              </div>
-            </div>
-          ))}
-          <Link href="/projects" className="p-2.5 border border-slate-100 rounded-lg hover:bg-slate-50 text-slate-400 transition-all">
-            <ChevronRight className="w-5 h-5" />
-          </Link>
-        </div>
-      </div>
+
 
     </div>
   );

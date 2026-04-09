@@ -45,14 +45,14 @@ export default function PurchasePage() {
         </div>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs rounded-xl transition-colors shadow-sm self-start sm:self-center"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs rounded-xl transition-colors  self-start sm:self-center"
         >
           <span>+</span> Pengajuan Baru
         </button>
       </div>
 
       {/* Filter Bar */}
-      <div className="bg-white rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)] border border-slate-100 p-3 mt-4">
+      <div className="bg-white rounded-xl  border border-slate-100 p-3 mt-4">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
           <div className="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0 scrollbar-hide">
               {["Semua", "Pending", "Approved", "Rejected"].map((status) => (
@@ -77,14 +77,14 @@ export default function PurchasePage() {
                   placeholder="Cari referensi atau deskripsi..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-9 pr-4 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium shadow-sm"
+                  className="w-full pl-9 pr-4 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium "
               />
           </div>
         </div>
       </div>
 
       {/* Main Table */}
-      <div className="bg-white border border-slate-100 rounded-xl overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.02)] mt-2">
+      <div className="bg-white border border-slate-100 rounded-xl overflow-hidden  mt-2">
         <div className="overflow-x-auto scrollbar-hide">
           <table className="w-full text-xs">
             <thead>
@@ -134,16 +134,16 @@ export default function PurchasePage() {
                         <div className="flex items-center justify-end gap-1.5 transition-opacity opacity-0 group-hover:opacity-100">
                            {item.status === "pending" && (
                                 <>
-                                    <button className="p-2 text-slate-400 hover:text-indigo-600 transition-colors bg-white hover:bg-indigo-50 border border-slate-100 hover:border-indigo-100 rounded-lg shadow-sm">
+                                    <button className="p-2 text-slate-400 hover:text-indigo-600 transition-colors bg-white hover:bg-indigo-50 border border-slate-100 hover:border-indigo-100 rounded-lg ">
                                         <Edit className="w-3.5 h-3.5" />
                                     </button>
-                                    <button className="p-2 text-slate-400 hover:text-red-600 transition-colors bg-white hover:bg-red-50 border border-slate-100 hover:border-red-100 rounded-lg shadow-sm">
+                                    <button className="p-2 text-slate-400 hover:text-red-600 transition-colors bg-white hover:bg-red-50 border border-slate-100 hover:border-red-100 rounded-lg ">
                                         <Trash2 className="w-3.5 h-3.5" />
                                     </button>
                                 </>
                            )}
                            {item.status === "approved" && (
-                                <button className="p-2 text-slate-400 hover:text-emerald-600 transition-colors bg-white hover:bg-emerald-50 border border-slate-100 hover:border-emerald-100 rounded-lg shadow-sm">
+                                <button className="p-2 text-slate-400 hover:text-emerald-600 transition-colors bg-white hover:bg-emerald-50 border border-slate-100 hover:border-emerald-100 rounded-lg ">
                                     <Printer className="w-3.5 h-3.5" />
                                 </button>
                            )}
@@ -174,14 +174,14 @@ export default function PurchasePage() {
         footer={
           <>
             <button onClick={() => setIsModalOpen(false)} className="px-5 py-2.5 text-xs font-medium text-slate-500 hover:text-slate-900 transition-colors">Batal</button>
-            <button onClick={() => setIsModalOpen(false)} className="px-5 py-2.5 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-all shadow-sm">Kirim Pengajuan</button>
+            <button onClick={() => setIsModalOpen(false)} className="px-5 py-2.5 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-all ">Kirim Pengajuan</button>
           </>
         }
       >
         <div className="space-y-4">
           <div className="space-y-1.5">
             <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Terkait Proyek (Opsional)</label>
-            <select className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium appearance-none shadow-sm">
+            <select className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium appearance-none ">
               <option value="">-- Internal / Operasional Karyawan --</option>
               <option value="1">Alpha (PRJ-001)</option>
               <option value="2">Beta (PRJ-002)</option>
@@ -189,15 +189,15 @@ export default function PurchasePage() {
           </div>
           <div className="space-y-1.5">
             <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Item Barang/Jasa</label>
-            <input type="text" placeholder="Laptop, Sewa Server, dll" className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium shadow-sm" />
+            <input type="text" placeholder="Laptop, Sewa Server, dll" className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium " />
           </div>
           <div className="space-y-1.5">
             <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Estimasi Harga (Rp)</label>
-            <input type="number" placeholder="0" className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium shadow-sm" />
+            <input type="number" placeholder="0" className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium " />
           </div>
           <div className="space-y-1.5">
             <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Tujuan Pengadaan (Deskripsi)</label>
-            <textarea rows={3} placeholder="Alasan membutuhkan barang/jasa ini..." className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all resize-none shadow-sm"></textarea>
+            <textarea rows={3} placeholder="Alasan membutuhkan barang/jasa ini..." className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all resize-none "></textarea>
           </div>
         </div>
       </Modal>

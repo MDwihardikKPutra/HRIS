@@ -51,13 +51,13 @@ export default function ProjectsPage() {
         </div>
         <div className="flex items-center gap-2.5">
           <button
-            className="px-4 py-2 bg-white border border-slate-200 text-slate-600 font-medium text-xs rounded-xl hover:bg-slate-50 transition-colors shadow-sm"
+            className="px-4 py-2 bg-white border border-slate-200 text-slate-600 font-medium text-xs rounded-xl hover:bg-slate-50 transition-colors "
           >
             Export CSV
           </button>
           <button
             onClick={() => setIsNewProjectModalOpen(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs rounded-xl transition-colors shadow-sm"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs rounded-xl transition-colors "
           >
             <Plus className="w-3.5 h-3.5" /> Proyek Baru
           </button>
@@ -65,7 +65,7 @@ export default function ProjectsPage() {
       </div>
 
       {/* Control Bar */}
-      <div className="bg-white p-3 rounded-xl border border-slate-100 shadow-[0_1px_3px_rgba(0,0,0,0.02)] mt-4">
+      <div className="bg-white p-3 rounded-xl border border-slate-100  mt-4">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
           <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide pb-1 lg:pb-0">
               {["Semua Proyek", "active", "on_hold", "completed"].map((tab) => (
@@ -90,23 +90,23 @@ export default function ProjectsPage() {
                   placeholder="Cari nama proyek atau kode..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-9 pr-4 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium shadow-sm"
+                  className="w-full pl-9 pr-4 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium "
               />
           </div>
         </div>
       </div>
 
       {/* Project Table */}
-      <div className="bg-white border border-slate-100 rounded-xl overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.02)] mt-2">
+      <div className="bg-white border border-slate-100 rounded-xl overflow-hidden  mt-2">
         <div className="overflow-x-auto scrollbar-hide">
           <table className="w-full text-xs">
             <thead>
               <tr className="bg-slate-50/50 border-b border-slate-100 font-semibold text-slate-500 uppercase tracking-widest text-[10px]">
-                <th className="text-left py-4 px-6">Informasi Proyek</th>
-                <th className="text-left py-4 px-4 hidden md:table-cell">PIC / Manager</th>
-                <th className="text-left py-4 px-4 hidden lg:table-cell">Timeline</th>
-                <th className="text-center py-4 px-4">Status</th>
-                <th className="text-right py-4 px-6">Opsi</th>
+                <th className="text-left py-2.5 px-4">Informasi Proyek</th>
+                <th className="text-left py-2.5 px-4 hidden md:table-cell">PIC / Manager</th>
+                <th className="text-left py-2.5 px-4 hidden lg:table-cell">Timeline</th>
+                <th className="text-center py-2.5 px-4">Status</th>
+                <th className="text-right py-2.5 px-4">Opsi</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50">
@@ -116,10 +116,10 @@ export default function ProjectsPage() {
                 
                 return (
                   <tr key={p.id} className="group hover:bg-slate-50/50 transition-colors">
-                    <td className="py-4 px-6">
-                       <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shrink-0">
-                                <FolderKanban className="w-5 h-5" />
+                    <td className="py-2.5 px-4">
+                       <div className="flex items-center gap-2.5">
+                            <div className="w-8 h-8 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shrink-0">
+                                <FolderKanban className="w-4 h-4" />
                             </div>
                             <div className="min-w-0">
                                 <p className="font-bold text-slate-800 text-sm leading-none mb-1.5 truncate">{p.name}</p>
@@ -127,50 +127,50 @@ export default function ProjectsPage() {
                             </div>
                        </div>
                     </td>
-                    <td className="py-4 px-4 hidden md:table-cell">
-                      <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-[10px] font-black text-slate-500 uppercase">
+                    <td className="py-2.5 px-4 hidden md:table-cell">
+                      <div className="flex items-center gap-2">
+                        <div className="w-7 h-7 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center text-[10px] font-black text-slate-500 uppercase">
                              {manager?.name?.charAt(0)}
                         </div>
                         <div className="min-w-0">
-                          <p className="font-bold text-slate-700 leading-none mb-1 truncate">{manager?.name || "-"}</p>
-                          <p className="text-[12px] text-slate-400 font-bold uppercase tracking-tight">{manager?.position || "Staff"}</p>
+                          <p className="font-bold text-slate-700 leading-none mb-0.5 truncate">{manager?.name || "-"}</p>
+                          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-tight">{manager?.position || "Staff"}</p>
                         </div>
                       </div>
                     </td>
-                    <td className="py-4 px-4 hidden lg:table-cell">
-                        <div className="flex flex-col gap-1.5">
-                            <div className="flex items-center gap-2 text-slate-500 font-bold text-[10px] uppercase">
+                    <td className="py-2.5 px-4 hidden lg:table-cell">
+                        <div className="flex flex-col gap-1">
+                            <div className="flex items-center gap-1.5 text-slate-500 font-bold text-[9px] uppercase">
                                 <Clock className="w-3 h-3 text-slate-300" />
                                 <span>3 Bulan Tersisa</span>
                             </div>
-                            <div className="w-32 bg-slate-100 h-1 rounded-full overflow-hidden">
+                            <div className="w-24 bg-slate-100 h-1 rounded-full overflow-hidden">
                                 <div className="h-full bg-indigo-500 w-2/3 rounded-full" />
                             </div>
                         </div>
                     </td>
-                    <td className="py-4 px-4 text-center">
-                      <span className={`inline-flex px-2 py-1 rounded-lg text-[12px] font-black border uppercase tracking-widest bg-transparent ${sc.text} ${sc.border === 'border-slate-200' ? 'border-slate-300' : sc.border}`}>
+                    <td className="py-2.5 px-4 text-center">
+                      <span className={`inline-flex px-2 py-0.5 rounded-lg text-[10px] font-black border uppercase tracking-widest bg-transparent ${sc.text} ${sc.border === 'border-slate-200' ? 'border-slate-300' : sc.border}`}>
                         {p.status.replace('_', ' ')}
                       </span>
                     </td>
-                    <td className="py-4 px-6 text-right whitespace-nowrap">
-                        <div className="flex items-center justify-end gap-1.5 transition-opacity">
+                    <td className="py-2.5 px-4 text-right whitespace-nowrap">
+                        <div className="flex items-center justify-end gap-1 transition-opacity">
                            <button 
                              title="Detail Info"
-                             className="p-2 text-slate-400 hover:text-indigo-600 transition-colors bg-white hover:bg-indigo-50 border border-slate-100 rounded-lg shadow-sm"
+                             className="p-2 text-slate-400 hover:text-indigo-600 transition-colors bg-white hover:bg-indigo-50 border border-slate-100 rounded-lg "
                            >
                              <Eye className="w-3.5 h-3.5" />
                            </button>
                            <button 
                              onClick={() => openTeamModal(p)}
-                             className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-slate-500 hover:text-white bg-white hover:bg-slate-800 border border-slate-200 hover:border-slate-800 rounded-lg shadow-sm transition-all text-[10px] font-bold uppercase"
+                             className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-slate-500 hover:text-white bg-white hover:bg-slate-800 border border-slate-200 hover:border-slate-800 rounded-lg  transition-all text-[10px] font-bold uppercase"
                            >
                              <Users className="w-3.5 h-3.5" /> 
                              <span className="hidden sm:inline">Kelola Tim</span>
                            </button>
                            <button 
-                             className="p-2 text-slate-400 hover:text-red-600 transition-colors bg-white hover:bg-red-50 border border-slate-100 rounded-lg shadow-sm"
+                             className="p-2 text-slate-400 hover:text-red-600 transition-colors bg-white hover:bg-red-50 border border-slate-100 rounded-lg "
                            >
                              <Trash2 className="w-3.5 h-3.5" />
                            </button>
@@ -199,7 +199,7 @@ export default function ProjectsPage() {
         title={`Manajemen Tim: ${selectedProject?.name}`}
         size="lg"
         footer={
-           <button onClick={() => setIsTeamModalOpen(false)} className="px-5 py-2.5 text-xs font-bold text-white bg-slate-800 hover:bg-slate-900 rounded-xl transition-all shadow-sm">Simpan Perubahan</button>
+           <button onClick={() => setIsTeamModalOpen(false)} className="px-5 py-2.5 text-xs font-bold text-white bg-slate-800 hover:bg-slate-900 rounded-xl transition-all ">Simpan Perubahan</button>
         }
       >
         <div className="space-y-6">
@@ -213,7 +213,7 @@ export default function ProjectsPage() {
                         <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">{selectedProject?.code}</p>
                     </div>
                 </div>
-                <button className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-bold uppercase rounded-lg transition-all shadow-sm">
+                <button className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-bold uppercase rounded-lg transition-all ">
                     <Plus className="w-3.5 h-3.5" /> Tambah Personel
                 </button>
             </div>
@@ -269,7 +269,7 @@ export default function ProjectsPage() {
             </button>
             <button
               onClick={() => setIsNewProjectModalOpen(false)}
-              className="px-5 py-2.5 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-all shadow-sm"
+              className="px-5 py-2.5 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-all "
             >
               Simpan Proyek
             </button>
@@ -282,7 +282,7 @@ export default function ProjectsPage() {
             <input
               type="text"
               placeholder="Contoh: Infrastruktur Data Center"
-              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium shadow-sm"
+              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium "
             />
           </div>
 
@@ -292,13 +292,13 @@ export default function ProjectsPage() {
                 <input
                   type="text"
                   placeholder="PRJ-XXXX"
-                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium shadow-sm uppercase uppercase"
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium  uppercase uppercase"
                 />
               </div>
 
               <div className="space-y-1.5">
                 <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Manajer</label>
-                <select className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium shadow-sm appearance-none">
+                <select className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium  appearance-none">
                   <option value="">Pilih Member...</option>
                   {users.map(u => (
                     <option key={u.id} value={u.id}>{u.name}</option>
@@ -310,9 +310,9 @@ export default function ProjectsPage() {
           <div className="space-y-1.5">
             <label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Masa Kontrak / Timeline</label>
             <div className="flex items-center gap-3">
-                 <input type="date" className="flex-1 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium shadow-sm" />
+                 <input type="date" className="flex-1 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium " />
                  <ArrowRight className="w-4 h-4 text-slate-300" />
-                 <input type="date" className="flex-1 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium shadow-sm" />
+                 <input type="date" className="flex-1 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium " />
             </div>
           </div>
 
@@ -321,7 +321,7 @@ export default function ProjectsPage() {
             <textarea
               rows={3}
               placeholder="Ruang lingkup kerja..."
-              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium shadow-sm resize-none"
+              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium  resize-none"
             ></textarea>
           </div>
         </div>

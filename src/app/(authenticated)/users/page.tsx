@@ -113,7 +113,7 @@ export default function UsersPage() {
         <div className="flex items-center gap-2.5">
           <button
             onClick={() => setIsAddModalOpen(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs rounded-xl transition-colors shadow-sm"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs rounded-xl transition-colors "
           >
             <Plus className="w-3.5 h-3.5" />
             Tambah Karyawan
@@ -126,13 +126,13 @@ export default function UsersPage() {
         {stats.map((s) => {
           const Icon = s.icon;
           return (
-            <div key={s.label} className="bg-white border border-slate-100 p-5 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)] flex items-center gap-4">
-              <div className={`p-2.5 rounded-xl ${s.bg} ${s.color}`}>
-                <Icon className="w-5 h-5" />
+            <div key={s.label} className="bg-white border border-slate-100 p-3 rounded-xl flex items-center gap-3">
+              <div className={`p-2 rounded-lg ${s.bg} ${s.color}`}>
+                <Icon className="w-4 h-4" />
               </div>
               <div>
                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{s.label}</p>
-                <p className="text-2xl font-bold text-slate-800 tabular-nums">{s.value}</p>
+                <p className="text-xl font-bold text-slate-800 tabular-nums leading-none mt-0.5">{s.value}</p>
               </div>
             </div>
           );
@@ -140,7 +140,7 @@ export default function UsersPage() {
       </div>
 
       {/* User table */}
-      <div className="bg-white border border-slate-100 rounded-xl overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.02)] mt-2">
+      <div className="bg-white border border-slate-100 rounded-xl overflow-hidden  mt-2">
         <div className="p-5 border-b border-slate-50 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <h2 className="text-base font-semibold text-slate-800">Direktori Personel</h2>
           <div className="relative group min-w-[300px]">
@@ -159,83 +159,83 @@ export default function UsersPage() {
           <table className="w-full text-xs">
             <thead>
               <tr className="bg-slate-50/50 border-b border-slate-100 font-semibold text-slate-500 uppercase tracking-widest text-[12px]">
-                <th className="text-left py-3.5 px-6">ID / Karyawan</th>
-                <th className="text-left py-3.5 px-4 hidden sm:table-cell">Jabatan & Departemen</th>
-                <th className="text-left py-3.5 px-4 hidden md:table-cell">Modul Aktif</th>
-                <th className="text-center py-3.5 px-4">Role</th>
-                <th className="text-center py-3.5 px-4">Status</th>
-                <th className="text-right py-3.5 px-6">Aksi</th>
+                <th className="text-left py-2.5 px-4 font-bold">Karyawan</th>
+                <th className="text-left py-2.5 px-4 hidden sm:table-cell font-bold">Jabatan</th>
+                <th className="text-left py-2.5 px-4 hidden md:table-cell font-bold">Modul Aktif</th>
+                <th className="text-center py-2.5 px-4 font-bold">Role</th>
+                <th className="text-center py-2.5 px-4 font-bold">Status</th>
+                <th className="text-right py-2.5 px-4 font-bold">Aksi</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50">
               {filteredUsers.map((u) => (
                 <tr key={u.id} className="hover:bg-slate-50/50 transition-colors group">
-                  <td className="py-3.5 px-6">
-                    <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-xs font-bold text-slate-500 group-hover:text-indigo-600 group-hover:bg-indigo-50 group-hover:border-indigo-100 transition-all">
+                  <td className="py-2.5 px-4">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-8 h-8 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center text-[10px] font-bold text-slate-500 group-hover:text-indigo-600 group-hover:bg-indigo-50 group-hover:border-indigo-100 transition-all">
                         {u.name.charAt(0)}
                       </div>
                       <div>
-                        <p className="font-bold text-slate-800 leading-none mb-1">{u.name}</p>
+                        <p className="font-bold text-slate-800 leading-none mb-0.5">{u.name}</p>
                         <p className="text-[10px] text-slate-400 font-bold tracking-tight">{u.email}</p>
                       </div>
                     </div>
                   </td>
-                  <td className="py-3.5 px-4 hidden sm:table-cell">
-                    <p className="font-bold text-slate-700 mb-0.5">{u.position}</p>
+                  <td className="py-2.5 px-4 hidden sm:table-cell">
+                    <p className="font-bold text-slate-700 leading-none mb-0.5">{u.position}</p>
                     <p className="text-[10px] text-slate-400 font-bold uppercase tracking-tight">{u.department}</p>
                   </td>
-                  <td className="py-3.5 px-4 hidden md:table-cell">
+                  <td className="py-2.5 px-4 hidden md:table-cell">
                     <div className="flex flex-wrap gap-1 max-w-[220px]">
                       {u.role === "admin" ? (
-                        <span className="px-1.5 py-0.5 bg-indigo-50 text-indigo-600 rounded text-[12px] font-bold uppercase border border-indigo-100 tracking-tighter">FULL ACCESS</span>
+                        <span className="px-1.5 py-0.5 bg-indigo-50 text-indigo-600 rounded text-[10px] font-bold uppercase border border-indigo-100 tracking-tighter">FULL ACCESS</span>
                       ) : u.modules.length === 0 ? (
                         <span className="text-[10px] text-slate-400 font-bold italic">No Modules</span>
                       ) : (
                         u.modules.slice(0, 3).map(m => {
                           const mod = SYSTEM_MODULES.find(s => s.key === m);
                           return (
-                            <span key={m} className="px-1.5 py-0.5 bg-slate-50 text-slate-600 rounded text-[12px] font-bold border border-slate-100 uppercase tracking-tighter">
+                            <span key={m} className="px-1 py-0.5 bg-slate-50 text-slate-600 rounded text-[10px] font-bold border border-slate-100 uppercase tracking-tighter leading-none">
                               {mod?.label || m}
                             </span>
                           );
                         })
                       )}
                       {u.role !== "admin" && u.modules.length > 3 && (
-                        <span className="px-1.5 py-0.5 bg-slate-100 text-slate-500 rounded text-[12px] font-bold border border-slate-200">
+                        <span className="px-1 py-0.5 bg-slate-100 text-slate-500 rounded text-[10px] font-bold border border-slate-200 leading-none">
                           +{u.modules.length - 3}
                         </span>
                       )}
                     </div>
                   </td>
-                  <td className="py-3.5 px-4 text-center">
-                    <span className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-lg text-[10px] font-bold border uppercase tracking-widest ${
+                  <td className="py-2.5 px-4 text-center">
+                    <span className={`inline-flex items-center gap-1.5 px-1.5 py-0.5 rounded-lg text-[10px] font-bold border uppercase tracking-widest ${
                       u.role === 'admin' ? 'bg-indigo-50 text-indigo-600 border-indigo-100' : 'bg-slate-50 text-slate-500 border-slate-100'
                     }`}>
                       {u.role === 'admin' && <Shield className="w-2.5 h-2.5" />}
                       {u.role}
                     </span>
                   </td>
-                  <td className="py-3.5 px-4 text-center">
-                    <span className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-lg text-[12px] font-bold border uppercase tracking-widest ${
+                  <td className="py-2.5 px-4 text-center">
+                    <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-lg text-[10px] font-bold border uppercase tracking-widest ${
                       u.isActive ? 'text-emerald-600 bg-emerald-50 border-emerald-100' : 'text-slate-400 bg-slate-50 border-slate-100'
                     }`}>
-                      <span className={`w-1.5 h-1.5 rounded-full ${u.isActive ? 'bg-emerald-500' : 'bg-slate-300'}`} />
+                      <span className={`w-1 h-1 rounded-full ${u.isActive ? 'bg-emerald-500' : 'bg-slate-300'}`} />
                       {u.isActive ? 'Aktif' : 'Nonaktif'}
                     </span>
                   </td>
-                  <td className="py-3.5 px-6 text-right">
-                    <div className="flex items-center justify-end gap-1.5 transition-opacity">
+                  <td className="py-2.5 px-4 text-right">
+                    <div className="flex items-center justify-end gap-1 transition-opacity">
                       <button 
                         onClick={() => openManageModal(u)}
                         title="Kelola Modul"
-                        className="p-2 text-slate-400 hover:text-indigo-600 transition-colors bg-white hover:bg-indigo-50 border border-slate-100 hover:border-indigo-100 rounded-lg shadow-sm"
+                        className="p-1.5 text-slate-400 hover:text-indigo-600 transition-colors bg-white hover:bg-indigo-50 border border-slate-100 hover:border-indigo-100 rounded-lg "
                       >
                         <LayoutGrid className="w-3.5 h-3.5" />
                       </button>
                       <button 
                         title="Pengaturan User"
-                        className="p-2 text-slate-400 hover:text-slate-600 transition-colors bg-white hover:bg-slate-50 border border-slate-100 rounded-lg shadow-sm"
+                        className="p-1.5 text-slate-400 hover:text-slate-600 transition-colors bg-white hover:bg-slate-50 border border-slate-100 rounded-lg "
                       >
                         <Settings2 className="w-3.5 h-3.5" />
                       </button>
@@ -252,7 +252,7 @@ export default function UsersPage() {
       {managingUser && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm" onClick={() => setManagingUser(null)} />
-          <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+          <div className="relative bg-white rounded-2xl  w-full max-w-lg overflow-hidden animate-in fade-in zoom-in-95 duration-200">
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-slate-100">
               <div className="flex items-center gap-3">
@@ -305,7 +305,7 @@ export default function UsersPage() {
                                 onClick={() => toggleDraftModule(mod.key)}
                                 className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all text-left ${
                                   isSelected
-                                    ? "bg-indigo-50/60 border-indigo-200 shadow-sm"
+                                    ? "bg-indigo-50/60 border-indigo-200 "
                                     : "bg-white border-slate-100 hover:border-slate-200"
                                 }`}
                               >
@@ -344,7 +344,7 @@ export default function UsersPage() {
               {managingUser.role !== "admin" && (
                 <button
                   onClick={saveModules}
-                  className="px-5 py-2 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-colors shadow-sm"
+                  className="px-5 py-2 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-colors "
                 >
                   Simpan Perubahan
                 </button>
@@ -363,7 +363,7 @@ export default function UsersPage() {
         footer={
           <>
             <button onClick={() => setIsAddModalOpen(false)} className="px-5 py-2.5 text-xs font-medium text-slate-500 hover:text-slate-900 transition-colors">Batal</button>
-            <button onClick={() => setIsAddModalOpen(false)} className="px-5 py-2.5 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-all shadow-sm">Simpan Personel</button>
+            <button onClick={() => setIsAddModalOpen(false)} className="px-5 py-2.5 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-all ">Simpan Personel</button>
           </>
         }
       >
@@ -449,7 +449,7 @@ export default function UsersPage() {
                     onClick={() => toggleNewUserModule(mod.key)}
                     className={`flex items-center justify-between p-2.5 rounded-xl border transition-all ${
                       isDisabled ? "cursor-not-allowed opacity-60" : "cursor-pointer"
-                    } ${isSelected ? "bg-white border-indigo-200 shadow-sm" : "bg-white/50 border-slate-100 hover:border-slate-200"}`}
+                    } ${isSelected ? "bg-white border-indigo-200 " : "bg-white/50 border-slate-100 hover:border-slate-200"}`}
                   >
                     <div>
                       <p className={`text-[12px] font-semibold ${isSelected ? "text-slate-800" : "text-slate-500"}`}>{mod.label}</p>

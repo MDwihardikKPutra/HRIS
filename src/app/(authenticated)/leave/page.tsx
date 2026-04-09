@@ -68,13 +68,13 @@ export default function LeavePage() {
         <div className="flex items-center gap-2.5">
           <button
             onClick={() => setIsApplyModalOpen(true)}
-            className="px-4 py-2 bg-white border border-slate-200 text-slate-600 font-medium text-xs rounded-xl hover:bg-slate-50 transition-colors shadow-sm"
+            className="px-4 py-2 bg-white border border-slate-200 text-slate-600 font-medium text-xs rounded-xl hover:bg-slate-50 transition-colors "
           >
             Ajukan Sakit
           </button>
           <button
             onClick={() => setIsApplyModalOpen(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs rounded-xl transition-colors shadow-sm"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs rounded-xl transition-colors "
           >
             <span>+</span> Ajukan Cuti
           </button>
@@ -106,22 +106,22 @@ export default function LeavePage() {
                 placeholder="Cari nama karyawan atau nomor surat..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-4 py-1.5 bg-white border border-slate-100 rounded-lg text-xs focus:outline-none focus:border-indigo-300 focus:ring-1 focus:ring-indigo-100 transition-all font-medium shadow-sm"
+                className="w-full pl-9 pr-4 py-1.5 bg-white border border-slate-100 rounded-lg text-xs focus:outline-none focus:border-indigo-300 focus:ring-1 focus:ring-indigo-100 transition-all font-medium "
             />
         </div>
       </div>
 
       {/* Content Table */}
-      <div className="bg-white border border-slate-100 rounded-xl overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.02)] mt-2">
+      <div className="bg-white border border-slate-100 rounded-xl overflow-hidden  mt-2">
         <div className="overflow-x-auto scrollbar-hide">
           <table className="w-full text-xs">
             <thead>
               <tr className="bg-slate-50/50 border-b border-slate-100 font-semibold text-slate-500 uppercase tracking-wider text-[10px]">
-                <th className="text-left py-3.5 px-6">Info Karyawan</th>
-                <th className="text-left py-3.5 px-4 hidden sm:table-cell">Kategori / Durasi</th>
-                <th className="text-left py-3.5 px-4 hidden md:table-cell">Keterangan</th>
-                <th className="text-center py-3.5 px-4">Status</th>
-                <th className="text-right py-3.5 px-6">Opsi</th>
+                <th className="text-left py-2.5 px-4 font-bold">Info Karyawan</th>
+                <th className="text-left py-2.5 px-4 hidden sm:table-cell font-bold">Kategori / Durasi</th>
+                <th className="text-left py-2.5 px-4 hidden md:table-cell font-bold">Keterangan</th>
+                <th className="text-center py-2.5 px-4 font-bold">Status</th>
+                <th className="text-right py-2.5 px-4 font-bold">Opsi</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50">
@@ -131,9 +131,9 @@ export default function LeavePage() {
                 
                 return (
                   <tr key={item.id} className="group hover:bg-slate-50/50 transition-colors">
-                    <td className="py-3.5 px-6">
-                      <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-xs font-bold text-indigo-600">
+                    <td className="py-2.5 px-4">
+                      <div className="flex items-center gap-2.5">
+                        <div className="w-8 h-8 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center text-[10px] font-bold text-indigo-600">
                           {user?.name?.charAt(0) || "?"}
                         </div>
                         <div>
@@ -142,24 +142,24 @@ export default function LeavePage() {
                         </div>
                       </div>
                     </td>
-                    <td className="py-3.5 px-4 hidden sm:table-cell">
-                      <p className="font-semibold text-slate-700 mb-0.5">{item.type}</p>
-                      <p className="text-[10px] text-slate-400 font-medium uppercase tracking-tight">{item.totalDays || "3"} Hari Cuti</p>
+                    <td className="py-2.5 px-4 hidden sm:table-cell">
+                      <p className="font-bold text-slate-700 leading-tight mb-0.5">{item.type}</p>
+                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-tight">{item.totalDays || "3"} Hari Cuti</p>
                     </td>
-                    <td className="py-3.5 px-4 hidden md:table-cell text-xs text-slate-500 max-w-[200px] truncate">
+                    <td className="py-2.5 px-4 hidden md:table-cell text-[11px] text-slate-500 max-w-[200px] truncate leading-tight">
                       {item.description}
                     </td>
-                    <td className="py-3.5 px-4 text-center">
-                      <span className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-lg text-[10px] font-bold border uppercase tracking-widest bg-transparent ${sc.text} ${sc.border === 'border-slate-200' ? 'border-slate-300' : sc.border}`}>
+                    <td className="py-2.5 px-4 text-center">
+                      <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-lg text-[10px] font-bold border uppercase tracking-widest bg-transparent ${sc.text} ${sc.border === 'border-slate-200' ? 'border-slate-300' : sc.border}`}>
                         {item.status}
                       </span>
                     </td>
-                    <td className="py-3.5 px-6 text-right">
-                        <div className="flex items-center justify-end gap-1.5 transition-opacity">
+                    <td className="py-2.5 px-4 text-right">
+                        <div className="flex items-center justify-end gap-1 transition-opacity">
                             {item.status === "pending" ? (
                                 <button 
                                     onClick={() => setSelectedApprovalItem(item)}
-                                    className="px-3 py-1.5 text-[10px] font-bold text-indigo-600 hover:text-white bg-indigo-50 hover:bg-indigo-600 rounded-lg transition-colors border border-indigo-100 hover:border-indigo-600 shadow-sm"
+                                    className="px-3 py-1.5 text-[10px] font-bold text-indigo-600 hover:text-white bg-indigo-50 hover:bg-indigo-600 rounded-lg transition-colors border border-indigo-100 hover:border-indigo-600 "
                                 >
                                     Proses Form
                                 </button>
@@ -167,13 +167,13 @@ export default function LeavePage() {
                                 <>
                                     <button 
                                         onClick={() => openPDFPreview(item)}
-                                        className="p-2 text-slate-400 hover:text-indigo-600 transition-colors bg-white hover:bg-indigo-50 border border-slate-100 hover:border-indigo-100 rounded-lg shadow-sm"
+                                        className="p-2 text-slate-400 hover:text-indigo-600 transition-colors bg-white hover:bg-indigo-50 border border-slate-100 hover:border-indigo-100 rounded-lg "
                                         title="Download PDF"
                                     >
                                         <Printer className="w-3.5 h-3.5" />
                                     </button>
                                     <button 
-                                        className="p-2 text-slate-400 hover:text-slate-600 transition-colors bg-white hover:bg-slate-50 border border-slate-100 rounded-lg shadow-sm"
+                                        className="p-2 text-slate-400 hover:text-slate-600 transition-colors bg-white hover:bg-slate-50 border border-slate-100 rounded-lg "
                                         title="View Details"
                                     >
                                         <Search className="w-3.5 h-3.5" />
@@ -222,7 +222,7 @@ export default function LeavePage() {
             </button>
             <button
               onClick={() => setIsApplyModalOpen(false)}
-              className="px-5 py-2.5 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-all shadow-sm"
+              className="px-5 py-2.5 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-all "
             >
               Kirim Pengajuan
             </button>
@@ -232,7 +232,7 @@ export default function LeavePage() {
         <div className="space-y-4">
           <div className="space-y-1.5">
             <label className="text-xs font-medium text-slate-700">Kategori Pengajuan</label>
-            <select className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 transition-all font-medium appearance-none shadow-sm">
+            <select className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 transition-all font-medium appearance-none ">
               <option value="">Pilih Kategori</option>
               {leaveTypes.map(type => (
                 <option key={type.id} value={type.id}>{type.name}</option>
@@ -245,14 +245,14 @@ export default function LeavePage() {
               <label className="text-xs font-medium text-slate-700">Tanggal Mulai</label>
               <input
                 type="date"
-                className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 transition-all font-medium shadow-sm"
+                className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 transition-all font-medium "
               />
             </div>
             <div className="space-y-1.5">
               <label className="text-xs font-medium text-slate-700">Tanggal Selesai</label>
               <input
                 type="date"
-                className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 transition-all font-medium shadow-sm"
+                className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 transition-all font-medium "
               />
             </div>
           </div>
@@ -262,7 +262,7 @@ export default function LeavePage() {
             <textarea
               rows={3}
               placeholder="Berikan detail alasan pengajuan..."
-              className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 transition-all resize-none font-medium shadow-sm"
+              className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 transition-all resize-none font-medium "
             ></textarea>
           </div>
         </div>

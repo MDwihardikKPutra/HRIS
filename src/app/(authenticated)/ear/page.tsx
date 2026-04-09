@@ -53,14 +53,14 @@ export default function EARPage() {
           <h1 className="text-xl md:text-2xl font-semibold text-slate-800 tracking-tight">Executive Report (EAR)</h1>
           <p className="text-sm font-medium text-slate-500 mt-1">Monitoring Rencana & Realisasi Kerja Karyawan</p>
         </div>
-        <button className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 text-slate-600 font-medium text-xs rounded-xl hover:bg-slate-50 transition-colors shadow-sm self-start sm:self-center">
+        <button className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 text-slate-600 font-medium text-xs rounded-xl hover:bg-slate-50 transition-colors  self-start sm:self-center">
           <Printer className="w-3.5 h-3.5" />
           Cetak Laporan
         </button>
       </div>
 
       {/* Filter Bar (Light Mode) */}
-      <div className="bg-white rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)] border border-slate-100 p-4">
+      <div className="bg-white rounded-xl  border border-slate-100 p-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
           {/* Month Filter */}
           <div className="space-y-1.5">
@@ -71,7 +71,7 @@ export default function EARPage() {
               type="month" 
               value={selectedMonth}
               onChange={(e) => setSelectedMonth(e.target.value)}
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm text-slate-700 focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium shadow-sm"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm text-slate-700 focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium "
             />
           </div>
 
@@ -83,7 +83,7 @@ export default function EARPage() {
             <select 
               value={selectedUser}
               onChange={(e) => setSelectedUser(e.target.value)}
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm text-slate-700 focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium shadow-sm appearance-none"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm text-slate-700 focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium  appearance-none"
             >
               <option value="">Semua User</option>
               {users.map(u => (
@@ -100,7 +100,7 @@ export default function EARPage() {
             <select 
               value={selectedProject}
               onChange={(e) => setSelectedProject(e.target.value)}
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm text-slate-700 focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium shadow-sm appearance-none"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm text-slate-700 focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium  appearance-none"
             >
               <option value="">Semua Project</option>
               {projects.map(p => (
@@ -121,7 +121,7 @@ export default function EARPage() {
                 placeholder="Cari aktivitas atau nomor..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-2 text-sm text-slate-700 focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium shadow-sm"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-2 text-sm text-slate-700 focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium "
               />
             </div>
           </div>
@@ -153,11 +153,11 @@ export default function EARPage() {
         
         {/* Compact Stats */}
         <div className="flex items-center gap-3 pb-3">
-             <div className="px-3 py-1.5 rounded-lg bg-indigo-50 border border-indigo-100 text-xs font-bold text-indigo-700 flex items-center gap-2 shadow-sm">
+             <div className="px-3 py-1.5 rounded-lg bg-indigo-50 border border-indigo-100 text-xs font-bold text-indigo-700 flex items-center gap-2 ">
                  <span>Rencana</span>
                  <span className="bg-white px-2 py-0.5 rounded text-indigo-600 border border-indigo-50">{filteredPlans.length}</span>
              </div>
-             <div className="px-3 py-1.5 rounded-lg bg-emerald-50 border border-emerald-100 text-xs font-bold text-emerald-700 flex items-center gap-2 shadow-sm">
+             <div className="px-3 py-1.5 rounded-lg bg-emerald-50 border border-emerald-100 text-xs font-bold text-emerald-700 flex items-center gap-2 ">
                  <span>Realisasi</span>
                  <span className="bg-white px-2 py-0.5 rounded text-emerald-600 border border-emerald-50">{filteredRealizations.length}</span>
              </div>
@@ -165,17 +165,17 @@ export default function EARPage() {
       </div>
 
       {/* Main Content Table (Geometric & Compact) */}
-      <div className="bg-white rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)] border border-slate-100 overflow-hidden">
+      <div className="bg-white rounded-xl  border border-slate-100 overflow-hidden">
         <div className="overflow-x-auto scrollbar-hide">
           {activeTab === "plans" ? (
             <table className="w-full text-xs">
               <thead>
                 <tr className="bg-slate-50/50 border-b border-slate-100 font-semibold text-slate-500 uppercase tracking-wider text-[10px]">
-                  <th className="px-6 py-3.5 text-left">Tanggal & Waktu</th>
-                  <th className="px-4 py-3.5 text-left">Karyawan</th>
-                  <th className="px-4 py-3.5 text-left">Aktivitas / Nomor</th>
-                  <th className="px-4 py-3.5 text-left hidden md:table-cell">Project</th>
-                  <th className="px-6 py-3.5 text-right">Opsi</th>
+                  <th className="px-4 py-2.5 text-left font-bold">Waktu</th>
+                  <th className="px-4 py-2.5 text-left font-bold">Karyawan</th>
+                  <th className="px-4 py-2.5 text-left font-bold">Aktivitas</th>
+                  <th className="px-4 py-2.5 text-left hidden md:table-cell font-bold">Project</th>
+                  <th className="px-4 py-2.5 text-right font-bold">Opsi</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-50">
@@ -188,40 +188,40 @@ export default function EARPage() {
 
                     return (
                       <tr key={plan.id} className="hover:bg-slate-50/50 transition-colors group">
-                        <td className="px-6 py-3.5 whitespace-nowrap">
-                          <p className="font-semibold text-slate-800 mb-0.5">
-                            {new Date(plan.planDate).toLocaleDateString("id-ID", { day: 'numeric', month: 'short', year: 'numeric' })}
+                        <td className="px-4 py-2 whitespace-nowrap">
+                          <p className="font-bold text-slate-800 text-[11px] mb-0.5 leading-tight">
+                            {new Date(plan.planDate).toLocaleDateString("id-ID", { day: 'numeric', month: 'short' })}
                           </p>
-                          <span className={`inline-flex px-1.5 py-0.5 rounded text-[10px] font-bold border uppercase tracking-widest ${
+                          <span className={`inline-flex px-1 py-0.5 rounded text-[9px] font-bold border uppercase tracking-widest ${
                             isLate ? 'bg-red-50 text-red-600 border-red-100' : 'bg-emerald-50 text-emerald-600 border-emerald-100'
                           }`}>
-                            {createdDate.toLocaleTimeString("id-ID", { hour: '2-digit', minute: '2-digit' })} {isLate ? '(Telat)' : ''}
+                            {createdDate.toLocaleTimeString("id-ID", { hour: '2-digit', minute: '2-digit' })} {isLate ? '(TLT)' : ''}
                           </span>
                         </td>
-                        <td className="px-4 py-3.5 whitespace-nowrap">
-                          <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-[10px] font-bold text-indigo-600 shrink-0">
+                        <td className="px-4 py-2 whitespace-nowrap">
+                          <div className="flex items-center gap-2">
+                            <div className="w-7 h-7 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center text-[10px] font-bold text-indigo-600 shrink-0">
                                 {user?.name?.charAt(0) || "?"}
                             </div>
                             <div>
-                                <p className="font-semibold text-slate-800 leading-none mb-1">{user?.name}</p>
-                                <p className="text-[10px] text-slate-400 font-medium">{user?.position}</p>
+                                <p className="font-bold text-slate-800 leading-none mb-0.5 text-[11px]">{user?.name}</p>
+                                <p className="text-[9px] text-slate-400 font-bold uppercase">{user?.position}</p>
                             </div>
                           </div>
                         </td>
-                        <td className="px-4 py-3.5">
-                          <div className="font-semibold text-slate-700 block truncate max-w-[200px] lg:max-w-xs">{plan.activities}</div>
-                          <div className="text-[10px] text-slate-400 font-sans mt-0.5">#{plan.planNumber}</div>
+                        <td className="px-4 py-2">
+                          <div className="font-bold text-slate-700 block truncate max-w-[180px] text-[11px] leading-tight">{plan.activities}</div>
+                          <div className="text-[9px] text-slate-400 font-bold font-sans">#{plan.planNumber}</div>
                         </td>
-                        <td className="px-4 py-3.5 whitespace-nowrap hidden md:table-cell">
+                        <td className="px-4 py-2 whitespace-nowrap hidden md:table-cell">
                           {project ? (
-                            <span className="px-2 py-1 bg-purple-50 text-purple-600 rounded-lg text-xs font-bold border border-purple-100 shadow-sm">
+                            <span className="px-1.5 py-0.5 bg-slate-50 text-slate-600 rounded-md text-[10px] font-bold border border-slate-200 ">
                               {project.code}
                             </span>
-                          ) : <span className="text-slate-400 text-xs font-bold">-</span>}
+                          ) : <span className="text-slate-400 text-[10px] font-bold">-</span>}
                         </td>
-                        <td className="px-6 py-3.5 whitespace-nowrap text-right">
-                          <button className="p-2 bg-white hover:bg-slate-50 border border-slate-100 rounded-lg text-slate-400 hover:text-indigo-600 transition-colors shadow-sm">
+                        <td className="px-4 py-2 whitespace-nowrap text-right">
+                          <button className="p-1.5 bg-white hover:bg-slate-50 border border-slate-100 rounded-lg text-slate-400 hover:text-indigo-600 transition-colors ">
                             <Eye className="w-3.5 h-3.5" />
                           </button>
                         </td>
@@ -241,11 +241,11 @@ export default function EARPage() {
             <table className="w-full text-xs">
               <thead>
                 <tr className="bg-slate-50/50 border-b border-slate-100 font-semibold text-slate-500 uppercase tracking-wider text-[10px]">
-                  <th className="px-6 py-3.5 text-left">Tanggal & Progress</th>
-                  <th className="px-4 py-3.5 text-left">Karyawan</th>
-                  <th className="px-4 py-3.5 text-left">Aktivitas / Nomor</th>
-                  <th className="px-4 py-3.5 text-left hidden md:table-cell">Project</th>
-                  <th className="px-6 py-3.5 text-right">Opsi</th>
+                  <th className="px-4 py-2.5 text-left font-bold">Progress</th>
+                  <th className="px-4 py-2.5 text-left font-bold">Karyawan</th>
+                  <th className="px-4 py-2.5 text-left font-bold">Aktivitas</th>
+                  <th className="px-4 py-2.5 text-left hidden md:table-cell font-bold">Project</th>
+                  <th className="px-4 py-2.5 text-right font-bold">Opsi</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-50">
@@ -256,44 +256,44 @@ export default function EARPage() {
 
                     return (
                       <tr key={real.id} className="hover:bg-slate-50/50 transition-colors group">
-                        <td className="px-6 py-3.5 whitespace-nowrap">
-                          <p className="font-semibold text-slate-800 mb-1.5">
-                            {new Date(real.realizationDate).toLocaleDateString("id-ID", { day: 'numeric', month: 'short', year: 'numeric' })}
+                        <td className="px-4 py-2 whitespace-nowrap">
+                          <p className="font-bold text-slate-800 text-[11px] mb-1 leading-tight">
+                            {new Date(real.realizationDate).toLocaleDateString("id-ID", { day: 'numeric', month: 'short' })}
                           </p>
-                          <div className="flex flex-col gap-1 w-24">
-                            <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                          <div className="flex flex-col gap-0.5 w-20">
+                            <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
                               <div 
                                 className="h-full bg-emerald-500 rounded-full" 
                                 style={{ width: `${real.progress}%` }}
                               />
                             </div>
-                            <span className="text-[12px] font-black text-emerald-600 uppercase tracking-widest">{real.progress}% Selesai</span>
+                            <span className="text-[9px] font-black text-emerald-600 uppercase tracking-widest">{real.progress}% SLSE</span>
                           </div>
                         </td>
-                        <td className="px-4 py-3.5 whitespace-nowrap">
-                           <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-[10px] font-bold text-indigo-600 shrink-0">
+                        <td className="px-4 py-2 whitespace-nowrap">
+                           <div className="flex items-center gap-2">
+                            <div className="w-7 h-7 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center text-[10px] font-bold text-indigo-600 shrink-0">
                                 {user?.name?.charAt(0) || "?"}
                             </div>
                             <div>
-                                <p className="font-semibold text-slate-800 leading-none mb-1">{user?.name}</p>
-                                <p className="text-[10px] text-slate-400 font-medium">{user?.position}</p>
+                                <p className="font-bold text-slate-800 leading-none mb-0.5 text-[11px]">{user?.name}</p>
+                                <p className="text-[9px] text-slate-400 font-bold uppercase">{user?.position}</p>
                             </div>
                           </div>
                         </td>
-                        <td className="px-4 py-3.5">
-                          <div className="font-semibold text-slate-700 block truncate max-w-[200px] lg:max-w-xs">{real.activities}</div>
-                          <div className="text-[10px] text-slate-400 font-sans mt-0.5">#{real.realizationNumber}</div>
+                        <td className="px-4 py-2">
+                          <div className="font-bold text-slate-700 block truncate max-w-[180px] text-[11px] leading-tight">{real.activities}</div>
+                          <div className="text-[9px] text-slate-400 font-bold font-sans">#{real.realizationNumber}</div>
                         </td>
-                        <td className="px-4 py-3.5 whitespace-nowrap hidden md:table-cell">
+                        <td className="px-4 py-2 whitespace-nowrap hidden md:table-cell">
                           {project ? (
-                            <span className="px-2 py-1 bg-purple-50 text-purple-600 rounded-lg text-xs font-bold border border-purple-100 shadow-sm">
+                            <span className="px-1.5 py-0.5 bg-slate-50 text-slate-600 rounded-md text-[10px] font-bold border border-slate-200 ">
                               {project.code}
                             </span>
-                          ) : <span className="text-slate-400 text-xs font-bold">-</span>}
+                          ) : <span className="text-slate-400 text-[10px] font-bold">-</span>}
                         </td>
-                        <td className="px-6 py-3.5 whitespace-nowrap text-right">
-                          <button className="p-2 bg-white hover:bg-slate-50 border border-slate-100 rounded-lg text-slate-400 hover:text-indigo-600 transition-colors shadow-sm">
+                        <td className="px-4 py-2 whitespace-nowrap text-right">
+                          <button className="p-1.5 bg-white hover:bg-slate-50 border border-slate-100 rounded-lg text-slate-400 hover:text-indigo-600 transition-colors ">
                             <Eye className="w-3.5 h-3.5" />
                           </button>
                         </td>
@@ -314,7 +314,7 @@ export default function EARPage() {
       </div>
 
       {/* Info Box - Lightened and Styled */}
-      <div className="bg-indigo-50 border border-indigo-100 rounded-xl p-4 flex gap-3 shadow-sm">
+      <div className="bg-indigo-50 border border-indigo-100 rounded-xl p-4 flex gap-3 ">
         <Info className="w-5 h-5 text-indigo-500 mt-0.5 shrink-0" />
         <div className="text-xs text-indigo-900 leading-relaxed font-medium">
           <p className="font-bold text-indigo-800 mb-1">Panduan Pemantauan EAR:</p>

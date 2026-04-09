@@ -50,7 +50,7 @@
 }
 
 html {
-  font-size: 106.25%; /* Scales 16px to 17px (+1px) */
+  font-size: 100%; /* Default 16px */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

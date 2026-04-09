@@ -3,7 +3,7 @@
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Fingerprint, User, Users, Eye, EyeOff, Globe, Shield, ShieldCheck } from "lucide-react";
+import { Lock, User, ShieldCheck, ArrowRight, Loader2, Building, Eye, EyeOff, Info } from "lucide-react";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -25,7 +25,7 @@ export default function LoginPage() {
     });
 
     if (result?.error) {
-      setError("Email atau password salah.");
+      setError("Incorrect email or password.");
       setLoading(false);
     } else {
       router.push("/dashboard");
@@ -47,7 +47,7 @@ export default function LoginPage() {
     });
 
     if (result?.error) {
-      setError("Demo login gagal.");
+      setError("Demo login failed.");
       setLoading(false);
     } else {
       router.push("/dashboard");
@@ -56,152 +56,159 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-[100dvh] bg-[#f8fafc] flex items-center justify-center p-4 md:p-6 lg:p-8 selection:bg-slate-200">
-      {/* Background decorations - Subtle Geometric Pattern */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none opacity-[0.06]">
-        <div className="absolute top-0 right-0 w-[45dvw] h-[45dvw] border-l border-b border-indigo-600 translate-x-1/3 -translate-y-1/3 rounded-full" />
-        <div className="absolute bottom-0 left-0 w-[35dvw] h-[35dvw] border-r border-t border-indigo-600 -translate-x-1/3 translate-y-1/3 rotate-12" />
-        <div className="absolute top-1/2 left-1/4 w-full h-px bg-gradient-to-r from-transparent via-indigo-600 to-transparent rotate-45" />
+    <div className="flex min-h-screen w-full bg-white font-sans text-slate-800">
+      
+      {/* LEFT SECTION - IMAGE */}
+      <div className="hidden lg:flex w-1/2 min-h-screen relative bg-black flex-col justify-between p-12">
+        <img
+          src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2069&auto=format&fit=crop"
+          alt="Office space"
+          className="absolute inset-0 w-full h-full object-cover opacity-80"
+        />
+        
+        {/* Top Logo */}
+        <div className="relative z-10 flex items-center">
+          <span className="text-white font-bold text-2xl tracking-tighter">HRIS Next</span>
+        </div>
+
+        {/* Bottom Text */}
+        <div className="relative z-10 mb-8">
+          <h1 className="text-white text-5xl font-bold mb-4 tracking-tight leading-tight">
+            Portal Manajemen<br/>SDM Terpadu
+          </h1>
+          <p className="text-white/90 text-[15px] font-medium mb-6">
+            Tingkatkan efisiensi pengelolaan data karyawan, persetujuan<br/>operasional, dan payroll dalam satu platform.
+          </p>
+          <div className="flex gap-2 items-center">
+            <div className="w-8 h-1.5 bg-white rounded-full"></div>
+            <div className="w-1.5 h-1.5 bg-white/50 rounded-full"></div>
+            <div className="w-1.5 h-1.5 bg-white/50 rounded-full"></div>
+          </div>
+        </div>
       </div>
 
-      <div className="relative z-10 w-full max-w-6xl flex flex-col md:flex-row bg-white rounded-[2rem] overflow-hidden shadow-[0_25px_50px_-12px_rgba(79,70,229,0.08)] border border-slate-100">
-        {/* Left Section: Sign In Form */}
-        <div className="w-full md:w-[48%] flex flex-col justify-center px-8 sm:px-12 md:px-16 lg:px-24 py-12 md:py-20 lg:py-24">
-          <div className="mb-10">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-10 h-10 bg-indigo-600 flex items-center justify-center rounded-xl shadow-lg shadow-indigo-100">
-                <ShieldCheck className="w-6 h-6 text-white" />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-xl font-bold tracking-tight text-slate-900">HRIS Next</span>
-                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Enterprise Portal</span>
-              </div>
+      {/* RIGHT SECTION - FORM */}
+      <div className="w-full lg:w-1/2 min-h-screen flex items-center justify-center relative bg-white px-6 py-12">
+        
+        {/* Top Right "Support" Pill */}
+        <div className="absolute top-8 right-8 hidden md:block">
+          <button className="bg-black text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-gray-800 transition-colors">
+            Pusat Bantuan
+          </button>
+        </div>
+
+        {/* Main Form Center Wrapper */}
+        <div className="w-full max-w-md">
+          {/* Titles */}
+          <h2 className="text-[#151522] text-3xl font-bold mb-2 tracking-tight">
+            Selamat Datang!
+          </h2>
+          <p className="text-[#92929D] text-sm mb-6 font-medium">
+            Silakan masuk menggunakan akun perusahaan Anda
+          </p>
+
+          {/* Demo Alert Box */}
+          <div className="mb-6 p-4 bg-indigo-50/80 border border-indigo-100 rounded-xl flex gap-3 items-start">
+            <div className="mt-0.5 text-indigo-500 shrink-0">
+              <Info className="w-5 h-5" />
             </div>
-            <h1 className="text-4xl font-bold text-slate-900 tracking-tighter leading-tight uppercase">Log In To<br /><span className="text-indigo-600">Your HR Portal</span></h1>
-            <p className="text-slate-500 mt-4 text-sm font-medium">Sistem manajemen SDM terpadu untuk efisiensi maksimal.</p>
+            <div className="text-[13px] font-medium text-indigo-900 leading-relaxed">
+               Anda sedang mengakses versi <strong>Demo HRIS</strong> (Human Resource Integration System). Ini adalah ruang lingkup demonstrasi untuk tujuan pengujian. Beberapa fitur operasional mungkin dibatasi, dan data yang dimasukkan tidak akan tersimpan secara permanen.
+            </div>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-6">
             {error && (
-              <div className="p-4 bg-red-50 border border-red-100 rounded-xl text-red-900 text-[11px] font-bold uppercase tracking-wide animate-in fade-in slide-in-from-top-2">
+              <div className="p-3 bg-red-100 text-red-700 rounded-lg text-sm font-medium">
                 {error}
               </div>
             )}
 
+            {/* Email Field */}
             <div className="space-y-2">
-              <label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-1">Work Email</label>
-              <div className="relative group">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all placeholder-slate-300 font-bold"
-                  placeholder="name@company.com"
-                  required
-                />
-                <User className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-indigo-500 transition-colors" />
-              </div>
+              <label className="text-[#696974] text-xs font-semibold tracking-wide uppercase">Email Perusahaan</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                placeholder="nama@perusahaan.com"
+                className="w-full p-3.5 border border-gray-300 rounded-lg text-sm text-gray-800 focus:outline-none focus:border-black focus:ring-1 focus:ring-black placeholder-gray-400"
+              />
             </div>
 
+            {/* Password Field */}
             <div className="space-y-2">
-              <div className="flex items-center justify-between ml-1">
-                <label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Password</label>
-                <a href="#" className="text-[11px] font-bold text-slate-400 hover:text-indigo-600 transition-colors uppercase tracking-widest">Forgot?</a>
-              </div>
-              <div className="relative group">
+              <label className="text-[#696974] text-xs font-semibold tracking-wide uppercase">Kata Sandi</label>
+              <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all placeholder-slate-300 font-bold"
-                  placeholder="••••••••"
                   required
+                  placeholder="••••••••"
+                  className="w-full p-3.5 border border-gray-300 rounded-lg text-sm text-gray-800 focus:outline-none focus:border-black focus:ring-1 focus:ring-black placeholder-gray-400 tracking-widest"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-12 top-1/2 -translate-y-1/2 text-slate-300 hover:text-indigo-600 transition-colors"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
-                <Shield className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-indigo-500 transition-colors" />
               </div>
             </div>
 
+            {/* Remember Me & Forgot Password */}
+            <div className="flex items-center justify-between text-xs pt-1">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" className="w-4 h-4 rounded border-gray-300 cursor-pointer" defaultChecked />
+                <span className="text-gray-600 font-medium">Ingat Saya</span>
+              </label>
+              <a href="#" className="font-medium text-gray-400 hover:text-black transition-colors">
+                Lupa Kata Sandi?
+              </a>
+            </div>
+
+            {/* Login Button */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-4.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl transition-all duration-300 active:scale-[0.98] disabled:opacity-50 text-[12px] uppercase tracking-[0.2em] shadow-xl shadow-indigo-200 mt-2"
+              className="w-full bg-[#1A1A1A] hover:bg-black text-white font-medium rounded-lg py-3.5 text-sm transition-colors mt-4 flex items-center justify-center gap-2"
             >
-              {loading ? "Authenticating..." : "Sign in to Dashboard"}
+              {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
+              Masuk Eksekutif
             </button>
           </form>
 
-          {/* Quick Demo Access */}
-          <div className="mt-12">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="h-px bg-slate-100 flex-1" />
-              <span className="text-[11px] font-bold text-slate-300 uppercase tracking-[0.3em]">Quick Access</span>
-              <div className="h-px bg-slate-100 flex-1" />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <button
-                onClick={() => demoLogin("admin")}
-                className="flex items-center justify-center gap-3 h-12 border border-slate-200 rounded-xl bg-white hover:bg-indigo-50 hover:border-indigo-200 transition-all group font-bold"
-              >
-                <ShieldCheck className="w-4 h-4 text-slate-400 group-hover:text-indigo-600" />
-                <span className="text-[11px] text-slate-400 group-hover:text-indigo-600 uppercase tracking-widest">Admin</span>
-              </button>
-              <button
-                onClick={() => demoLogin("user")}
-                className="flex items-center justify-center gap-3 h-12 border border-slate-200 rounded-xl bg-white hover:bg-indigo-50 hover:border-indigo-200 transition-all group font-bold"
-              >
-                <Users className="w-4 h-4 text-slate-400 group-hover:text-indigo-600" />
-                <span className="text-[11px] text-slate-400 group-hover:text-indigo-600 uppercase tracking-widest">Employee</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Right Section: Hero Part */}
-        <div className="hidden md:flex flex-1 relative bg-indigo-600 p-12 lg:p-20 overflow-hidden">
-          {/* Hero Decoration */}
-          <div className="absolute top-0 right-0 w-full h-full">
-            <div className="absolute top-[10%] right-[10%] w-[32dvw] h-[32dvw] bg-white/[0.04] border border-white/[0.08] rounded-[4rem] rotate-12" />
-            <div className="absolute bottom-[20%] left-[20%] w-[22dvw] h-[22dvw] bg-white/[0.03] border border-white/[0.06] rounded-full" />
-            {/* Soft geometric lines */}
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]" />
+          {/* Divider */}
+          <div className="flex items-center justify-center my-8">
+            <div className="h-px bg-gray-200 flex-1"></div>
+            <span className="px-3 text-xs text-gray-400 font-medium uppercase tracking-wider">Akses Demo</span>
+            <div className="h-px bg-gray-200 flex-1"></div>
           </div>
 
-          <div className="relative z-10 flex flex-col justify-between w-full h-full">
-            <div className="flex items-center gap-2.5">
-              <Globe className="w-5 h-5 text-indigo-200" />
-              <span className="text-[11px] font-bold text-white/50 uppercase tracking-[0.4em]">Enterprise Edition</span>
-            </div>
-
-            <div className="space-y-6 max-w-sm">
-              <div className="w-20 h-1 bg-white/30 rounded-full" />
-              <h2 className="text-5xl font-bold text-white tracking-tighter leading-[0.9] uppercase">
-                Modernize<br />Your HR<br /><span className="text-white/60">Workflows</span>
-              </h2>
-              <p className="text-indigo-100/60 text-sm leading-relaxed font-medium">
-                Solusi manajemen personil generasi baru yang dirancang untuk kecepatan, keamanan, dan pengalaman pengguna yang luar biasa.
-              </p>
-            </div>
-
-            <div className="flex items-center gap-4">
-                <div className="flex -space-x-2">
-                    {[1,2,3,4].map(i => (
-                        <div key={i} className="w-8 h-8 rounded-full bg-indigo-400 border-2 border-indigo-600" />
-                    ))}
-                </div>
-                <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest">Trusted by 500+ Teams</p>
-            </div>
+          {/* Dummy Login Buttons */}
+          <div className="grid grid-cols-2 gap-4">
+            <button
+              onClick={() => demoLogin('admin')}
+              className="flex items-center justify-center gap-2 border border-gray-200 hover:bg-gray-50 text-gray-700 py-3 rounded-lg transition-colors text-xs font-semibold"
+            >
+              <ShieldCheck className="w-4 h-4 text-gray-400" />
+              Akun Admin
+            </button>
+            <button
+              onClick={() => demoLogin('user')}
+              className="flex items-center justify-center gap-2 border border-gray-200 hover:bg-gray-50 text-gray-700 py-3 rounded-lg transition-colors text-xs font-semibold"
+            >
+              <User className="w-4 h-4 text-gray-400" />
+              Akun Karyawan
+            </button>
           </div>
 
-          {/* Large Background Letter */}
-          <div className="absolute -bottom-20 -right-20 pointer-events-none select-none">
-            <span className="text-[400px] font-bold text-white/[0.03] leading-none tracking-tighter">PGE</span>
+          {/* Registration link at the very bottom */}
+          <div className="mt-12 text-center text-xs font-medium text-gray-500">
+            Belum memiliki akses? <a href="#" className="text-blue-600 font-bold hover:underline">Hubungi HRD</a>
           </div>
         </div>
       </div>

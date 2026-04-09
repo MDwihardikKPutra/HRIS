@@ -30,13 +30,13 @@ export default function WorkRealizationsPage() {
         <div className="flex items-center gap-2.5">
           <button
             onClick={() => setIsModalOpen(true)}
-            className="px-4 py-2 bg-white border border-slate-200 text-slate-600 font-medium text-xs rounded-xl hover:bg-slate-50 transition-colors shadow-sm"
+            className="px-4 py-2 bg-white border border-slate-200 text-slate-600 font-medium text-xs rounded-xl hover:bg-slate-50 transition-colors "
           >
             Export Log
           </button>
           <button
             onClick={() => setIsModalOpen(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs rounded-xl transition-colors shadow-sm"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs rounded-xl transition-colors "
           >
             <Plus className="w-3.5 h-3.5" />
             Lapor Realisasi
@@ -45,7 +45,7 @@ export default function WorkRealizationsPage() {
       </div>
 
       {/* Content table */}
-      <div className="bg-white border border-slate-100 rounded-xl overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.02)] mt-2">
+      <div className="bg-white border border-slate-100 rounded-xl overflow-hidden  mt-2">
         <div className="p-5 border-b border-slate-50 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <h2 className="text-base font-semibold text-slate-800">Daftar Capaian Harian</h2>
           <div className="relative group min-w-[300px]">
@@ -64,11 +64,11 @@ export default function WorkRealizationsPage() {
           <table className="w-full text-xs">
             <thead>
               <tr className="bg-slate-50/50 border-b border-slate-100 font-semibold text-slate-500 uppercase tracking-widest text-[10px]">
-                <th className="text-left py-3.5 px-6">Pelaksana</th>
-                <th className="text-left py-3.5 px-4">Proyek & Aktivitas</th>
-                <th className="text-left py-3.5 px-4 hidden md:table-cell">Kecepatan (Velocity)</th>
-                <th className="text-center py-3.5 px-4 whitespace-nowrap">Status</th>
-                <th className="text-right py-3.5 px-6">Opsi</th>
+                <th className="text-left py-2.5 px-4 font-bold">Pelaksana</th>
+                <th className="text-left py-2.5 px-4 font-bold">Proyek & Aktivitas</th>
+                <th className="text-left py-2.5 px-4 hidden md:table-cell font-bold">Velocity</th>
+                <th className="text-center py-2.5 px-4 whitespace-nowrap font-bold">Status</th>
+                <th className="text-right py-2.5 px-4 font-bold">Opsi</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50">
@@ -79,41 +79,41 @@ export default function WorkRealizationsPage() {
                 
                 return (
                   <tr key={wr.id} className="group hover:bg-slate-50/50 transition-colors">
-                    <td className="py-3.5 px-6">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center text-[10px] font-bold text-slate-600 border border-slate-200">
+                    <td className="py-2.5 px-4">
+                      <div className="flex items-center gap-2.5">
+                        <div className="w-7 h-7 rounded-lg bg-slate-100 flex items-center justify-center text-[10px] font-bold text-slate-600 border border-slate-200">
                           {user?.name?.charAt(0) || "?"}
                         </div>
                         <div>
-                          <p className="font-bold text-slate-800 leading-none mb-1">{user?.name || "-"}</p>
+                          <p className="font-bold text-slate-800 leading-none mb-0.5">{user?.name || "-"}</p>
                           <p className="text-[10px] text-slate-400 font-bold uppercase tracking-tight">{formatDate(wr.realizationDate)}</p>
                         </div>
                       </div>
                     </td>
-                    <td className="py-3.5 px-4">
+                    <td className="py-2.5 px-4">
                         <div className="flex flex-col">
-                            <span className="font-bold text-indigo-600 text-[12px] uppercase tracking-[0.1em] mb-0.5">{project?.name || "-"}</span>
-                            <span className="text-slate-600 font-semibold truncate max-w-[200px]">{wr.activities}</span>
+                            <span className="font-bold text-indigo-600 text-[10px] uppercase tracking-[0.1em] mb-0.5">{project?.name || "-"}</span>
+                            <span className="text-slate-600 font-bold text-[11px] truncate max-w-[200px] leading-tight">{wr.activities}</span>
                         </div>
                     </td>
-                    <td className="py-2.5 px-4 hidden md:table-cell">
-                        <div className="flex flex-col gap-1.5 w-32">
-                           <div className="flex items-center justify-between text-[10px] text-slate-400 font-medium">
-                               <span>Efficiency</span>
+                    <td className="py-2 px-4 hidden md:table-cell">
+                        <div className="flex flex-col gap-1 w-24">
+                           <div className="flex items-center justify-between text-[9px] text-slate-400 font-bold uppercase">
+                               <span>Eff.</span>
                                <span>{wr.progress}%</span>
                            </div>
-                           <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                           <div className="h-1 w-full bg-slate-100 rounded-full overflow-hidden">
                                <div className="h-full bg-indigo-500 rounded-full" style={{ width: `${wr.progress}%` }} />
                            </div>
                         </div>
                     </td>
-                    <td className="py-3.5 px-4 text-center font-bold">
-                      <span className={`inline-flex px-2 py-0.5 rounded-lg text-[12px] font-black uppercase tracking-wider border cursor-default ${sc.bg} ${sc.text} ${sc.border}`}>
+                    <td className="py-2.5 px-4 text-center font-bold">
+                      <span className={`inline-flex px-1.5 py-0.5 rounded-lg text-[10px] font-black uppercase tracking-wider border cursor-default ${sc.bg} ${sc.text} ${sc.border}`}>
                         {wr.status}
                       </span>
                     </td>
-                    <td className="py-3.5 px-6 text-right">
-                        <button className="p-2 text-slate-400 hover:text-indigo-600 transition-colors bg-white hover:bg-indigo-50 border border-slate-100 hover:border-indigo-100 rounded-lg shadow-sm font-bold text-[10px] uppercase">
+                    <td className="py-2.5 px-4 text-right">
+                        <button className="px-2 py-1 text-slate-400 hover:text-indigo-600 transition-colors bg-white hover:bg-indigo-50 border border-slate-100 hover:border-indigo-100 rounded-lg  font-bold text-[10px] uppercase">
                             Detail
                         </button>
                     </td>
@@ -133,7 +133,7 @@ export default function WorkRealizationsPage() {
         footer={
           <>
             <button onClick={() => setIsModalOpen(false)} className="px-5 py-2.5 text-xs font-medium text-slate-500 hover:text-slate-900 transition-colors">Batal</button>
-            <button onClick={() => setIsModalOpen(false)} className="px-5 py-2.5 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-all shadow-sm">Kirim Laporan</button>
+            <button onClick={() => setIsModalOpen(false)} className="px-5 py-2.5 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-all ">Kirim Laporan</button>
           </>
         }
       >
@@ -149,7 +149,7 @@ export default function WorkRealizationsPage() {
           </div>
           <div className="space-y-1.5">
             <label className="text-xs font-medium text-slate-700">Deskripsi Aktivitas</label>
-            <textarea rows={3} placeholder="Apa yang Anda kerjakan hari ini?" className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 transition-all resize-none shadow-sm"></textarea>
+            <textarea rows={3} placeholder="Apa yang Anda kerjakan hari ini?" className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 transition-all resize-none "></textarea>
           </div>
           <div className="space-y-1.5">
             <div className="flex items-center justify-between mb-1">

@@ -55,27 +55,27 @@ export default function Modal({
 
       {/* Modal Container: Flat, no shadow, clean border */}
       <div
-        className={`relative w-full ${sizeClasses[size]} bg-white border-2 border-slate-100 rounded-2xl overflow-hidden flex flex-col transition-all duration-300 scale-100 opacity-100 animate-in fade-in zoom-in-95`}
+        className={`relative w-full ${sizeClasses[size]} bg-white border-2 border-slate-100 rounded-xl overflow-hidden flex flex-col transition-all duration-300 scale-100 opacity-100 animate-in fade-in zoom-in-95`}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-white">
-          <h3 className="text-lg font-bold text-slate-800 tracking-tight">{title}</h3>
+        <div className="flex items-center justify-between px-5 py-3 border-b border-slate-100 bg-white">
+          <h3 className="text-base font-bold text-slate-800 tracking-tight">{title}</h3>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-xl text-slate-400 hover:text-red-500 hover:bg-red-50 transition-colors"
+            className="p-1 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 transition-colors"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
  
         {/* Content */}
-        <div className="flex-1 overflow-y-auto p-6 text-slate-600">
+        <div className="flex-1 overflow-y-auto p-5 text-slate-600">
           {children}
         </div>
  
         {/* Footer */}
         {footer ? (
-          <div className="px-6 py-4 border-t border-slate-100 bg-slate-50/20 flex justify-end gap-3">
+          <div className="px-5 py-3 border-t border-slate-100 bg-slate-50/20 flex justify-end gap-2.5">
             {footer}
           </div>
         ) : null}

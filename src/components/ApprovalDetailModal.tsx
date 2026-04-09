@@ -149,14 +149,14 @@ export default function ApprovalDetailModal({
       footer={
         <div className="flex justify-between items-center w-full">
           <div className="flex gap-2">
-            <button className="px-4 py-2.5 text-xs font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-all flex items-center gap-1.5 shadow-sm">
+            <button className="px-4 py-2 text-xs font-bold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-lg transition-all flex items-center gap-1.5 ">
               <FileText className="w-3.5 h-3.5" /> View Dokumen
             </button>
           </div>
           <div className="flex gap-2.5">
             <button
               onClick={onClose}
-              className="px-5 py-2.5 text-xs font-medium text-slate-600 bg-white hover:bg-slate-50 rounded-xl border border-slate-200 transition-colors shadow-sm"
+              className="px-4 py-2 text-xs font-bold text-slate-600 bg-white hover:bg-slate-50 rounded-lg border border-slate-200 transition-colors "
             >
               Tutup
             </button>
@@ -164,15 +164,15 @@ export default function ApprovalDetailModal({
               <>
                 <button
                   onClick={() => onReject(item.id, "")}
-                  className="px-5 py-2.5 text-xs font-bold text-red-600 bg-red-50 hover:bg-red-100 hover:text-red-700 rounded-xl transition-colors shadow-sm"
+                  className="px-4 py-2 text-xs font-bold text-red-600 bg-red-50 hover:bg-red-100 hover:text-red-700 rounded-lg transition-colors "
                 >
-                  Tolak (Decline)
+                  Tolak
                 </button>
                 <button
                   onClick={() => onApprove(item.id, "")}
-                  className="px-5 py-2.5 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-colors shadow-sm"
+                  className="px-4 py-2 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors "
                 >
-                  Setujui (Approve)
+                  Setujui
                 </button>
               </>
             )}
@@ -182,18 +182,18 @@ export default function ApprovalDetailModal({
     >
       <div className="space-y-5">
         {/* User Card */}
-        <div className="flex items-center gap-4 p-5 bg-white border border-slate-100 shadow-[0_1px_3px_rgba(0,0,0,0.02)] rounded-xl">
-          <div className="w-12 h-12 bg-indigo-50 flex items-center justify-center text-lg font-bold border border-indigo-100 rounded-xl text-indigo-600 shrink-0">
+        <div className="flex items-center gap-4 p-4 bg-white border border-slate-100 rounded-xl">
+          <div className="w-10 h-10 bg-indigo-50 flex items-center justify-center text-sm font-bold border border-indigo-100 rounded-lg text-indigo-600 shrink-0">
             {item.user?.name?.charAt(0) || "?"}
           </div>
           <div className="min-w-0">
-            <p className="text-sm font-bold text-slate-800 truncate">{item.user?.name}</p>
-            <p className="text-xs text-slate-500 font-medium truncate">{item.user?.position} • {item.user?.employeeId}</p>
-            <p className="text-[10px] text-indigo-500 font-bold mt-0.5 uppercase tracking-wider">{item.user?.department}</p>
+            <p className="text-xs font-bold text-slate-800 truncate">{item.user?.name}</p>
+            <p className="text-[10px] text-slate-400 font-bold truncate tracking-tight uppercase">{item.user?.position} • {item.user?.employeeId}</p>
+            <p className="text-[9px] text-indigo-500 font-bold mt-0.5 uppercase tracking-wider">{item.user?.department}</p>
           </div>
           <div className="ml-auto text-right">
-            <p className="text-[10px] text-slate-400 uppercase font-bold tracking-widest">Type Request</p>
-            <p className="text-sm font-bold text-indigo-600">{item.type}</p>
+            <p className="text-[9px] text-slate-400 uppercase font-bold tracking-widest">Type Request</p>
+            <p className="text-xs font-bold text-indigo-600">{item.type}</p>
           </div>
         </div>
 
@@ -203,20 +203,20 @@ export default function ApprovalDetailModal({
         </div>
 
         {/* Support Documents Placeholder */}
-        <div className="border border-slate-100 rounded-xl overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
-          <div className="px-5 py-3 bg-slate-50/50 border-b border-slate-50 flex items-center justify-between">
-            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Dokumen Lampiran</p>
-            <span className="text-[10px] font-bold py-0.5 px-2 bg-indigo-50 text-indigo-600 rounded-md">1 File</span>
+        <div className="border border-slate-100 rounded-xl overflow-hidden">
+          <div className="px-4 py-2 bg-slate-50/50 border-b border-slate-50 flex items-center justify-between">
+            <p className="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Dokumen Lampiran</p>
+            <span className="text-[9px] font-bold py-0.5 px-1.5 bg-indigo-50 text-indigo-600 rounded-md">1 File</span>
           </div>
-          <div className="p-4 bg-white flex items-center gap-4 group cursor-pointer hover:bg-slate-50/50 transition-colors">
-            <div className="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center text-red-500 border border-red-100">
-              <FileText className="w-5 h-5" />
+          <div className="p-3 bg-white flex items-center gap-3 group cursor-pointer hover:bg-slate-50/50 transition-colors">
+            <div className="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center text-red-500 border border-red-100">
+              <FileText className="w-4 h-4" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-semibold text-slate-800 truncate group-hover:text-indigo-600 transition-colors">lampiran_pengajuan_document.pdf</p>
-              <p className="text-[10px] text-slate-400 font-medium">PDF Document • 1.2 MB</p>
+              <p className="text-[11px] font-bold text-slate-800 truncate group-hover:text-indigo-600 transition-colors">lampiran_pengajuan_document.pdf</p>
+              <p className="text-[10px] text-slate-400 font-bold">PDF • 1.2 MB</p>
             </div>
-            <button className="text-[10px] font-bold text-indigo-600 hover:text-indigo-700 transition-opacity bg-indigo-50 px-3 py-1.5 rounded-lg border border-indigo-100 shadow-sm opacity-0 group-hover:opacity-100">
+            <button className="text-[9px] font-bold text-indigo-600 hover:text-indigo-700 transition-opacity bg-indigo-50 px-2 py-1 rounded-md border border-indigo-100 opacity-0 group-hover:opacity-100">
               PREVIEW
             </button>
           </div>
@@ -229,9 +229,9 @@ export default function ApprovalDetailModal({
               Catatan Admin (Opsional)
             </label>
             <textarea
-              rows={3}
+              rows={2}
               placeholder="Berikan catatan jika diperlukan..."
-              className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium resize-none shadow-sm"
+              className="w-full px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium resize-none"
             ></textarea>
           </div>
         )}

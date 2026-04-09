@@ -57,7 +57,7 @@ export default function PDFPreviewModal({
                  <FileText className="w-6 h-6" />
               </div>
               <div>
-                 <h3 className="text-lg font-black text-slate-800 tracking-tighter uppercase leading-none mb-1">PGE HRIS SYSTEM</h3>
+                 <h3 className="text-lg font-black text-slate-800 tracking-tighter uppercase leading-none mb-1">HRIS NEXT SYSTEM</h3>
                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Official Document Generator</p>
               </div>
            </div>
@@ -71,7 +71,7 @@ export default function PDFPreviewModal({
         <div className="bg-white border-2 border-slate-50 p-8 rounded-xl space-y-8 relative overflow-hidden">
             {/* Watermark */}
             <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none rotate-12 select-none">
-                <p className="text-8xl font-black text-slate-900 leading-none">PGE-SYSTEM</p>
+                <p className="text-8xl font-black text-slate-900 leading-none">HRIS-NEXT</p>
             </div>
 
             <div className="text-center space-y-1">
@@ -83,7 +83,7 @@ export default function PDFPreviewModal({
                 <div className="space-y-4">
                     <div>
                         <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1.5">Diterbitkan Untuk:</p>
-                        <p className="font-bold text-slate-800 text-sm">{itemData?.user?.name || itemData?.name || "Karyawan PGE"}</p>
+                        <p className="font-bold text-slate-800 text-sm">{itemData?.user?.name || itemData?.name || "Karyawan Lintas"}</p>
                         <p className="text-slate-500 font-medium">#{itemData?.user?.employeeId || "EM-001"}</p>
                     </div>
                     <div>

@@ -21,6 +21,16 @@ export default function AppShell({ children, user }: AppShellProps) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setNotificationsOpen(false);
+    };
+    if (notificationsOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [notificationsOpen]);
+
   return (
     <SessionProvider>
       <div className="min-h-screen" style={{ background: "var(--content-bg)" }}>
@@ -44,7 +54,7 @@ export default function AppShell({ children, user }: AppShellProps) {
             <div className="flex items-center gap-4">
               <button
                 onClick={() => setSidebarOpen(true)}
-                className="lg:hidden text-slate-500 hover:text-slate-900 transition-colors bg-white border border-slate-100 shadow-sm p-2 rounded-lg"
+                className="lg:hidden text-slate-500 hover:text-slate-900 transition-colors bg-white border border-slate-100 p-2 rounded-lg"
               >
                 <Menu className="w-5 h-5" />
               </button>
@@ -64,10 +74,10 @@ export default function AppShell({ children, user }: AppShellProps) {
                 {notificationsOpen && (
                   <>
                     <div className="fixed inset-0 z-40" onClick={() => setNotificationsOpen(false)} />
-                    <div className="absolute right-0 mt-2 w-80 bg-white border border-slate-100 z-50 rounded-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 origin-top-right shadow-[0_15px_35px_-5px_rgba(0,0,0,0.1)]">
-                      <div className="px-5 py-4 border-b border-slate-50 flex items-center justify-between bg-slate-50/50">
-                        <span className="text-xs font-semibold text-slate-900">Notifications</span>
-                        <span className="text-[10px] px-2 py-0.5 bg-indigo-50 text-indigo-600 rounded-lg font-bold">4 NEW</span>
+                    <div className="absolute right-0 mt-2 w-80 bg-white border border-slate-100 z-50 rounded-xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 origin-top-right">
+                      <div className="px-5 py-3 border-b border-slate-50 flex items-center justify-between bg-slate-50/50">
+                        <span className="text-xs font-bold text-slate-900">Notifikasi</span>
+                        <span className="text-[10px] px-2 py-0.5 bg-indigo-50 text-indigo-600 rounded-md font-black">4 BARU</span>
                       </div>
                       <div className="max-h-80 overflow-y-auto divide-y divide-slate-50">
                         {[
@@ -115,7 +125,7 @@ export default function AppShell({ children, user }: AppShellProps) {
           </header>
 
           {/* Page content */}
-          <main className="p-6">
+          <main className="p-4 lg:p-5">
             {children}
           </main>
         </div>
