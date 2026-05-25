@@ -4,13 +4,27 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard, ClipboardList, CheckCircle2, CalendarDays,
-  Plane, ShoppingCart, CreditCard, Users, FolderKanban,
-  FileText, ChevronLeft, ChevronRight, LogOut, X, Activity, Search,
-  BarChart3, BookOpen, Wallet, ChevronDown
+  Plane, ShoppingCart, Wallet,
+  Users, FolderKanban, Activity, BarChart3, BookOpen,
+  ChevronDown, ChevronUp, Banknote, LogOut,
+  Briefcase, Settings, FileText
 } from "lucide-react";
 import { signOut } from "next-auth/react";
-import { getPendingApprovalsCount } from "@/lib/data";
 import { useState } from "react";
+import { ROLE_ACCESS, UserRole } from "@/lib/data";
+
+interface MenuItem {
+  label: string;
+  href: string;
+  icon: React.ComponentType<{ className?: string }>;
+  badge?: number;
+}
+
+interface MenuSection {
+  title: string;
+  items: MenuItem[];
+  defaultOpen?: boolean;
+}
 
 interface SidebarProps {
   role: string;
@@ -22,83 +36,155 @@ interface SidebarProps {
   onToggleCollapse: () => void;
 }
 
-const menuSections = [
-  {
-    label: "Dashboard",
-    items: [
-      { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard, roles: ["admin", "user"] },
-    ],
-  },
-  {
-    label: "Administrasi",
-    items: [
-      { label: "Manajemen User", href: "/users", icon: Users, roles: ["admin"], moduleKey: "user" },
-      { label: "Daftar Cuti & Izin", href: "/leave", icon: CalendarDays, roles: ["admin", "user"], badgeKey: "leave", moduleKey: "leave-approval" },
-      { label: "Approval Pembayaran", href: "/finance", icon: Wallet, roles: ["admin", "user"], badgeKey: "finance", moduleKey: "payment-approval" },
-      { label: "Project Management", href: "/projects", icon: FolderKanban, roles: ["admin", "user"], moduleKey: "project-management" },
-      { label: "EAR", href: "/ear", icon: BarChart3, roles: ["admin", "user"], moduleKey: "ear" },
-      { label: "Dokumentasi", href: "/documentation", icon: BookOpen, roles: ["admin", "user"], moduleKey: "documentation" },
-    ],
-  },
-  {
-    label: "Modul",
-    items: [
-      { label: "Rencana Kerja", href: "/work/plans", icon: ClipboardList, roles: ["admin", "user"], moduleKey: "work-plan" },
-      { label: "Realisasi Kerja", href: "/work/realizations", icon: CheckCircle2, roles: ["admin", "user"], moduleKey: "work-realization" },
-      { label: "Cuti & Izin", href: "/leave", icon: CalendarDays, roles: ["admin", "user"], moduleKey: "leave" },
-      { label: "SPD", href: "/spd", icon: Plane, roles: ["admin", "user"], moduleKey: "spd" },
-      { label: "Pembelian", href: "/purchase", icon: ShoppingCart, roles: ["admin", "user"], moduleKey: "purchase" },
-      { label: "Pembayaran Vendor", href: "/vendor", icon: CreditCard, roles: ["admin", "user"], moduleKey: "vendor-payment" },
-    ],
-  },
-  {
-    label: "Fitur",
-    items: [
-      { label: "Activity Log", href: "/activity-log", icon: Activity, roles: ["admin", "user"] },
-    ],
-  },
-];
-
 export default function Sidebar({ role, userName, modules, open, collapsed, onClose, onToggleCollapse }: SidebarProps) {
   const pathname = usePathname();
-  const pendingCounts = getPendingApprovalsCount() as Record<string, number>;
-  const [expandedSections, setExpandedSections] = useState<string[]>(["Dashboard", "Administrasi", "Modul", "Fitur"]);
+  const userAccess = ROLE_ACCESS[role as UserRole];
+  const isFinance = userAccess?.canApprovePayment;
+  const isHR = userAccess?.canApproveLeave;
+  const isAdmin = role === "admin";
+
+  // Build the dynamic Beranda items based on core role
+  const berandaItems: MenuItem[] = [
+    { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  ];
+
+  if (isAdmin) {
+    berandaItems.push(
+      { label: "Karyawan", href: "/users", icon: Users },
+      { label: "Log Aktivitas", href: "/activity-log", icon: Activity }
+    );
+  } else if (isFinance) {
+    berandaItems.push(
+      { label: "Approval Pembayaran", href: "/finance", icon: Wallet },
+      { label: "Kelola Payroll", href: "/payroll", icon: Banknote }
+    );
+  } else if (isHR) {
+    berandaItems.push(
+      { label: "Daftar Cuti", href: "/leave", icon: CalendarDays },
+      { label: "Karyawan", href: "/users", icon: Users }
+    );
+  } else if (role === "project_manager") {
+    berandaItems.push(
+      { label: "Laporan EAR", href: "/ear", icon: BarChart3 },
+      { label: "Proyek", href: "/projects", icon: FolderKanban }
+    );
+  } else {
+    // Karyawan Biasa
+    berandaItems.push(
+      { label: "Slip Gaji", href: "/my-payroll", icon: Banknote },
+      { label: "Cuti & Izin", href: "/my-leave", icon: CalendarDays }
+    );
+  }
+
+  // Filter out items that have been moved to Beranda so they don't duplicate
+  const berandaHrefs = berandaItems.map(item => item.href);
+
+  const rawMenuSections: MenuSection[] = [
+    {
+      title: "Beranda",
+      defaultOpen: true,
+      items: berandaItems,
+    },
+    {
+      title: "Pekerjaan",
+      defaultOpen: true,
+      items: [
+        { label: "Rencana Kerja", href: "/work/plans", icon: ClipboardList },
+        { label: "Realisasi Kerja", href: "/work/realizations", icon: CheckCircle2 },
+        { label: "Laporan EAR", href: "/ear", icon: BarChart3 },
+      ].filter(item => !berandaHrefs.includes(item.href)),
+    },
+    {
+      title: "Pengajuan",
+      defaultOpen: true,
+      items: [
+        { label: "Cuti & Izin", href: "/my-leave", icon: CalendarDays },
+        { label: "SPD / Perjalanan", href: "/spd", icon: Plane },
+        { label: "Pembelian", href: "/purchase", icon: ShoppingCart },
+      ].filter(item => !berandaHrefs.includes(item.href)),
+    },
+    {
+      title: "Persetujuan",
+      defaultOpen: false,
+      items: [
+        { label: "Daftar Cuti", href: "/leave", icon: CalendarDays },
+        { label: "Approval Pembayaran", href: "/finance", icon: Wallet },
+        { label: "Kelola Payroll", href: "/payroll", icon: Banknote },
+      ].filter(item => !berandaHrefs.includes(item.href)),
+    },
+    {
+      title: "Pengaturan",
+      defaultOpen: false,
+      items: [
+        { label: "Karyawan", href: "/users", icon: Users },
+        { label: "Proyek", href: "/projects", icon: FolderKanban },
+      ].filter(item => !berandaHrefs.includes(item.href)),
+    },
+    ...(isAdmin ? [{
+      title: "Sistem",
+      defaultOpen: false,
+      items: [
+        { label: "Log Aktivitas", href: "/activity-log", icon: Activity },
+        { label: "Dokumentasi", href: "/documentation", icon: BookOpen },
+      ].filter(item => !berandaHrefs.includes(item.href)),
+    }] : []),
+  ];
+
+  // Remove empty sections
+  const menuSections = rawMenuSections.filter(section => section.items.length > 0);
+
+  const [expandedSections, setExpandedSections] = useState<string[]>(
+    menuSections.filter(s => s.defaultOpen).map(s => s.title)
+  );
 
   const toggleSection = (label: string) => {
     if (collapsed) return;
-    setExpandedSections(prev => 
-      prev.includes(label) 
-        ? prev.filter(s => s !== label) 
+    setExpandedSections(prev =>
+      prev.includes(label)
+        ? prev.filter(s => s !== label)
         : [...prev, label]
     );
   };
 
-  const hasAccess = (item: any) => {
-    if (role === "admin") return true; // Admin sees everything
-    if (modules.includes("all")) return true;
-
-    // Items with no moduleKey/moduleKeys are always visible (Dashboard, Activity Log)
-    if (!item.moduleKey && !item.moduleKeys) return true;
-
-    // Fixed default modules that everyone sees
-    const defaultModules = ["work-plan", "work-realization", "documentation"];
+  // Module access control
+  const hasAccess = (item: MenuItem): boolean => {
+    if (role === "admin") return true;
     
-    // Check single key
-    if (item.moduleKey && (defaultModules.includes(item.moduleKey) || modules.includes(item.moduleKey))) {
-        return true;
+    // Map href to role-based access config
+    const accessMap: Record<string, keyof typeof ROLE_ACCESS["hr"]> = {
+      "/leave": "canApproveLeave",
+      "/finance": "canApprovePayment",
+      "/payroll": "canManagePayroll",
+      "/users": "canManageUsers",
+      "/projects": "canManageProjects",
+      "/ear": "canViewEAR",
+      "/documentation": "canManageDocumentation",
+    };
+
+    const requiredPermission = accessMap[item.href];
+    if (requiredPermission) {
+      const userAccess = ROLE_ACCESS[role as UserRole];
+      return userAccess ? !!userAccess[requiredPermission] : false;
     }
 
-    // Check multiple keys (for grouped modules like Finance)
-    if (item.moduleKeys && item.moduleKeys.some((k: string) => modules.includes(k))) {
-        return true;
-    }
+    return true;
+  };
 
-    return false;
+  const isActive = (href: string): boolean => {
+    return pathname === href || pathname?.startsWith(href + "/");
+  };
+
+  const sectionIcons: Record<string, React.ComponentType<{ className?: string }>> = {
+    "Pekerjaan": Briefcase,
+    "Pengajuan": FileText,
+    "Persetujuan": CheckCircle2,
+    "Pengaturan": Settings,
+    "Sistem": Activity,
   };
 
   return (
     <>
-      {/* Mobile overlay */}
+      {/* Mobile Overlay */}
       {open && (
         <div
           className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 lg:hidden"
@@ -106,140 +192,189 @@ export default function Sidebar({ role, userName, modules, open, collapsed, onCl
         />
       )}
 
-      {/* Sidebar Container */}
+      {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 h-full z-50 flex flex-col transition-all duration-300 ease-in-out border-r border-slate-100 ${
+        className={`fixed top-0 left-0 h-full z-50 flex flex-col transition-all duration-300 ease-in-out border-r border-slate-100 bg-white ${
           open ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
-        }`}
-        style={{
-          background: "var(--sidebar-bg)",
-          width: collapsed ? "80px" : "260px",
-        }}
+        } ${collapsed ? "w-[72px] overflow-visible" : "w-[260px] overflow-hidden"}`}
       >
         {/* Logo Header */}
-        <div className="flex items-center h-16 px-5 shrink-0 relative">
+        <div className="flex items-center h-16 px-6 shrink-0 relative overflow-hidden">
           <Link href="/dashboard" className="flex items-center gap-3 overflow-hidden">
-            <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center shrink-0">
-               <span className="text-white font-black text-[10px]">HR</span>
-            </div>
-            <div className={`transition-all duration-300 ${collapsed ? "opacity-0 w-0 -translate-x-4 overflow-hidden pointer-events-none absolute" : "opacity-100 w-auto translate-x-0 relative"}`}>
-               <span className="font-bold text-slate-800 text-base tracking-tight whitespace-nowrap block">HRIS Next</span>
-               <span className="block text-[11px] text-slate-400 font-bold leading-none whitespace-nowrap">
-                  Human Resource Integration System
-               </span>
-            </div>
+            <svg className="w-7 h-7 text-indigo-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M6 10l6 9 6-9" />
+              <path d="M12 6v5" />
+            </svg>
+            <span className={`font-extrabold text-slate-800 text-lg tracking-tight block whitespace-nowrap transition-all duration-300 ease-in-out overflow-hidden ${
+              collapsed ? "w-0 opacity-0" : "w-auto opacity-100"
+            }`}>
+              ProWork
+            </span>
           </Link>
-
-          {/* Combined Toggle Button - Fixed position */}
-          <button
-            onClick={onToggleCollapse}
-            className="hidden lg:flex absolute -right-3.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full border border-slate-100 bg-white items-center justify-center text-slate-400 hover:text-indigo-600 transition-all z-10 hover:scale-110"
-          >
-            {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
-          </button>
         </div>
 
+        {/* Navigation */}
+        <nav className={`flex-1 px-3 py-2 space-y-1.5 scrollbar-hide ${collapsed ? "overflow-visible" : "overflow-y-auto"}`}>
+          {!collapsed && (
+            <div className="px-2 mb-2 transition-all duration-350">
+              <h2 className="text-[10px] font-bold text-slate-400 tracking-wider uppercase">MENU</h2>
+            </div>
+          )}
 
-
-        {/* Menu sections */}
-        <nav className="flex-1 overflow-y-auto px-4 space-y-4 pt-2 scrollbar-hide">
           {menuSections.map((section) => {
             const visibleItems = section.items.filter(hasAccess);
             if (visibleItems.length === 0) return null;
 
-            const isExpanded = expandedSections.includes(section.label);
+            // Render Beranda items directly as top-level menus
+            if (section.title === "Beranda") {
+              return visibleItems.map((item) => {
+                const Icon = item.icon;
+                const active = isActive(item.href);
+
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={onClose}
+                    className={`group flex items-center transition-all duration-200 relative px-3 py-2.5 rounded-xl ${
+                      active
+                        ? "bg-indigo-600 text-white shadow-sm font-semibold"
+                        : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                    }`}
+                  >
+                    <Icon className={`w-[18px] h-[18px] shrink-0 ${active ? "text-white" : "text-slate-400 group-hover:text-slate-600"}`} />
+                    <div className={`flex items-center justify-between flex-1 transition-all duration-300 ease-in-out overflow-hidden ${
+                      collapsed ? "w-0 opacity-0 pointer-events-none ml-0" : "w-auto opacity-100 ml-3"
+                    }`}>
+                      <span className="text-sm font-medium leading-none whitespace-nowrap">
+                        {item.label}
+                      </span>
+                      {item.badge && item.badge > 0 && (
+                        <span className={`ml-auto text-[10px] font-bold px-1.5 py-0.5 rounded-full shrink-0 ${active ? "bg-white text-indigo-600" : "bg-red-500 text-white"}`}>
+                          {item.badge}
+                        </span>
+                      )}
+                    </div>
+                    {collapsed && (
+                      <div className="absolute left-full ml-2 px-2.5 py-1.5 bg-slate-900 text-white text-xs font-medium rounded-lg invisible opacity-0 group-hover:visible group-hover:opacity-100 pointer-events-none transition-all duration-200 whitespace-nowrap z-50">
+                        {item.label}
+                      </div>
+                    )}
+                  </Link>
+                );
+              });
+            }
+
+            // Other sections are rendered as expandable list headers
+            const SectionIcon = sectionIcons[section.title] || ClipboardList;
+            const isAnyChildActive = visibleItems.some(item => isActive(item.href));
+            const isExpanded = expandedSections.includes(section.title);
 
             return (
-              <div key={section.label}>
-                {section.label !== "Dashboard" && (
-                <button 
-                  onClick={() => toggleSection(section.label)}
-                  className={`flex items-center justify-between w-full mb-1.5 transition-all duration-300 group/label px-1 ${collapsed ? "opacity-0 h-0 w-0 overflow-hidden pointer-events-none absolute" : "opacity-100 h-auto scale-100 relative"}`}
+              <div key={section.title} className="space-y-1">
+                <button
+                  onClick={() => toggleSection(section.title)}
+                  className={`w-full group flex items-center transition-all duration-200 px-3 py-2.5 rounded-xl relative ${
+                    isAnyChildActive
+                      ? "bg-indigo-600 text-white shadow-sm font-semibold"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                  }`}
                 >
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] whitespace-nowrap truncate">
-                        {section.label}
+                  <SectionIcon className={`w-[18px] h-[18px] shrink-0 ${isAnyChildActive ? "text-white" : "text-slate-400 group-hover:text-slate-600"}`} />
+                  <div className={`flex items-center justify-between flex-1 transition-all duration-300 ease-in-out overflow-hidden ${
+                    collapsed ? "w-0 opacity-0 pointer-events-none ml-0" : "w-auto opacity-100 ml-3"
+                  }`}>
+                    <span className="text-sm font-medium leading-none whitespace-nowrap text-left flex-1">
+                      {section.title}
                     </span>
-                    <ChevronDown className={`w-3 h-3 text-slate-300 transition-transform duration-300 ${isExpanded ? "rotate-0" : "-rotate-90"}`} />
+                    <span className="shrink-0 ml-2">
+                      {isExpanded ? (
+                        <ChevronUp className={`w-4 h-4 ${isAnyChildActive ? "text-white" : "text-slate-400"}`} />
+                      ) : (
+                        <ChevronDown className={`w-4 h-4 ${isAnyChildActive ? "text-white" : "text-slate-400"}`} />
+                      )}
+                    </span>
+                  </div>
+
+                  {collapsed && (
+                    <div className="absolute left-full ml-2 px-2.5 py-1.5 bg-slate-900 text-white text-xs font-medium rounded-lg invisible opacity-0 group-hover:visible group-hover:opacity-100 pointer-events-none transition-all duration-200 whitespace-nowrap z-50">
+                      {section.title}
+                    </div>
+                  )}
                 </button>
-                )}
-                
-                <div className={`space-y-1 transition-all duration-300 overflow-hidden ${isExpanded ? "max-h-[500px] opacity-100" : section.label === "Dashboard" ? "max-h-[100px]" : "max-h-0 opacity-0"}`}>
-                  {visibleItems.map((item: any) => {
-                    const Icon = item.icon;
-                    const isActive = pathname === item.href || pathname?.startsWith(item.href + "/");
-                    const badgeCount = item.badgeKey && role === "admin" ? pendingCounts[item.badgeKey] : 0;
 
-                    return (
-                      <Link
-                        key={item.href + item.label}
-                        href={item.href}
-                        onClick={onClose}
-                        className={`group flex items-center justify-between transition-all duration-200 relative ${
-                          collapsed ? "w-9 h-9 mx-auto justify-center rounded-lg p-0" : "w-full px-2.5 py-1.5 gap-2.5 rounded-lg"
-                        } ${
-                          isActive
-                            ? "bg-indigo-50 text-indigo-600"
-                            : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
-                        }`}
-                      >
-                        <div className={`flex items-center gap-2.5 ${collapsed ? "justify-center" : ""}`}>
-                           <Icon className={`w-[16px] h-[16px] shrink-0 transition-transform ${collapsed ? "" : isActive ? "scale-110" : "group-hover:scale-110"}`} />
-                           <span className={`text-xs font-semibold whitespace-nowrap transition-all duration-300 ${collapsed ? "opacity-0 w-0 -translate-x-4 pointer-events-none absolute overflow-hidden" : "opacity-100 w-auto translate-x-0 relative"}`}>
-                             {item.label}
-                           </span>
-                        </div>
-                        
-                        {/* Notification Badge */}
-                        {badgeCount > 0 && (
-                            <span className={`rounded-md font-black transition-all ${
-                                collapsed ? "absolute top-0 right-0 w-3 h-3 text-[8px] flex items-center justify-center p-0" : "px-1.5 py-0.5 text-[10px]"
-                            } ${isActive ? "bg-indigo-600 text-white" : "bg-red-500 text-white"}`}>
-                                {badgeCount}
+                {/* Submenu with Tree Lines */}
+                {!collapsed && isExpanded && (
+                  <div className="relative ml-6 pl-4 my-1 space-y-1 transition-all duration-300 ease-in-out">
+                    {visibleItems.map((item, index) => {
+                      const subActive = isActive(item.href);
+                      const isFirst = index === 0;
+                      const isLast = index === visibleItems.length - 1;
+
+                      return (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          onClick={onClose}
+                          className={`group flex items-center relative py-2 px-3.5 rounded-xl transition-all duration-150 ${
+                            subActive
+                              ? "bg-white text-indigo-600 font-semibold shadow-[0_2px_8px_rgba(0,0,0,0.03)] border border-slate-100/50"
+                              : "text-slate-500 hover:text-slate-800 font-medium hover:bg-slate-50/50"
+                          }`}
+                        >
+                          {/* Vertical tree line segment */}
+                          <div 
+                            className="absolute -left-4 w-px bg-slate-200/60" 
+                            style={{
+                              top: isFirst ? '50%' : '0px',
+                              bottom: isLast ? '50%' : '0px'
+                            }}
+                          />
+                          
+                          {/* Horizontal connection tick line */}
+                          <div className="absolute -left-4 top-1/2 -translate-y-1/2 w-4 h-px bg-slate-200/60" />
+                          
+                          <span className="text-xs leading-none whitespace-nowrap">
+                            {item.label}
+                          </span>
+
+                          {item.badge && item.badge > 0 && (
+                            <span className="ml-auto text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-red-500 text-white">
+                              {item.badge}
                             </span>
-                        )}
-
-                        {isActive && !collapsed && (
-                           <div className="w-1 h-4 bg-indigo-600 rounded-full absolute left-0" />
-                        )}
-                        
-                        {/* Tooltip for collapsed state */}
-                        {collapsed && (
-                           <div className="absolute left-16 px-3 py-2 bg-slate-900 text-white text-[10px] font-bold rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-all translate-x-4 group-hover:translate-x-0 z-50 whitespace-nowrap">
-                              {item.label}
-                              {badgeCount > 0 && ` (${badgeCount})`}
-                           </div>
-                        )}
-                      </Link>
-                    );
-                  })}
-                </div>
+                          )}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             );
           })}
         </nav>
 
-        {/* Sidebar Footer User Info */}
-        <div className="p-4 border-t border-slate-50 bg-slate-50/10">
-            <div className={`flex items-center gap-2.5 rounded-xl bg-slate-50 p-2 transition-colors ${collapsed ? "justify-center" : ""}`}>
-                <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-slate-900 text-[10px] font-bold shrink-0 border border-slate-100 group-hover:bg-indigo-600 group-hover:text-white transition-all">
-                    {userName?.charAt(0) || "U"}
-                </div>
-                {!collapsed && (
-                    <div className="flex-1 min-w-0 transition-all duration-300">
-                        <p className="text-xs font-bold text-slate-800 truncate leading-none mb-1">{userName}</p>
-                        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-tight">{role}</p>
-                    </div>
-                )}
-                {!collapsed && (
-                    <button
-                        onClick={() => signOut({ callbackUrl: "/login" })}
-                        className="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-red-500 transition-colors bg-white rounded-lg border border-slate-100"
-                        title="Keluar"
-                    >
-                        <LogOut className="w-3.5 h-3.5" />
-                    </button>
-                )}
+        {/* Footer - User Info */}
+        <div className="p-3 border-t border-slate-100/80">
+          <div className="flex items-center p-2 rounded-xl">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center text-white text-xs font-bold shrink-0">
+              {userName?.charAt(0)?.toUpperCase() || "U"}
             </div>
+            <div className={`flex-1 flex items-center justify-between min-w-0 transition-all duration-300 ease-in-out overflow-hidden ${
+              collapsed ? "w-0 opacity-0 pointer-events-none ml-0" : "w-auto opacity-100 ml-2.5"
+            }`}>
+              <div className="flex-1 min-w-0 pr-2">
+                <p className="text-xs font-semibold text-slate-800 truncate">{userName}</p>
+                <p className="text-[10px] text-slate-400 font-medium capitalize truncate">{role}</p>
+              </div>
+              <button
+                onClick={() => signOut({ callbackUrl: "/login" })}
+                className="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors shrink-0"
+                title="Keluar"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
         </div>
       </aside>
     </>

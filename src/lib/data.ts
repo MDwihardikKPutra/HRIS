@@ -2,19 +2,90 @@
 // HRIS Data Layer - JSON-based demo data
 // ============================================
 
+export type UserRole = "admin" | "hr" | "finance" | "karyawan" | "project_manager";
+
 export interface User {
   id: number;
   name: string;
   email: string;
   password: string;
-  role: "admin" | "user";
+  role: UserRole;
   employeeId: string;
   department: string;
   position: string;
   isActive: boolean;
   avatar?: string;
-  modules: string[];
+  baseSalary?: number;
+  allowanceMeal?: number;
+  allowanceTransport?: number;
+  allowancePositionPct?: number;
+  deductionBpjsKesehatanPct?: number;
+  deductionBpjsKetenagakerjaanPct?: number;
+  deductionPph21Pct?: number;
 }
+
+// Role descriptions for display
+export const ROLE_LABELS: Record<UserRole, string> = {
+  admin: "Administrator",
+  hr: "HR Manager",
+  finance: "Finance",
+  karyawan: "Karyawan",
+  project_manager: "Project Manager"
+};
+
+// Role-based access configuration
+export const ROLE_ACCESS = {
+  admin: {
+    canApproveLeave: true,
+    canApprovePayment: true,
+    canManageUsers: true,
+    canManageProjects: true,
+    canViewEAR: true,
+    canManageDocumentation: true,
+    canViewAllActivities: true,
+    canManagePayroll: true,
+  },
+  hr: {
+    canApproveLeave: true,
+    canApprovePayment: false,
+    canManageUsers: true,
+    canManageProjects: false,
+    canViewEAR: true,
+    canManageDocumentation: true,
+    canViewAllActivities: true,
+    canManagePayroll: false,
+  },
+  finance: {
+    canApproveLeave: false,
+    canApprovePayment: true,
+    canManageUsers: false,
+    canManageProjects: false,
+    canViewEAR: false,
+    canManageDocumentation: true,
+    canViewAllActivities: true,
+    canManagePayroll: true,
+  },
+  karyawan: {
+    canApproveLeave: false,
+    canApprovePayment: false,
+    canManageUsers: false,
+    canManageProjects: false,
+    canViewEAR: false,
+    canManageDocumentation: true,
+    canViewAllActivities: false,
+    canManagePayroll: false,
+  },
+  project_manager: {
+    canApproveLeave: false,
+    canApprovePayment: false,
+    canManageUsers: false,
+    canManageProjects: true,
+    canViewEAR: true,
+    canManageDocumentation: true,
+    canViewAllActivities: false,
+    canManagePayroll: false,
+  }
+};
 
 export interface Project {
   id: number;
@@ -146,78 +217,174 @@ export const SYSTEM_MODULES = [
 // ============================================
 
 export const users: User[] = [
+  // Admin
   {
     id: 1,
-    name: "Admin HRIS",
+    name: "Rina Wijaya",
     email: "admin@hris.local",
     password: "password",
     role: "admin",
     employeeId: "ADM001",
     department: "IT",
-    position: "Administrator",
+    position: "System Administrator",
     isActive: true,
-    modules: ["all"],
   },
+  // HR
   {
     id: 2,
-    name: "Budi Santoso",
-    email: "user@hris.local",
+    name: "Dewi Lestari",
+    email: "hr@hris.local",
     password: "password",
-    role: "user",
-    employeeId: "EMP002",
-    department: "Engineering",
-    position: "Project Manager",
+    role: "hr",
+    employeeId: "HR001",
+    department: "Human Resource",
+    position: "HR Manager",
     isActive: true,
-    modules: ["work-plan", "work-realization", "leave", "spd", "purchase"],
   },
+  // Finance
   {
     id: 3,
+    name: "Ahmad Hidayat",
+    email: "finance@hris.local",
+    password: "password",
+    role: "finance",
+    employeeId: "FIN001",
+    department: "Finance",
+    position: "Finance Supervisor",
+    isActive: true,
+  },
+  // Karyawan 1
+  {
+    id: 4,
+    name: "Budi Santoso",
+    email: "budi@hris.local",
+    password: "password",
+    role: "karyawan",
+    employeeId: "EMP001",
+    department: "Engineering",
+    position: "Project Engineer",
+    isActive: true,
+  },
+  // Karyawan 2
+  {
+    id: 5,
     name: "Siti Nurhaliza",
     email: "siti@hris.local",
     password: "password",
-    role: "user",
-    employeeId: "EMP003",
+    role: "karyawan",
+    employeeId: "EMP002",
     department: "Engineering",
     position: "Senior Engineer",
     isActive: true,
-    modules: ["work-plan", "work-realization", "leave"],
   },
+  // Karyawan 3
   {
-    id: 4,
-    name: "Ahmad Yani",
-    email: "ahmad@hris.local",
+    id: 6,
+    name: "Andi Pratama",
+    email: "andi@hris.local",
     password: "password",
-    role: "user",
-    employeeId: "EMP004",
+    role: "karyawan",
+    employeeId: "EMP003",
     department: "Engineering",
     position: "Engineer",
     isActive: true,
-    modules: ["work-plan", "work-realization", "leave"],
   },
+  // Karyawan 4
   {
-    id: 5,
-    name: "Dewi Sartika",
-    email: "dewi@hris.local",
-    password: "password",
-    role: "user",
-    employeeId: "EMP005",
-    department: "Finance",
-    position: "Finance Officer",
-    isActive: true,
-    modules: ["work-plan", "work-realization", "leave", "purchase", "vendor-payment"],
-  },
-  {
-    id: 6,
+    id: 7,
     name: "Rizki Pratama",
     email: "rizki@hris.local",
     password: "password",
-    role: "user",
-    employeeId: "EMP006",
+    role: "karyawan",
+    employeeId: "EMP004",
     department: "Procurement",
     position: "Procurement Officer",
     isActive: true,
-    modules: ["work-plan", "work-realization", "purchase", "vendor-payment"],
   },
+  // Karyawan 5
+  {
+    id: 8,
+    name: "Mega Sari",
+    email: "mega@hris.local",
+    password: "password",
+    role: "karyawan",
+    employeeId: "EMP005",
+    department: "Finance",
+    position: "Accountant",
+    isActive: true,
+  },
+  // Karyawan 6
+  {
+    id: 9,
+    name: "Fajar Nugroho",
+    email: "fajar@hris.local",
+    password: "password",
+    role: "karyawan",
+    employeeId: "EMP006",
+    department: "Engineering",
+    position: "Site Supervisor",
+    isActive: true,
+  },
+  // Karyawan 7
+  {
+    id: 10,
+    name: "Nadia Utami",
+    email: "nadia@hris.local",
+    password: "password",
+    role: "karyawan",
+    employeeId: "EMP007",
+    department: "Engineering",
+    position: "Junior Engineer",
+    isActive: true,
+  },
+  // Karyawan 8
+  {
+    id: 11,
+    name: "Hendra Wijaya",
+    email: "hendra@hris.local",
+    password: "password",
+    role: "karyawan",
+    employeeId: "EMP008",
+    department: "Procurement",
+    position: "Procurement Staff",
+    isActive: true,
+  },
+  // Karyawan 9
+  {
+    id: 12,
+    name: "Lisa Permata",
+    email: "lisa@hris.local",
+    password: "password",
+    role: "karyawan",
+    employeeId: "EMP009",
+    department: "Human Resource",
+    position: "HR Staff",
+    isActive: true,
+  },
+  // Karyawan 10
+  {
+    id: 13,
+    name: "Bayu Setiawan",
+    email: "bayu@hris.local",
+    password: "password",
+    role: "karyawan",
+    employeeId: "EMP010",
+    department: "Engineering",
+    position: "Field Engineer",
+    isActive: true,
+  },
+  // Project Manager
+  {
+    id: 14,
+    name: "Dimas Anggara",
+    email: "pm@hris.local",
+    password: "password",
+    role: "project_manager",
+    employeeId: "PM001",
+    department: "Project Management",
+    position: "Senior Project Manager",
+    isActive: true,
+  }
 ];
 
 export const projects: Project[] = [
@@ -363,3 +530,55 @@ export const projectTeams: ProjectTeam[] = [
 export function getProjectTeam(projectId: number): ProjectTeam[] {
   return projectTeams.filter(pt => pt.projectId === projectId);
 }
+
+export interface Payroll {
+  id: number;
+  userId: number;
+  period: string;
+  baseSalary: number;
+  allowances: number;
+  deductions: number;
+  netSalary: number;
+  status: "draft" | "paid";
+  paymentDate?: string;
+}
+
+export const payrolls: Payroll[] = (() => {
+  const arr: Payroll[] = [];
+  for (let userId = 1; userId <= 14; userId++) {
+    let baseSalary = 8000000;
+    let allowances = 1500000;
+    let deductions = 250000;
+    
+    if (userId === 1) { baseSalary = 20000000; allowances = 5000000; deductions = 1000000; }
+    else if (userId === 2) { baseSalary = 15000000; allowances = 3000000; deductions = 750000; }
+    else if (userId === 3) { baseSalary = 12000000; allowances = 2000000; deductions = 500000; }
+    else if (userId === 14) { baseSalary = 18000000; allowances = 4000000; deductions = 800000; }
+
+    // Mei 2026
+    arr.push({
+      id: userId * 2 - 1,
+      userId,
+      period: "Mei 2026",
+      baseSalary,
+      allowances,
+      deductions,
+      netSalary: baseSalary + allowances - deductions,
+      status: "paid",
+      paymentDate: "2026-05-25T08:00:00Z"
+    });
+
+    // Juni 2026 (Draft)
+    arr.push({
+      id: userId * 2,
+      userId,
+      period: "Juni 2026",
+      baseSalary,
+      allowances,
+      deductions,
+      netSalary: baseSalary + allowances - deductions,
+      status: "draft"
+    });
+  }
+  return arr;
+})();

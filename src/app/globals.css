@@ -8,7 +8,7 @@
   --sidebar-text-active: #4f46e5; /* Indigo-600 */
   
   --header-bg: rgba(255, 255, 255, 0.8);
-  --content-bg: #f8fafc;
+  --content-bg: #ffffff; /* White background as requested */
   
   --accent-primary: #4f46e5; /* Indigo-600 */
   --accent-secondary: #6366f1; /* Indigo-500 */
@@ -26,7 +26,16 @@
   --table-hover: #f8fafc;
 
   /* Fonts */
-  --font-sans: "Helvetica", "Arial", sans-serif;
+  --font-sans: var(--font-plus-jakarta), "Plus Jakarta Sans", "Helvetica", "Arial", sans-serif;
+}
+
+/* Ultra-thin shadow style for all cards */
+.bg-white.rounded-xl,
+.bg-white.rounded-2xl,
+.bg-white.rounded-lg,
+.bg-card-bg {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.02), 0 1px 3px 0 rgba(0, 0, 0, 0.01) !important;
+  border-color: rgba(241, 245, 249, 0.8) !important;
 }
 
 @theme inline {
@@ -47,12 +56,16 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 html {
-  font-size: 100%; /* Default 16px */
+  font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {

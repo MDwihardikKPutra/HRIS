@@ -8,7 +8,6 @@ declare module "next-auth" {
     employeeId?: string;
     department?: string;
     position?: string;
-    modules?: string[];
   }
   interface Session {
     user: {
@@ -19,7 +18,6 @@ declare module "next-auth" {
       employeeId?: string;
       department?: string;
       position?: string;
-      modules?: string[];
     };
   }
 }
@@ -30,7 +28,6 @@ declare module "@auth/core/jwt" {
     employeeId?: string;
     department?: string;
     position?: string;
-    modules?: string[];
   }
 }
 
@@ -56,7 +53,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             employeeId: user.employeeId,
             department: user.department,
             position: user.position,
-            modules: user.modules,
           };
         }
         return null;
@@ -70,19 +66,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.employeeId = user.employeeId;
         token.department = user.department;
         token.position = user.position;
-        token.modules = (user as any).modules;
       }
       return token;
     },
-    /* eslint-disable @typescript-eslint/no-explicit-any */
-    async session({ session, token }: any) {
+    async session({ session, token }) {
       if (session.user) {
-        session.user.id = token.sub;
-        session.user.role = token.role;
-        session.user.employeeId = token.employeeId;
-        session.user.department = token.department;
-        session.user.position = token.position;
-        session.user.modules = token.modules;
+        (session.user as any).id = token.sub;
+        (session.user as any).role = token.role;
+        (session.user as any).employeeId = token.employeeId;
+        (session.user as any).department = token.department;
+        (session.user as any).position = token.position;
       }
       return session;
     },

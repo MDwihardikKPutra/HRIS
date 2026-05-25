@@ -13,6 +13,14 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
+  {
+    rules: {
+      // Allow any for demo/prototype app flexibility
+      "@typescript-eslint/no-explicit-any": "off",
+      // Allow unused vars that start with underscore
+      "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+    },
+  },
 ]);
 
 export default eslintConfig;
