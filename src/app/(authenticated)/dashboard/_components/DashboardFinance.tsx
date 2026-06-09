@@ -149,7 +149,7 @@ export default function DashboardFinance() {
   });
 
   return (
-    <div className="flex flex-col h-[calc(100vh-5.25rem)] overflow-hidden gap-4 w-full animate-in fade-in duration-500 text-slate-800">
+    <div className="flex flex-col h-[calc(100vh-5.5rem)] overflow-hidden gap-5 w-full text-slate-800 pb-2">
       {/* Premium Gradient Banner */}
       <div className="relative overflow-hidden rounded-2xl p-5 bg-indigo-600 border border-indigo-500/20 shadow-sm shrink-0">
         <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-3xl" />
@@ -189,7 +189,7 @@ export default function DashboardFinance() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 shrink-0">
         <Link 
           href="/finance" 
-          className="bg-white rounded-xl p-4 border-l-4 border-l-amber-500 border border-slate-100 hover:border-slate-200 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between h-[90px] relative overflow-hidden group"
+          className="bg-white p-5 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 flex flex-col justify-between min-h-[100px] group"
         >
           <div className="flex justify-between items-start">
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Pending</span>
@@ -207,7 +207,7 @@ export default function DashboardFinance() {
 
         <Link 
           href="/finance" 
-          className="bg-white rounded-xl p-4 border-l-4 border-l-indigo-500 border border-slate-100 hover:border-slate-200 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between h-[90px] relative overflow-hidden group"
+          className="bg-white p-5 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 flex flex-col justify-between min-h-[100px] group"
         >
           <div className="flex justify-between items-start">
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Menunggu Approval</span>
@@ -225,7 +225,7 @@ export default function DashboardFinance() {
 
         <Link 
           href="/finance" 
-          className="bg-white rounded-xl p-4 border-l-4 border-l-emerald-500 border border-slate-100 hover:border-slate-200 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between h-[90px] relative overflow-hidden group"
+          className="bg-white p-5 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 flex flex-col justify-between min-h-[100px] group"
         >
           <div className="flex justify-between items-start">
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Telah Disetujui</span>
@@ -243,7 +243,7 @@ export default function DashboardFinance() {
 
         <Link 
           href="/payroll" 
-          className="bg-white rounded-xl p-4 border-l-4 border-l-violet-500 border border-slate-100 hover:border-slate-200 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between h-[90px] relative overflow-hidden group"
+          className="bg-white p-5 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 flex flex-col justify-between min-h-[100px] group"
         >
           <div className="flex justify-between items-start">
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Draft Payroll</span>
@@ -263,7 +263,7 @@ export default function DashboardFinance() {
       {/* Modern & Symmetrical Analytics Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 shrink-0 h-[225px]">
         {/* Rebuilt Trend Curve Chart */}
-        <div className="lg:col-span-2 bg-white rounded-xl border border-slate-100 p-4 relative flex flex-col justify-between h-full hover:shadow-sm transition-shadow">
+        <div className="lg:col-span-2 bg-white rounded-2xl border-2 border-slate-100 shadow-sm p-5 relative flex flex-col justify-between h-full">
           <div className="flex items-center justify-between shrink-0">
             <div>
               <h3 className="text-[10px] font-bold text-slate-500 tracking-wider uppercase">
@@ -273,8 +273,8 @@ export default function DashboardFinance() {
             </div>
           </div>
 
-          <div className="relative flex-1 w-full min-h-0 mt-2">
-            <ChartContainer config={trendChartConfig} className="h-[140px] w-full min-h-0 min-w-0 aspect-auto">
+          <div className="relative flex-1 w-full mt-2 min-h-[140px]">
+            <ChartContainer config={trendChartConfig} className="h-[140px] w-full min-h-[140px] aspect-auto">
               <AreaChart data={chartPoints} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
                 <defs>
                   <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
@@ -348,7 +348,7 @@ export default function DashboardFinance() {
         </div>
 
         {/* Rebuilt 2-Column Donut Chart Card */}
-        <div className="bg-white rounded-xl border border-slate-100 p-4 flex flex-col justify-between h-full hover:shadow-sm transition-shadow">
+        <div className="bg-white rounded-2xl border-2 border-slate-100 shadow-sm p-5 flex flex-col justify-between h-full">
           <div className="shrink-0">
             <h3 className="text-[10px] font-bold text-slate-500 tracking-wider uppercase">
               Alokasi Dana
@@ -358,8 +358,8 @@ export default function DashboardFinance() {
 
           <div className="flex items-center justify-between gap-4 flex-1 min-h-0 py-2">
             {/* Recharts Donut Circle */}
-            <div className="relative flex items-center justify-center shrink-0 w-24 h-24">
-              <ChartContainer config={donutConfig} className="w-24 h-24 min-h-0 min-w-0 aspect-square">
+            <div className="relative flex items-center justify-center shrink-0 w-24 h-24 min-h-[96px] min-w-[96px]">
+              <ChartContainer config={donutConfig} className="w-24 h-24 min-h-[96px] min-w-[96px] aspect-square">
                 <PieChart>
                   <Pie
                     data={[
@@ -420,7 +420,7 @@ export default function DashboardFinance() {
       </div>
 
       {/* Symmetrical & Clean Recent Activities List */}
-      <div className="flex-1 min-h-0 bg-white rounded-xl border border-slate-100 flex flex-col p-4 overflow-hidden hover:shadow-xs transition-shadow">
+      <div className="flex-1 min-h-0 bg-white rounded-2xl border-2 border-slate-100 shadow-sm flex flex-col p-5 overflow-hidden">
         <div className="flex items-center justify-between mb-3 shrink-0">
           <h2 className="text-[10px] font-bold text-slate-500 tracking-wider uppercase">Pengajuan Terbaru</h2>
           <Link href="/finance" className="text-[10px] font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-0.5 transition-colors">

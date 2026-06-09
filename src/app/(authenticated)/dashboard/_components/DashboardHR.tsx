@@ -180,7 +180,7 @@ export default function DashboardHR() {
   }, []);
 
   return (
-    <div className="flex flex-col h-full overflow-hidden gap-4 w-full animate-in fade-in duration-500">
+    <div className="flex flex-col h-full overflow-hidden gap-5 w-full pb-2">
 
       {/* Banner */}
       <div className="relative overflow-hidden rounded-xl p-4 md:p-6 bg-indigo-600 shrink-0">
@@ -222,7 +222,7 @@ export default function DashboardHR() {
       {/* Stats Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 shrink-0">
         <Link href="/leave"
-          className="bg-white rounded-xl p-4 border-l-4 border-l-amber-500 border border-slate-100 hover:border-slate-200 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between h-[90px] group"
+          className="bg-white p-5 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 flex flex-col justify-between min-h-[100px] group"
         >
           <div className="flex justify-between items-start">
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Cuti Pending</span>
@@ -239,7 +239,7 @@ export default function DashboardHR() {
         </Link>
 
         <Link href="/leave"
-          className="bg-white rounded-xl p-4 border-l-4 border-l-emerald-500 border border-slate-100 hover:border-slate-200 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between h-[90px] group"
+          className="bg-white p-5 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 flex flex-col justify-between min-h-[100px] group"
         >
           <div className="flex justify-between items-start">
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Sedang Cuti</span>
@@ -256,7 +256,7 @@ export default function DashboardHR() {
         </Link>
 
         <Link href="/users"
-          className="bg-white rounded-xl p-4 border-l-4 border-l-indigo-500 border border-slate-100 hover:border-slate-200 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between h-[90px] group"
+          className="bg-white p-5 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 flex flex-col justify-between min-h-[100px] group"
         >
           <div className="flex justify-between items-start">
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Karyawan</span>
@@ -273,7 +273,7 @@ export default function DashboardHR() {
         </Link>
 
         <Link href="/ear"
-          className="bg-white rounded-xl p-4 border-l-4 border-l-slate-500 border border-slate-100 hover:border-slate-200 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between h-[90px] group"
+          className="bg-white p-5 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 flex flex-col justify-between min-h-[100px] group"
         >
           <div className="flex justify-between items-start">
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Rencana Kerja</span>
@@ -293,7 +293,7 @@ export default function DashboardHR() {
       {/* HR Analytics Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 shrink-0 h-[225px]">
         {/* Department Distribution (Horizontal Bar Chart) */}
-        <div className="lg:col-span-2 bg-white rounded-xl border border-slate-100 p-4 relative flex flex-col justify-between h-full hover:shadow-sm transition-shadow">
+        <div className="lg:col-span-2 bg-white rounded-2xl border-2 border-slate-100 shadow-sm p-5 relative flex flex-col justify-between h-full">
           <div className="flex items-center justify-between shrink-0">
             <div>
               <h3 className="text-[10px] font-bold text-slate-500 tracking-wider uppercase">
@@ -303,8 +303,8 @@ export default function DashboardHR() {
             </div>
           </div>
 
-          <div className="relative flex-1 w-full min-h-0 mt-2">
-            <ChartContainer config={deptChartConfig} className="h-[140px] w-full min-h-0 min-w-0 aspect-auto">
+          <div className="relative flex-1 w-full mt-2 min-h-[140px]">
+            <ChartContainer config={deptChartConfig} className="h-[140px] w-full min-h-[140px] aspect-auto">
               <BarChart data={deptData} layout="vertical" margin={{ top: 5, right: 10, left: 30, bottom: 5 }}>
                 <CartesianGrid horizontal={false} strokeDasharray="3 3" stroke="#f1f5f9" />
                 <XAxis type="number" hide />
@@ -328,7 +328,7 @@ export default function DashboardHR() {
         </div>
 
         {/* Leave Reason Allocation (Donut Chart) */}
-        <div className="bg-white rounded-xl border border-slate-100 p-4 flex flex-col justify-between h-full hover:shadow-sm transition-shadow">
+        <div className="bg-white rounded-2xl border-2 border-slate-100 shadow-sm p-5 flex flex-col justify-between h-full">
           <div className="shrink-0">
             <h3 className="text-[10px] font-bold text-slate-500 tracking-wider uppercase">
               Alokasi Jenis Cuti
@@ -338,8 +338,8 @@ export default function DashboardHR() {
 
           <div className="flex items-center justify-between gap-4 flex-1 min-h-0 py-2">
             {/* Donut Circle */}
-            <div className="relative flex items-center justify-center shrink-0 w-24 h-24">
-              <ChartContainer config={leaveDonutConfig} className="w-24 h-24 min-h-0 min-w-0 aspect-square">
+            <div className="relative flex items-center justify-center shrink-0 w-24 h-24 min-h-[96px] min-w-[96px]">
+              <ChartContainer config={leaveDonutConfig} className="w-24 h-24 min-h-[96px] min-w-[96px] aspect-square">
                 <PieChart>
                   <Pie
                     data={leaveData}
@@ -380,7 +380,7 @@ export default function DashboardHR() {
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 flex-1 min-h-0">
         
         {/* Left 2 Columns: Recent Leave Requests */}
-        <div className="xl:col-span-2 bg-white rounded-xl border border-slate-100 overflow-hidden flex flex-col p-4">
+        <div className="xl:col-span-2 bg-white rounded-2xl border-2 border-slate-100 shadow-sm overflow-hidden flex flex-col p-5">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-base font-bold text-slate-800 tracking-tight">Pengajuan Cuti Terbaru</h2>
             <Link href="/leave" className="text-[10px] font-bold text-indigo-500 hover:text-indigo-700 flex items-center gap-1 transition-colors">
@@ -430,7 +430,7 @@ export default function DashboardHR() {
         </div>
 
         {/* Right 1 Column: Karyawan Cuti Minggu Ini */}
-        <div className="bg-white rounded-xl border border-slate-100 overflow-hidden flex flex-col p-4">
+        <div className="bg-white rounded-2xl border-2 border-slate-100 shadow-sm overflow-hidden flex flex-col p-5">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-base font-bold text-slate-800 tracking-tight">Karyawan Cuti Minggu Ini</h2>
             <span className="px-2 py-0.5 bg-emerald-50 border border-emerald-100 rounded text-[9px] font-bold text-emerald-700 capitalize">

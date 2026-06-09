@@ -1,17 +1,14 @@
-import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
-
-const plusJakartaSans = Plus_Jakarta_Sans({
- subsets: ["latin"],
- weight: ["200", "300", "400", "500", "600", "700", "800"],
- variable: "--font-plus-jakarta",
-});
 
 export const metadata: Metadata = {
  title: "HRIS — Human Resource Integration System",
  description: "Sistem manajemen kantor terintegrasi untuk mengelola workflow operasional perusahaan.",
- viewport: "width=device-width, initial-scale=1.0",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1.0,
 };
 
 export default function RootLayout({
@@ -20,8 +17,13 @@ export default function RootLayout({
  children: React.ReactNode;
 }>) {
  return (
- <html lang="id" className={plusJakartaSans.variable}>
- <body className="font-sans antialiased">
+ <html lang="id">
+ <head>
+   <link rel="preconnect" href="https://fonts.googleapis.com" />
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet" />
+ </head>
+ <body className="font-sans antialiased" style={{ fontFamily: '"Plus Jakarta Sans", sans-serif' }}>
  {children}
  </body>
  </html>

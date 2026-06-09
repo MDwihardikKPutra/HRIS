@@ -29,13 +29,21 @@
   --font-sans: var(--font-plus-jakarta), "Plus Jakarta Sans", "Helvetica", "Arial", sans-serif;
 }
 
-/* Ultra-thin shadow style for all cards */
+/* Flat design style for all cards (No Shadows) */
 .bg-white.rounded-xl,
 .bg-white.rounded-2xl,
 .bg-white.rounded-lg,
 .bg-card-bg {
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.02), 0 1px 3px 0 rgba(0, 0, 0, 0.01) !important;
-  border-color: rgba(241, 245, 249, 0.8) !important;
+  /* box-shadow removed for flat design */
+  border-color: rgba(241, 245, 249, 1) !important; /* border-slate-100 for a very thin/light edge */
+}
+
+@layer utilities {
+  /* Strip all tailwind shadow utilities without breaking focus rings */
+  .shadow-sm, .shadow, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl, .shadow-inner {
+    --tw-shadow: 0 0 #0000 !important;
+    --tw-shadow-colored: 0 0 #0000 !important;
+  }
 }
 
 @theme inline {

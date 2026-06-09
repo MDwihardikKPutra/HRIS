@@ -32,7 +32,7 @@ export default function PurchasePage() {
   }, [filterStatus, searchQuery, userId]);
 
   return (
-    <div className="space-y-4 w-full animate-in fade-in duration-500">
+    <div className="space-y-5 w-full">
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -64,7 +64,7 @@ export default function PurchasePage() {
       </FilterBar>
 
       {/* STANDARDIZED: Main Table */}
-      <div className="bg-white border border-slate-100 rounded-xl overflow-hidden mt-2">
+      <div className="bg-white border-2 border-slate-100 rounded-2xl shadow-sm overflow-hidden mt-2">
         <div className="overflow-x-auto scrollbar-hide">
           <table className="w-full text-xs">
             <thead>

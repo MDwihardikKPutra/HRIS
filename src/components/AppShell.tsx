@@ -14,12 +14,22 @@ interface AppShellProps {
    position: string;
    modules: string[];
  };
+ session?: any;
 }
 
-export default function AppShell({ children, user }: AppShellProps) {
+export default function AppShell({ children, user, session }: AppShellProps) {
  const [sidebarOpen, setSidebarOpen] = useState(false);
  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
  const [notificationsOpen, setNotificationsOpen] = useState(false);
+ const [currentTime, setCurrentTime] = useState<Date | null>(null);
+
+ useEffect(() => {
+   setCurrentTime(new Date());
+   const interval = setInterval(() => {
+     setCurrentTime(new Date());
+   }, 60000);
+   return () => clearInterval(interval);
+ }, []);
 
  useEffect(() => {
    const handleKeyDown = (e: KeyboardEvent) => {
@@ -31,8 +41,15 @@ export default function AppShell({ children, user }: AppShellProps) {
    return () => window.removeEventListener("keydown", handleKeyDown);
  }, [notificationsOpen]);
 
+ const formattedTime = currentTime 
+   ? new Intl.DateTimeFormat('id-ID', { hour: '2-digit', minute: '2-digit' }).format(currentTime)
+   : '';
+ const formattedDate = currentTime
+   ? new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }).format(currentTime)
+   : '';
+
  return (
-   <SessionProvider>
+   <SessionProvider session={session}>
      <div className="h-screen w-screen flex overflow-hidden bg-slate-50" style={{ background: "var(--content-bg)" }}>
        <Sidebar
          role={user.role}
@@ -47,8 +64,8 @@ export default function AppShell({ children, user }: AppShellProps) {
        {/* Main content wrapper */}
        <div className={`flex-1 flex flex-col min-h-0 h-full overflow-hidden transition-all duration-300 ease-in-out ${sidebarCollapsed ? "lg:pl-[72px]" : "lg:pl-[260px]"}`}>
          
-         {/* Clean top header bar */}
-         <header className="h-16 flex items-center justify-between px-6 border-b border-slate-100 backdrop-blur-md bg-white/80 shrink-0">
+         {/* Top header bar with distinct visual weight */}
+         <header className="h-16 flex items-center justify-between px-6 bg-white border-b border-slate-200/60 shadow-sm shrink-0 z-10 relative">
            <div className="flex items-center gap-2">
              <button
                onClick={() => setSidebarOpen(true)}
@@ -56,17 +73,28 @@ export default function AppShell({ children, user }: AppShellProps) {
              >
                <Menu className="w-5 h-5" />
              </button>
-             {/* Desktop collapse toggle */}
-             <button
-               onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-               className="hidden lg:flex items-center justify-center w-9 h-9 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-slate-50 border border-slate-100 transition-all"
-               title={sidebarCollapsed ? "Buka Sidebar" : "Tutup Sidebar"}
-             >
-               <PanelLeft className="w-4 h-4" />
-             </button>
+             
+             {/* User Identity - Left Side */}
+             <div className="hidden sm:flex items-center ml-2 border-l-[3px] border-indigo-600 pl-4 py-0.5">
+               <div>
+                 <h1 className="text-[17px] font-extrabold text-slate-900 leading-none tracking-tight">{user.name}</h1>
+                 <p className="text-xs text-slate-500 font-medium mt-1.5">{user.position}</p>
+               </div>
+             </div>
            </div>
 
-           <div className="flex items-center gap-5">
+           <div className="flex items-center gap-4">
+             
+             {/* Clock & Date */}
+             {currentTime && (
+               <div className="hidden md:flex flex-col items-end mr-1">
+                 <span className="text-[13px] font-extrabold text-slate-700 leading-none tracking-wide">{formattedTime}</span>
+                 <span className="text-[10px] font-bold text-slate-400 mt-1 uppercase tracking-widest">{formattedDate}</span>
+               </div>
+             )}
+             
+             {currentTime && <div className="hidden md:block h-6 w-px bg-slate-200 mx-1" />}
+
              <div className="relative">
                <button
                  onClick={() => setNotificationsOpen(!notificationsOpen)}
@@ -80,7 +108,7 @@ export default function AppShell({ children, user }: AppShellProps) {
                {notificationsOpen && (
                  <>
                    <div className="fixed inset-0 z-40" onClick={() => setNotificationsOpen(false)} />
-                   <div className="absolute right-0 mt-2 w-80 bg-white border border-slate-100 z-50 rounded-xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 origin-top-right">
+                   <div className="absolute right-0 mt-2 w-80 bg-white border border-slate-100 z-50 rounded-xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 origin-top-right shadow-xl">
                      <div className="px-5 py-3 border-b border-slate-50 flex items-center justify-between bg-slate-50/50">
                        <span className="text-xs font-bold text-slate-900">Notifikasi</span>
                        <span className="text-[10px] px-2 py-0.5 bg-indigo-50 text-indigo-600 rounded-md font-black">4 BARU</span>
@@ -115,23 +143,11 @@ export default function AppShell({ children, user }: AppShellProps) {
                  </>
                )}
              </div>
-             
-             <div className="hidden sm:block h-6 w-px bg-slate-200 mx-1" />
-             
-             <div className="flex items-center gap-3 cursor-pointer group">
-               <div className="w-9 h-9 rounded-full bg-slate-100 overflow-hidden border border-slate-200 flex items-center justify-center">
-                 <span className="text-sm font-bold text-slate-600 group-hover:text-indigo-600">{user.name.charAt(0)}</span>
-               </div>
-               <div className="hidden sm:block">
-                 <p className="text-sm font-semibold text-slate-800 leading-none group-hover:text-indigo-600 transition-colors">{user.name}</p>
-                 <p className="text-xs text-slate-500 font-medium leading-none mt-1.5">{user.position}</p>
-               </div>
-             </div>
            </div>
          </header>
 
          {/* Page content */}
-         <main className="flex-1 min-h-0 p-4 lg:p-5 overflow-y-auto scrollbar-hide">
+         <main className="flex-1 min-h-0 p-4 lg:p-5 overflow-y-auto scrollbar-hide relative z-0">
            {children}
          </main>
        </div>

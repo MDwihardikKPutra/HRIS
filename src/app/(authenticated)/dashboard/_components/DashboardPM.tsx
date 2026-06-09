@@ -58,7 +58,7 @@ export default function DashboardPM() {
   ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 10);
 
   return (
-    <div className="flex flex-col h-[calc(100vh-5.5rem)] overflow-hidden gap-4 w-full animate-in fade-in duration-500 pb-2">
+    <div className="flex flex-col h-[calc(100vh-5.5rem)] overflow-hidden gap-5 w-full pb-2">
 
       {/* Banner */}
       <div className="relative overflow-hidden rounded-xl p-4 md:p-6 bg-indigo-600">
@@ -87,8 +87,8 @@ export default function DashboardPM() {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 shrink-0">
-        <Link href="/projects" className="bg-white rounded-xl p-4 border border-slate-100 hover:border-teal-200 transition-all group flex items-center gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 shrink-0">
+        <Link href="/projects" className="bg-white p-5 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-md hover:border-teal-200 transition-all group flex items-center gap-4">
           <div className="w-12 h-12 rounded-xl bg-teal-50 text-teal-500 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
             <FolderKanban className="w-6 h-6" />
           </div>
@@ -98,7 +98,7 @@ export default function DashboardPM() {
           </div>
         </Link>
 
-        <Link href="/ear" className="bg-white rounded-xl p-4 border border-slate-100 hover:border-indigo-200 transition-all group flex items-center gap-4">
+        <Link href="/ear" className="bg-white p-5 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-md hover:border-indigo-200 transition-all group flex items-center gap-4">
           <div className="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-500 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
             <ClipboardList className="w-6 h-6" />
           </div>
@@ -108,7 +108,7 @@ export default function DashboardPM() {
           </div>
         </Link>
 
-        <Link href="/ear" className="bg-white rounded-xl p-4 border border-slate-100 hover:border-emerald-200 transition-all group flex items-center gap-4">
+        <Link href="/ear" className="bg-white p-5 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-md hover:border-emerald-200 transition-all group flex items-center gap-4">
           <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-500 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
             <CheckCircle2 className="w-6 h-6" />
           </div>
@@ -118,7 +118,7 @@ export default function DashboardPM() {
           </div>
         </Link>
 
-        <Link href="/ear" className="bg-white rounded-xl p-4 border border-slate-100 hover:border-amber-200 transition-all group flex items-center gap-4">
+        <Link href="/ear" className="bg-white p-5 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-md hover:border-amber-200 transition-all group flex items-center gap-4">
           <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
             <TrendingUp className="w-6 h-6" />
           </div>
@@ -130,7 +130,7 @@ export default function DashboardPM() {
       </div>
 
       {/* EAR Activity Table */}
-      <div className="flex-1 bg-white rounded-xl border border-slate-100 overflow-hidden flex flex-col p-4">
+      <div className="flex-1 bg-white rounded-2xl border-2 border-slate-100 shadow-sm overflow-hidden flex flex-col p-5">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-base font-bold text-slate-800 tracking-tight">Aktivitas EAR Proyek</h2>
           <Link href="/ear" className="text-[10px] font-bold text-indigo-500 hover:text-indigo-700 flex items-center gap-1 transition-colors">

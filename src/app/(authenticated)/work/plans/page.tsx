@@ -25,7 +25,7 @@ export default function WorkPlansPage() {
  });
 
  return (
- <div className="space-y-4 w-full animate-in fade-in duration-500">
+ <div className="space-y-5 w-full">
  {/* Page header */}
  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
  <div>
@@ -50,7 +50,7 @@ export default function WorkPlansPage() {
  </div>
 
  {/* Content table */}
- <div className="bg-white border border-slate-100 rounded-xl overflow-hidden mt-2">
+ <div className="bg-white border-2 border-slate-100 rounded-2xl shadow-sm overflow-hidden mt-2">
  <div className="p-5 border-b border-slate-50 flex flex-col md:flex-row md:items-center justify-between gap-4">
  <h2 className="text-base font-semibold text-slate-800">Daftar Rencana Aktif</h2>
  <div className="relative group min-w-[300px]">

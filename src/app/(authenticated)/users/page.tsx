@@ -194,9 +194,9 @@ export default function UsersPage() {
   };
 
   return (
-    <div className="flex flex-col h-full overflow-hidden w-full animate-in fade-in duration-500">
+    <div className="flex flex-col h-full overflow-hidden w-full space-y-5">
       {/* Unified Table Dashboard Card */}
-      <div className="flex-1 min-h-0 bg-white border border-slate-100/80 rounded-2xl flex flex-col overflow-hidden shadow-xs">
+      <div className="flex-1 min-h-0 bg-white border-2 border-slate-100 rounded-2xl flex flex-col overflow-hidden shadow-sm">
         
         {/* Top Card Header */}
         <div className="border-b border-slate-100 p-4 bg-white shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -207,7 +207,7 @@ export default function UsersPage() {
           <div className="flex items-center gap-2.5">
             <button
               onClick={() => setIsAddModalOpen(true)}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl transition-all hover:shadow-lg hover:shadow-blue-600/20 active:scale-95 border border-blue-500/20"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl transition-all hover:shadow-lg hover:shadow-indigo-600/20 active:scale-95 border border-indigo-500/20"
             >
               <Plus className="w-3.5 h-3.5" />
               Tambah Karyawan
@@ -240,13 +240,13 @@ export default function UsersPage() {
           
           {/* Search Box */}
           <div className="relative group w-full sm:w-72 shrink-0">
-            <Search className="absolute left-3 top-2.5 w-3.5 h-3.5 text-slate-400 group-focus-within:text-blue-500" />
+            <Search className="absolute left-3 top-2.5 w-3.5 h-3.5 text-slate-400 group-focus-within:text-indigo-500" />
             <input
               type="text"
               placeholder="Cari nama, NIK, kontrak, atau departemen..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-4 py-1.5 bg-slate-50/40 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-blue-400 focus:bg-white transition-all font-medium"
+              className="w-full pl-9 pr-4 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium"
             />
           </div>
         </div>
@@ -255,7 +255,7 @@ export default function UsersPage() {
         <div className="flex-1 overflow-auto scrollbar-hide">
           <table className="w-full text-xs">
             <thead>
-              <tr className="bg-slate-50/50 border-b border-slate-100 font-semibold text-slate-500 tracking-wide text-[10px] sticky top-0 z-10">
+              <tr className="bg-white border-b border-slate-200 font-semibold text-slate-500 tracking-wide text-[10px] sticky top-0 z-20 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
                 <th className="text-left py-3 px-4 font-bold">Karyawan (NIK)</th>
                 <th className="text-left py-3 px-4 font-bold">Penempatan</th>
                 <th className="text-center py-3 px-4 font-bold">Hubungan Kerja</th>
@@ -387,7 +387,7 @@ export default function UsersPage() {
                 }} 
                 className={`px-4 py-2 text-xs font-bold rounded-lg transition-colors border ${
                   profileDetailUser.isActive 
-                    ? "bg-red-50 text-red-700 border-red-200 hover:bg-red-100" 
+                    ? "bg-white text-red-600 border-red-200 hover:bg-red-50" 
                     : "bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100"
                 }`}
               >
@@ -402,91 +402,102 @@ export default function UsersPage() {
             </>
           }
         >
-          <div className="space-y-6 text-slate-800">
-            {/* Header Profil */}
-            <div className="flex items-center gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-100">
-              <AvatarInitial name={profileDetailUser.name} />
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <h3 className="text-base font-black text-slate-800 leading-tight">{profileDetailUser.name}</h3>
-                  <span className="px-2 py-0.2 rounded text-[9px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-100 font-mono uppercase tracking-wide">
-                    NIK: {profileDetailUser.employeeId}
-                  </span>
-                </div>
-                <p className="text-xs text-slate-400 font-bold mt-1 tracking-tight">{profileDetailUser.email}</p>
-                <div className="flex items-center gap-1.5 mt-2">
-                  <span className={`w-2 h-2 rounded-full ${profileDetailUser.isActive ? "bg-emerald-500" : "bg-slate-300"}`} />
-                  <span className="text-[10px] font-bold text-slate-500">Status Akun: {profileDetailUser.isActive ? "Aktif" : "Nonaktif"}</span>
-                </div>
+          <div className="flex flex-col md:flex-row gap-4 items-start text-slate-800">
+            {/* Kiri: Foto Placeholder 3x4 */}
+            <div className="w-24 sm:w-32 md:w-[160px] shrink-0 mx-auto md:mx-0">
+              <div className="w-full aspect-[3/4] rounded-2xl bg-indigo-50 border-2 border-indigo-100 flex items-center justify-center relative overflow-hidden shadow-sm group">
+                <div className="absolute inset-0 bg-gradient-to-br from-indigo-100/40 to-white/20" />
+                <span className="text-[64px] md:text-[80px] font-black text-indigo-200 group-hover:scale-110 transition-transform duration-300 relative z-10 leading-none">
+                  {profileDetailUser.name.charAt(0)}
+                </span>
               </div>
             </div>
 
-            {/* Grid Detail Pekerjaan & Kontrak */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Box 1: Informasi Penempatan */}
-              <div className="bg-white border border-slate-100 p-4 rounded-2xl space-y-3.5">
-                <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wider border-b border-slate-50 pb-2 flex items-center gap-1.5">
-                  <Award className="w-4 h-4 text-blue-500" /> Informasi Penempatan
-                </h4>
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div>
-                    <span className="text-[9px] font-bold text-slate-400 block uppercase">Departemen</span>
-                    <span className="font-bold text-slate-700">{profileDetailUser.department}</span>
-                  </div>
-                  <div>
-                    <span className="text-[9px] font-bold text-slate-400 block uppercase">Jabatan</span>
-                    <span className="font-bold text-slate-700">{profileDetailUser.position}</span>
-                  </div>
-                  <div className="col-span-2 pt-1">
-                    <span className="text-[9px] font-bold text-slate-400 block uppercase">Role Otorisasi Sistem</span>
-                    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-slate-50 text-slate-600 border border-slate-100 mt-1 capitalize font-semibold">
-                      <Shield className="w-3 h-3 text-slate-400" />
-                      {ROLE_LABELS[profileDetailUser.role as UserRole] || profileDetailUser.role}
-                    </span>
-                  </div>
-                </div>
+            {/* Kanan: Detail Information */}
+            <div className="flex-1 min-w-0 flex flex-col gap-4">
+              
+              {/* Header Info */}
+              <div className="bg-white border border-slate-100 p-4 rounded-2xl shadow-sm shrink-0">
+                 <div className="flex items-center gap-2 flex-wrap mb-1.5">
+                   <h3 className="text-xl font-black text-slate-900 leading-none">{profileDetailUser.name}</h3>
+                   <span className="text-slate-300 mx-1">•</span>
+                   <div className="flex items-center gap-1.5">
+                     <span className={`w-2 h-2 rounded-full ${profileDetailUser.isActive ? "bg-emerald-500" : "bg-red-500"}`} />
+                     <span className={`text-[10px] font-black tracking-widest uppercase ${profileDetailUser.isActive ? "text-emerald-600" : "text-red-600"}`}>
+                       {profileDetailUser.isActive ? "Aktif" : "Nonaktif"}
+                     </span>
+                   </div>
+                   <span className="text-slate-300 mx-1">•</span>
+                   <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-100 font-mono tracking-wide uppercase">
+                     NIK: {profileDetailUser.employeeId}
+                   </span>
+                 </div>
+                 <p className="text-sm font-bold text-slate-500 tracking-tight">{profileDetailUser.email}</p>
               </div>
 
-              {/* Box 2: Rincian Hubungan Kerja & Kontrak */}
-              <div className="bg-white border border-slate-100 p-4 rounded-2xl space-y-3.5">
-                <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wider border-b border-slate-50 pb-2 flex items-center gap-1.5">
-                  <Calendar className="w-4 h-4 text-indigo-500" /> Hubungan & Masa Kontrak
-                </h4>
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div>
-                    <span className="text-[9px] font-bold text-slate-400 block uppercase">Hubungan Kerja</span>
-                    <span className="inline-flex px-1.5 py-0.2 bg-blue-50 text-blue-700 border border-blue-100 rounded font-bold mt-0.5">
-                      {profileDetailUser.statusKontrak}
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-[9px] font-bold text-slate-400 block uppercase">Tipe Karyawan</span>
-                    <span className="font-bold text-slate-700">{profileDetailUser.tipeKaryawan}</span>
-                  </div>
-                  <div className="pt-1">
-                    <span className="text-[9px] font-bold text-slate-400 block uppercase">Mulai Kerja</span>
-                    <span className="font-bold text-slate-700">{formatDisplayDate(profileDetailUser.joinDate)}</span>
-                  </div>
-                  <div className="pt-1">
-                    <span className="text-[9px] font-bold text-slate-400 block uppercase">Akhir Kontrak</span>
-                    <span className="font-bold text-slate-700">{profileDetailUser.endDate === "-" ? "Permanen" : formatDisplayDate(profileDetailUser.endDate)}</span>
-                  </div>
-                  <div className="col-span-2 pt-1 border-t border-slate-50 mt-1 flex justify-between items-center">
-                    <span className="text-[9px] font-bold text-slate-400 uppercase">Masa Kontrak Kerja</span>
-                    <span className="px-2 py-0.5 bg-amber-50 text-amber-700 border border-amber-100/50 rounded font-black">
-                      {profileDetailUser.durationStr}
-                    </span>
+              {/* Grid 2 kolom informasi */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-1 items-stretch">
+                {/* Box 1: Informasi Penempatan */}
+                <div className="bg-white border border-slate-100 p-4 rounded-2xl flex flex-col shadow-sm">
+                  <h4 className="text-xs font-bold text-slate-800 tracking-wide border-b border-slate-50 pb-2 mb-3 flex items-center gap-1.5 shrink-0">
+                    <Award className="w-4 h-4 text-blue-500" /> Informasi Penempatan
+                  </h4>
+                  <div className="grid grid-cols-2 gap-3 text-xs flex-1 content-start">
+                    <div className="col-span-2 sm:col-span-1">
+                      <span className="text-[10px] font-semibold text-slate-400 block mb-0.5">Departemen</span>
+                      <span className="font-bold text-slate-700">{profileDetailUser.department}</span>
+                    </div>
+                    <div className="col-span-2 sm:col-span-1">
+                      <span className="text-[10px] font-semibold text-slate-400 block mb-0.5">Jabatan</span>
+                      <span className="font-bold text-slate-700">{profileDetailUser.position}</span>
+                    </div>
+                    <div className="col-span-2 mt-auto pt-3 border-t border-slate-50">
+                      <span className="text-[10px] font-semibold text-slate-400 block mb-1.5">Role Otorisasi Sistem</span>
+                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-slate-50 text-slate-600 border border-slate-100 capitalize font-bold">
+                        <Shield className="w-3.5 h-3.5 text-slate-400" />
+                        {ROLE_LABELS[profileDetailUser.role as UserRole] || profileDetailUser.role}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
 
-            {/* Note Kebijakan HR */}
-            <div className="bg-slate-50 border border-slate-100 p-3.5 rounded-xl text-xs text-slate-500 leading-relaxed flex items-start gap-2.5">
-              <AlertCircle className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
-              <div>
-                <p className="font-bold text-slate-700 mb-0.5">Informasi & Kepatuhan Kontrak Karyawan</p>
-                <p>Data durasi kontrak ini digunakan untuk pelaporan audit kepatuhan ketenagakerjaan dan master penggajian. Tanggal pengakhiran kontrak PKWT harus diperbarui sekurang-kurangnya 30 hari sebelum berakhir.</p>
+                {/* Box 2: Hubungan Kerja & Kontrak */}
+                <div className="bg-white border border-slate-100 p-4 rounded-2xl flex flex-col shadow-sm">
+                  <div className="border-b border-slate-50 pb-2 mb-3 flex items-center justify-between shrink-0">
+                    <h4 className="text-xs font-bold text-slate-800 tracking-wide flex items-center gap-1.5">
+                      <Calendar className="w-4 h-4 text-indigo-500" /> Hubungan & Kontrak
+                    </h4>
+                    {/* Tooltip Kepatuhan (replacing large block) */}
+                    <div className="relative group cursor-help">
+                      <AlertCircle className="w-4 h-4 text-slate-400 hover:text-indigo-500 transition-colors" />
+                      <div className="absolute right-0 bottom-full mb-2 w-64 p-3 bg-slate-800 text-white text-[10px] leading-relaxed rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+                        Data durasi kontrak digunakan untuk pelaporan audit kepatuhan ketenagakerjaan dan master penggajian. Tanggal pengakhiran kontrak PKWT harus diperbarui sekurang-kurangnya 30 hari sebelum berakhir.
+                        <div className="absolute right-1.5 -bottom-1 w-2 h-2 bg-slate-800 rotate-45" />
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-3 text-xs flex-1 content-start">
+                    <div>
+                      <span className="text-[10px] font-semibold text-slate-400 block mb-0.5">Hubungan Kerja</span>
+                      <span className="inline-flex px-1.5 py-0.5 bg-indigo-50 text-indigo-700 border border-indigo-100 rounded font-bold">
+                        {profileDetailUser.statusKontrak}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-semibold text-slate-400 block mb-0.5">Tipe Karyawan</span>
+                      <span className="font-bold text-slate-700">{profileDetailUser.tipeKaryawan}</span>
+                    </div>
+                    <div className="mt-2">
+                      <span className="text-[10px] font-semibold text-slate-400 block mb-0.5">Mulai Kerja</span>
+                      <span className="font-bold text-slate-700">{formatDisplayDate(profileDetailUser.joinDate)}</span>
+                    </div>
+                    <div className="mt-2">
+                      <span className="text-[10px] font-semibold text-slate-400 block mb-0.5">Akhir Kontrak</span>
+                      <span className="font-bold text-slate-700">{profileDetailUser.endDate === "-" ? "Permanen" : formatDisplayDate(profileDetailUser.endDate)}</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

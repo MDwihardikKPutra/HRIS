@@ -78,7 +78,7 @@ export default function DashboardKaryawan() {
   ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 8);
 
   return (
-    <div className="flex flex-col h-[calc(100vh-5.5rem)] overflow-hidden gap-4 w-full animate-in fade-in duration-500 pb-2">
+    <div className="flex flex-col h-[calc(100vh-5.5rem)] overflow-hidden gap-5 w-full pb-2">
 
       {/* Banner */}
       <div className="relative overflow-hidden rounded-xl p-4 md:p-6 bg-indigo-600">
@@ -107,7 +107,7 @@ export default function DashboardKaryawan() {
       {/* Stats Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 shrink-0">
         <Link href="/work/plans"
-          className="bg-white rounded-xl p-4 border-l-4 border-l-indigo-500 border border-slate-100 hover:border-slate-200 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between h-[90px] group"
+          className="bg-white p-5 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 flex flex-col justify-between min-h-[100px] group"
         >
           <div className="flex justify-between items-start">
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Rencana Kerja</span>
@@ -124,7 +124,7 @@ export default function DashboardKaryawan() {
         </Link>
 
         <Link href="/work/realizations"
-          className="bg-white rounded-xl p-4 border-l-4 border-l-emerald-500 border border-slate-100 hover:border-slate-200 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between h-[90px] group"
+          className="bg-white p-5 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 flex flex-col justify-between min-h-[100px] group"
         >
           <div className="flex justify-between items-start">
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Realisasi</span>
@@ -141,7 +141,7 @@ export default function DashboardKaryawan() {
         </Link>
 
         <Link href="/my-leave"
-          className="bg-white rounded-xl p-4 border-l-4 border-l-amber-500 border border-slate-100 hover:border-slate-200 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between h-[90px] group"
+          className="bg-white p-5 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 flex flex-col justify-between min-h-[100px] group"
         >
           <div className="flex justify-between items-start">
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Cuti Saya</span>
@@ -160,7 +160,7 @@ export default function DashboardKaryawan() {
         </Link>
 
         <Link href="/spd"
-          className="bg-white rounded-xl p-4 border-l-4 border-l-blue-500 border border-slate-100 hover:border-slate-200 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between h-[90px] group"
+          className="bg-white p-5 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 flex flex-col justify-between min-h-[100px] group"
         >
           <div className="flex justify-between items-start">
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">SPD</span>
@@ -180,7 +180,7 @@ export default function DashboardKaryawan() {
       </div>
 
       {/* Recent Activities */}
-      <div className="flex-1 bg-white rounded-xl border border-slate-100 overflow-hidden flex flex-col p-4">
+      <div className="flex-1 bg-white rounded-2xl border-2 border-slate-100 shadow-sm overflow-hidden flex flex-col p-5">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-base font-bold text-slate-800 tracking-tight">Pengajuan Saya</h2>
           <Link href="/my-leave" className="text-[10px] font-bold text-indigo-500 hover:text-indigo-700 flex items-center gap-1 transition-colors">

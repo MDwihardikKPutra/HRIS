@@ -17,6 +17,7 @@ export default async function DashboardLayout({
 
  return (
  <AppShell
+ session={session}
  user={{
  name: u.name ??"User",
  role: u.role ??"karyawan",

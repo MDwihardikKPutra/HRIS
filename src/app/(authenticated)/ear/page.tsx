@@ -46,7 +46,7 @@ export default function EARPage() {
  }, [selectedMonth, selectedUser, selectedProject, searchQuery]);
 
  return (
- <div className="space-y-4 w-full animate-in fade-in duration-500">
+ <div className="space-y-5 w-full">
  {/* Page Header */}
  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
  <div>
@@ -165,7 +165,7 @@ export default function EARPage() {
  </div>
 
  {/* Main Content Table (Geometric & Compact) */}
- <div className="bg-white rounded-xl border border-slate-100 overflow-hidden">
+ <div className="bg-white rounded-2xl border-2 border-slate-100 shadow-sm overflow-hidden">
  <div className="overflow-x-auto scrollbar-hide">
  {activeTab ==="plans"? (
  <table className="w-full text-xs">

@@ -45,9 +45,9 @@ export default function MyPayrollPage() {
  }, [userEmail, filterYear, searchQuery]);
 
  return (
-    <div className="flex flex-col h-[calc(100vh-5.5rem)] overflow-hidden w-full animate-in fade-in duration-500 pb-2">
+    <div className="flex flex-col h-[calc(100vh-5.5rem)] overflow-hidden w-full pb-2">
       {/* Unified Table Dashboard Card */}
-      <div className="flex-1 min-h-0 bg-white border border-slate-100/80 rounded-2xl flex flex-col overflow-hidden shadow-xs">
+      <div className="flex-1 min-h-0 bg-white border-2 border-slate-100 rounded-2xl flex flex-col overflow-hidden shadow-sm">
         
         {/* Top Card Header (Title and description) */}
         <div className="border-b border-slate-100 p-4 bg-white shrink-0 flex flex-col gap-4">
