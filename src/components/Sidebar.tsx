@@ -144,7 +144,7 @@ export default function Sidebar({ role, userName, modules, open, collapsed, onCl
         {/* Header (Logo + Toggle) */}
         <div className="h-16 shrink-0 flex items-center px-4 relative">
           <Link href="/dashboard" className="flex items-center absolute left-4 z-10">
-            <div className={`w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center shadow-lg shadow-indigo-600/30 transition-transform duration-300 ${collapsed ? "mx-auto" : ""}`}>
+            <div className={`w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center transition-transform duration-300 ${collapsed ? "mx-auto" : ""}`}>
               <div className="w-2.5 h-2.5 bg-white rounded-sm" />
             </div>
             <span className={`ml-3 font-extrabold text-slate-800 text-[17px] tracking-tight whitespace-nowrap transition-opacity duration-300 ${

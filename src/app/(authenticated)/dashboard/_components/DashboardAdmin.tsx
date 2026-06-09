@@ -18,23 +18,23 @@ function StatCard({ icon, iconBg, label, value, sub, valueColor, subIcon, trendS
   sub: string; valueColor: string; subIcon?: React.ReactNode; trendStr?: string; trendUp?: boolean;
 }) {
   return (
-    <div className="bg-white border-2 border-slate-100 rounded-xl p-5 flex flex-col hover:shadow-md transition-shadow group relative overflow-hidden">
-      <div className="flex justify-between items-start mb-4">
-        <div className={"w-10 h-10 rounded-xl border flex items-center justify-center shrink-0 transition-transform group-hover:scale-110 " + iconBg}>
+    <div className="p-4 flex flex-col relative overflow-hidden group hover:bg-slate-50/50 transition-colors flex-1">
+      <div className="flex justify-between items-start mb-3">
+        <div className={"w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-transform group-hover:scale-110 " + iconBg}>
           {icon}
         </div>
         {trendStr && (
-          <span className={`px-2 py-0.5 rounded-md text-[10px] font-black uppercase flex items-center gap-1 ${trendUp ? "bg-emerald-50 text-emerald-600 border border-emerald-100" : "bg-red-50 text-red-600 border border-red-100"}`}>
-            {trendUp ? <TrendingUp className="w-3 h-3"/> : <TrendingUp className="w-3 h-3 rotate-180"/>} {trendStr}
+          <span className={`px-1.5 py-0.5 rounded-full text-[9px] font-bold flex items-center gap-0.5 ${trendUp ? "text-emerald-600 bg-emerald-50/50" : "text-red-600 bg-red-50/50"}`}>
+            {trendUp ? <TrendingUp className="w-2.5 h-2.5"/> : <TrendingUp className="w-2.5 h-2.5 rotate-180"/>} {trendStr}
           </span>
         )}
       </div>
       <div>
-        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">{label}</p>
-        <p className={"text-2xl font-black leading-tight truncate " + valueColor}>{value}</p>
-        <div className="flex items-center gap-1 mt-1.5">
+        <p className="text-[10px] font-bold text-slate-500 mb-0.5">{label}</p>
+        <p className={"text-xl font-black tracking-tight leading-none mb-1.5 " + valueColor}>{value}</p>
+        <div className="flex items-center gap-1">
           {subIcon}
-          <p className="text-[10px] text-slate-500 font-medium truncate">{sub}</p>
+          <p className="text-[10px] text-slate-400 font-medium">{sub}</p>
         </div>
       </div>
     </div>
@@ -87,71 +87,71 @@ export default function DashboardAdmin() {
   }, [pendingLeave, pendingSpds, pendingPurchases, pendingVendors]);
 
   return (
-    <div className="flex flex-col h-full overflow-y-auto w-full pb-10 space-y-5">
+    <div className="flex flex-col h-full overflow-hidden w-full space-y-4">
       
-      {/* ── 5 DETAILED STAT CARDS ── */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 shrink-0">
+      {/* ── 5 DETAILED STAT CARDS (Edge-to-Edge Unified Block) ── */}
+      <div className="bg-white border border-slate-200 rounded-xl flex flex-col lg:flex-row divide-y lg:divide-y-0 lg:divide-x divide-slate-100 shrink-0 overflow-hidden">
         <StatCard 
-          icon={<Users className="w-5 h-5 text-indigo-600"/>} iconBg="bg-indigo-50 border-indigo-100"
-          label="Total Personel" value={activeUsers} sub={`${users.length - activeUsers} Inaktif`} valueColor="text-slate-800"
+          icon={<Users className="w-4 h-4 text-indigo-600"/>} iconBg="bg-indigo-50"
+          label="Total Personel" value={activeUsers} sub={`${users.length - activeUsers} Inaktif`} valueColor="text-slate-900"
           trendStr="+2 bln ini" trendUp={true}
         />
         <StatCard 
-          icon={<FolderKanban className="w-5 h-5 text-emerald-600"/>} iconBg="bg-emerald-50 border-emerald-100"
-          label="Proyek Berjalan" value={activeProjects.length} sub={`Budget: ${formatCurrency(totalBudget)}`} valueColor="text-emerald-700"
+          icon={<FolderKanban className="w-4 h-4 text-emerald-600"/>} iconBg="bg-emerald-50"
+          label="Proyek Berjalan" value={activeProjects.length} sub={`Budget: ${formatCurrency(totalBudget)}`} valueColor="text-slate-900"
         />
         <StatCard 
-          icon={<Clock className="w-5 h-5 text-amber-500"/>} iconBg="bg-amber-50 border-amber-100"
-          label="Antrean Approval" value={totalPendingItems} sub="Cuti, SPD, Pembelian" valueColor="text-amber-600"
+          icon={<Clock className="w-4 h-4 text-amber-600"/>} iconBg="bg-amber-50"
+          label="Antrean Approval" value={totalPendingItems} sub="Cuti, SPD, Pembelian" valueColor="text-slate-900"
           trendStr={`${pendingLeave.length} Cuti`} trendUp={false}
         />
         <StatCard 
-          icon={<Wallet className="w-5 h-5 text-rose-500"/>} iconBg="bg-rose-50 border-rose-100"
-          label="Total Pengeluaran" value={formatCurrency(totalPengeluaran)} sub={`${pengeluaranPct}% dari total budget`} valueColor="text-rose-700"
+          icon={<Wallet className="w-4 h-4 text-rose-600"/>} iconBg="bg-rose-50"
+          label="Total Pengeluaran" value={formatCurrency(totalPengeluaran)} sub={`${pengeluaranPct}% budget`} valueColor="text-slate-900"
         />
         <StatCard 
-          icon={<Banknote className="w-5 h-5 text-violet-600"/>} iconBg="bg-violet-50 border-violet-100"
-          label="Payroll Draft" value={draftPayrolls} sub="Siklus bulan ini" valueColor="text-violet-700"
+          icon={<Banknote className="w-4 h-4 text-violet-600"/>} iconBg="bg-violet-50"
+          label="Payroll Draft" value={draftPayrolls} sub="Siklus bulan ini" valueColor="text-slate-900"
         />
       </div>
 
       {/* ── MIDDLE ROW: APPROVAL QUEUE & FINANCIAL SUMMARY ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 shrink-0">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1 min-h-0">
         
         {/* APPROVAL QUEUE (Span 2) */}
-        <div className="lg:col-span-2 bg-white rounded-xl border-2 border-slate-100 shadow-sm overflow-hidden flex flex-col">
-          <div className="p-4 border-b border-slate-50 flex items-center justify-between bg-slate-50/50">
+        <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 overflow-hidden flex flex-col h-full">
+          <div className="px-4 py-3 border-b border-slate-100 flex items-center justify-between bg-white shrink-0">
             <div className="flex items-center gap-2">
-              <div className="p-1.5 bg-amber-100 text-amber-600 rounded-lg"><AlertCircle className="w-4 h-4" /></div>
-              <h2 className="text-sm font-bold text-slate-800">Antrean Persetujuan (Prioritas)</h2>
+              <div className="p-1.5 bg-amber-50 text-amber-600 rounded-full"><AlertCircle className="w-3.5 h-3.5" /></div>
+              <h2 className="text-sm font-black text-slate-900 tracking-tight">Antrean Persetujuan</h2>
             </div>
-            <span className="text-[10px] font-bold bg-slate-200 text-slate-600 px-2 py-0.5 rounded-md">{totalPendingItems} Total</span>
+            <span className="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full">{totalPendingItems} Total</span>
           </div>
-          <div className="flex-1 overflow-x-auto">
+          <div className="flex-1 overflow-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-white border-b border-slate-100 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                  <th className="px-4 py-3">Tipe & Tanggal</th>
-                  <th className="px-4 py-3">Pemohon</th>
-                  <th className="px-4 py-3">Deskripsi</th>
-                  <th className="px-4 py-3 text-right">Nilai / Estimasi</th>
-                  <th className="px-4 py-3 text-center">Aksi</th>
+                <tr className="bg-white border-b border-slate-100 text-[9px] font-bold text-slate-400 uppercase tracking-wider">
+                  <th className="px-4 py-2.5">Tipe & Tanggal</th>
+                  <th className="px-4 py-2.5">Pemohon</th>
+                  <th className="px-4 py-2.5">Deskripsi</th>
+                  <th className="px-4 py-2.5 text-right">Nilai / Estimasi</th>
+                  <th className="px-4 py-2.5 text-center">Aksi</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-50 text-xs">
                 {approvalQueue.length > 0 ? approvalQueue.map((item, idx) => (
-                  <tr key={idx} className="hover:bg-slate-50/60 transition-colors group">
-                    <td className="px-4 py-3">
-                      <p className="font-bold text-slate-700">{item.type}</p>
-                      <p className="text-[10px] text-slate-400 mt-0.5">{new Date(item.date).toLocaleDateString("id-ID")}</p>
+                  <tr key={idx} className="hover:bg-slate-50/50 transition-colors group">
+                    <td className="px-4 py-2.5">
+                      <p className="font-bold text-slate-900">{item.type}</p>
+                      <p className="text-[10px] text-slate-400">{new Date(item.date).toLocaleDateString("id-ID")}</p>
                     </td>
-                    <td className="px-4 py-3 font-medium text-slate-600">{item.user}</td>
-                    <td className="px-4 py-3 text-[11px] text-slate-500 max-w-[200px] truncate">{item.desc}</td>
-                    <td className="px-4 py-3 text-right font-bold text-slate-700">
+                    <td className="px-4 py-2.5 font-medium text-slate-700">{item.user}</td>
+                    <td className="px-4 py-2.5 text-[11px] text-slate-500 max-w-[180px] truncate">{item.desc}</td>
+                    <td className="px-4 py-2.5 text-right font-bold text-slate-900">
                       {item.amount ? formatCurrency(item.amount) : <span className="text-slate-300">—</span>}
                     </td>
-                    <td className="px-4 py-3 text-center">
-                      <Link href={item.link} className="inline-flex items-center gap-1 px-3 py-1.5 bg-indigo-50 text-indigo-600 text-[10px] font-bold rounded-lg hover:bg-indigo-600 hover:text-white transition-colors border border-indigo-100 hover:border-indigo-600">
+                    <td className="px-4 py-2.5 text-center">
+                      <Link href={item.link} className="inline-flex items-center gap-1 px-3 py-1.5 bg-slate-50 text-slate-700 text-[10px] font-bold rounded-full hover:bg-slate-100 transition-colors">
                         Review <ChevronRight className="w-3 h-3"/>
                       </Link>
                     </td>
@@ -159,9 +159,8 @@ export default function DashboardAdmin() {
                 )) : (
                   <tr>
                     <td colSpan={5} className="px-4 py-8 text-center">
-                      <CheckCircle2 className="w-8 h-8 text-emerald-400 mx-auto mb-2" />
-                      <p className="text-sm font-bold text-slate-600">Tidak ada antrean</p>
-                      <p className="text-xs text-slate-400">Semua pengajuan telah diproses.</p>
+                      <CheckCircle2 className="w-6 h-6 text-emerald-400 mx-auto mb-2" />
+                      <p className="text-sm font-bold text-slate-700">Tidak ada antrean</p>
                     </td>
                   </tr>
                 )}
@@ -171,63 +170,51 @@ export default function DashboardAdmin() {
         </div>
 
         {/* FINANCIAL SUMMARY (Span 1) */}
-        <div className="bg-white border-2 border-slate-100 rounded-xl shadow-sm flex flex-col p-5">
+        <div className="bg-white border border-slate-200 rounded-xl flex flex-col p-4">
           <div className="flex items-center justify-between mb-5">
-            <h2 className="text-sm font-bold text-slate-800 flex items-center gap-2">
-              <CreditCard className="w-4 h-4 text-blue-500" /> Ringkasan Keuangan
+            <h2 className="text-sm font-black text-slate-900 tracking-tight flex items-center gap-1.5">
+              <CreditCard className="w-4 h-4 text-slate-400" /> Ringkasan Keuangan
             </h2>
-            <Link href="/finance" className="p-1 text-slate-400 hover:text-blue-500"><ArrowUpRight className="w-4 h-4"/></Link>
+            <Link href="/finance" className="p-1 text-slate-400 hover:text-indigo-600 transition-colors"><ArrowUpRight className="w-3.5 h-3.5"/></Link>
           </div>
           
-          <div className="space-y-5">
+          <div className="space-y-4">
             <div>
               <div className="flex justify-between text-xs mb-1.5">
-                <span className="font-bold text-slate-600">Realisasi Budget</span>
-                <span className="font-black text-slate-800">{pengeluaranPct}%</span>
+                <span className="font-bold text-slate-500">Realisasi Budget</span>
+                <span className="font-black text-slate-900">{pengeluaranPct}%</span>
               </div>
-              <div className="w-full bg-slate-100 rounded-full h-2">
-                <div className={`h-2 rounded-full ${pengeluaranPct > 80 ? 'bg-red-500' : 'bg-emerald-500'}`} style={{ width: `${Math.min(pengeluaranPct, 100)}%` }} />
+              <div className="w-full bg-slate-100 rounded-full h-1 mb-1.5">
+                <div className={`h-1 rounded-full ${pengeluaranPct > 80 ? 'bg-red-500' : 'bg-slate-800'}`} style={{ width: `${Math.min(pengeluaranPct, 100)}%` }} />
               </div>
-              <p className="text-[10px] text-slate-400 mt-1.5 text-right font-medium">Dari {formatCurrency(totalBudget)}</p>
+              <p className="text-[10px] text-slate-400 text-right font-medium">Dari {formatCurrency(totalBudget)}</p>
             </div>
 
-            <div className="space-y-3 pt-3 border-t border-slate-50">
+            <div className="space-y-3 pt-3 border-t border-slate-100">
               <div className="flex justify-between items-center">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-blue-500" />
-                  <span className="text-[11px] font-bold text-slate-600">Pembelian Alat/Jasa</span>
-                </div>
-                <span className="text-xs font-black text-slate-800">{formatCurrency(approvedPurchasesTotal)}</span>
+                <span className="text-[10px] font-bold text-slate-500">Pembelian Alat/Jasa</span>
+                <span className="text-xs font-black text-slate-900">{formatCurrency(approvedPurchasesTotal)}</span>
               </div>
               <div className="flex justify-between items-center">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-amber-500" />
-                  <span className="text-[11px] font-bold text-slate-600">Perjalanan Dinas (SPD)</span>
-                </div>
-                <span className="text-xs font-black text-slate-800">{formatCurrency(approvedSpdsTotal)}</span>
+                <span className="text-[10px] font-bold text-slate-500">Perjalanan Dinas (SPD)</span>
+                <span className="text-xs font-black text-slate-900">{formatCurrency(approvedSpdsTotal)}</span>
               </div>
               <div className="flex justify-between items-center">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-rose-500" />
-                  <span className="text-[11px] font-bold text-slate-600">Pembayaran Vendor</span>
-                </div>
-                <span className="text-xs font-black text-slate-800">{formatCurrency(approvedVendorsTotal)}</span>
+                <span className="text-[10px] font-bold text-slate-500">Pembayaran Vendor</span>
+                <span className="text-xs font-black text-slate-900">{formatCurrency(approvedVendorsTotal)}</span>
               </div>
               <div className="flex justify-between items-center">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-violet-500" />
-                  <span className="text-[11px] font-bold text-slate-600">Payroll / Gaji</span>
-                </div>
-                <span className="text-xs font-black text-slate-800">{formatCurrency(paidPayrollsTotal)}</span>
+                <span className="text-[10px] font-bold text-slate-500">Payroll / Gaji</span>
+                <span className="text-xs font-black text-slate-900">{formatCurrency(paidPayrollsTotal)}</span>
               </div>
             </div>
             
-            <div className="mt-auto pt-4">
-              <div className="p-3 bg-blue-50 rounded-lg border border-blue-100 flex items-start gap-3">
-                <Activity className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+            <div className="mt-auto pt-4 border-t border-slate-100">
+              <div className="flex items-start gap-2">
+                <Activity className="w-3 h-3 text-emerald-500 shrink-0 mt-0.5" />
                 <div>
-                  <p className="text-[10px] font-bold text-blue-800">Status Keuangan Stabil</p>
-                  <p className="text-[9px] text-blue-600 mt-0.5 leading-relaxed">Pengeluaran bulan ini masih dalam batas aman rencana proyek.</p>
+                  <p className="text-[10px] font-bold text-slate-900">Status Stabil</p>
+                  <p className="text-[9px] text-slate-500 mt-0.5 leading-relaxed">Pengeluaran bulan ini masih dalam batas aman rencana proyek.</p>
                 </div>
               </div>
             </div>
@@ -236,42 +223,42 @@ export default function DashboardAdmin() {
       </div>
 
       {/* ── BOTTOM ROW: RECENT ACTIVITIES & DIRECTORY ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 shrink-0">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1 min-h-0">
         
         {/* RECENT ACTIVITIES */}
-        <div className="bg-white border-2 border-slate-100 rounded-xl shadow-sm flex flex-col">
-          <div className="p-4 border-b border-slate-50 flex items-center justify-between">
-            <h2 className="text-sm font-bold text-slate-800 flex items-center gap-2">
-              <Activity className="w-4 h-4 text-indigo-500" /> Aktivitas Sistem
+        <div className="bg-white border border-slate-200 rounded-xl flex flex-col h-full overflow-hidden">
+          <div className="px-4 py-3 border-b border-slate-100 flex items-center justify-between shrink-0">
+            <h2 className="text-sm font-black text-slate-900 tracking-tight flex items-center gap-1.5">
+              <Activity className="w-4 h-4 text-slate-400" /> Aktivitas Sistem
             </h2>
           </div>
-          <div className="p-5 flex-1">
-            <div className="space-y-4 relative before:absolute before:inset-0 before:ml-2.5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-slate-100">
+          <div className="p-4 flex-1 overflow-auto">
+            <div className="space-y-4 relative before:absolute before:inset-0 before:ml-2 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-px before:bg-slate-100">
               {/* Dummy Timeline items based on stats */}
-              <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                <div className="flex items-center justify-center w-6 h-6 rounded-full border-2 border-white bg-emerald-500 text-white shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm z-10">
-                  <CheckCircle2 className="w-3 h-3" />
+              <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                <div className="flex items-center justify-center w-4 h-4 rounded-full border-[2px] border-white bg-emerald-500 text-white shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+                  <CheckCircle2 className="w-2 h-2" />
                 </div>
-                <div className="w-[calc(100%-2.5rem)] md:w-[calc(50%-1.5rem)] p-3 rounded-lg border border-slate-100 bg-white shadow-sm">
-                  <p className="font-bold text-slate-800 text-xs">Payroll Selesai</p>
+                <div className="w-[calc(100%-1.5rem)] md:w-[calc(50%-1rem)] py-1.5">
+                  <p className="font-bold text-slate-900 text-xs">Payroll Selesai</p>
                   <p className="text-[10px] text-slate-500 mt-0.5">Siklus gaji bulan lalu telah didistribusikan.</p>
                 </div>
               </div>
-              <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                <div className="flex items-center justify-center w-6 h-6 rounded-full border-2 border-white bg-blue-500 text-white shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm z-10">
-                  <Users className="w-3 h-3" />
+              <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                <div className="flex items-center justify-center w-4 h-4 rounded-full border-[2px] border-white bg-indigo-500 text-white shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+                  <Users className="w-2 h-2" />
                 </div>
-                <div className="w-[calc(100%-2.5rem)] md:w-[calc(50%-1.5rem)] p-3 rounded-lg border border-slate-100 bg-white shadow-sm">
-                  <p className="font-bold text-slate-800 text-xs">2 Karyawan Baru</p>
+                <div className="w-[calc(100%-1.5rem)] md:w-[calc(50%-1rem)] py-1.5">
+                  <p className="font-bold text-slate-900 text-xs">2 Karyawan Baru</p>
                   <p className="text-[10px] text-slate-500 mt-0.5">Berhasil ditambahkan ke sistem HRIS.</p>
                 </div>
               </div>
-              <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                <div className="flex items-center justify-center w-6 h-6 rounded-full border-2 border-white bg-amber-500 text-white shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm z-10">
-                  <ClipboardList className="w-3 h-3" />
+              <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                <div className="flex items-center justify-center w-4 h-4 rounded-full border-[2px] border-white bg-amber-500 text-white shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+                  <ClipboardList className="w-2 h-2" />
                 </div>
-                <div className="w-[calc(100%-2.5rem)] md:w-[calc(50%-1.5rem)] p-3 rounded-lg border border-slate-100 bg-white shadow-sm">
-                  <p className="font-bold text-slate-800 text-xs">{totalWorkPlans} Rencana Kerja</p>
+                <div className="w-[calc(100%-1.5rem)] md:w-[calc(50%-1rem)] py-1.5">
+                  <p className="font-bold text-slate-900 text-xs">{totalWorkPlans} Rencana Kerja</p>
                   <p className="text-[10px] text-slate-500 mt-0.5">Draft EAR telah disubmit minggu ini.</p>
                 </div>
               </div>
@@ -280,63 +267,63 @@ export default function DashboardAdmin() {
         </div>
 
         {/* PERSONNEL DIRECTORY (Span 2) */}
-        <div className="lg:col-span-2 bg-white rounded-xl border-2 border-slate-100 overflow-hidden shadow-sm flex flex-col">
-          <div className="p-4 border-b border-slate-50 bg-slate-50/50 flex items-center justify-between">
+        <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 overflow-hidden flex flex-col h-full">
+          <div className="px-4 py-3 border-b border-slate-100 bg-white flex items-center justify-between shrink-0">
             <div className="flex items-center gap-2">
-              <Users className="w-5 h-5 text-indigo-500" />
-              <h2 className="text-sm font-bold text-slate-800">Direktori Personel</h2>
+              <div className="p-1.5 bg-indigo-50 text-indigo-600 rounded-full"><Users className="w-3.5 h-3.5" /></div>
+              <h2 className="text-sm font-black text-slate-900 tracking-tight">Direktori Personel</h2>
             </div>
-            <Link href="/users" className="px-3 py-1.5 bg-white border border-slate-200 text-slate-600 rounded-lg text-[10px] font-bold hover:bg-slate-50 transition-colors flex items-center gap-1 shadow-sm">
+            <Link href="/users" className="px-3 py-1.5 bg-slate-50 border border-slate-100 text-slate-700 rounded-full text-[10px] font-bold hover:bg-slate-100 transition-colors flex items-center gap-1">
               Kelola <ChevronRight className="w-3 h-3" />
             </Link>
           </div>
           
-          <div className="overflow-x-auto flex-1">
+          <div className="flex-1 overflow-auto">
             <table className="w-full text-left">
               <thead>
-                <tr className="bg-white border-b border-slate-100 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                  <th className="px-5 py-3">Nama Lengkap</th>
-                  <th className="px-5 py-3 hidden sm:table-cell">Jabatan / Dept</th>
-                  <th className="px-5 py-3 text-center">Akses Role</th>
-                  <th className="px-5 py-3 text-center hidden md:table-cell">Status</th>
+                <tr className="bg-white border-b border-slate-100 text-[9px] font-bold text-slate-400 uppercase tracking-wider">
+                  <th className="px-4 py-2.5">Nama Lengkap</th>
+                  <th className="px-4 py-2.5 hidden sm:table-cell">Jabatan / Dept</th>
+                  <th className="px-4 py-2.5 text-center">Akses Role</th>
+                  <th className="px-4 py-2.5 text-center hidden md:table-cell">Status</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-50 text-xs">
                 {users.slice(0, 5).map((user) => (
-                  <tr key={user.id} className="hover:bg-slate-50/60 transition-colors group">
-                    <td className="px-5 py-3.5">
+                  <tr key={user.id} className="hover:bg-slate-50/50 transition-colors group">
+                    <td className="px-4 py-2.5">
                       <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 font-black text-[11px] flex items-center justify-center shrink-0 border border-indigo-100 group-hover:scale-105 transition-transform">
+                        <div className="w-8 h-8 rounded-full bg-indigo-50 text-indigo-600 font-black text-[10px] flex items-center justify-center shrink-0 border border-indigo-100 group-hover:scale-105 transition-transform">
                           {user.name.charAt(0)}
                         </div>
                         <div>
-                          <p className="font-bold text-slate-800 leading-tight">{user.name}</p>
-                          <p className="text-[10px] text-slate-400 font-medium font-mono mt-0.5">{user.employeeId}</p>
+                          <p className="font-bold text-slate-900 leading-tight">{user.name}</p>
+                          <p className="text-[10px] text-slate-400 font-medium mt-0.5">{user.employeeId}</p>
                         </div>
                       </div>
                     </td>
-                    <td className="px-5 py-3.5 hidden sm:table-cell">
-                      <p className="font-bold text-slate-700 leading-tight">{user.position}</p>
+                    <td className="px-4 py-2.5 hidden sm:table-cell">
+                      <p className="font-bold text-slate-700 leading-tight text-xs">{user.position}</p>
                       <p className="text-[10px] text-slate-500 font-medium mt-0.5">{user.department}</p>
                     </td>
-                    <td className="px-5 py-3.5 text-center">
-                      <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-wider border ${
-                        user.role === 'admin' ? "bg-indigo-50 text-indigo-600 border-indigo-200" :
-                        user.role === 'hr' ? "bg-amber-50 text-amber-600 border-amber-200" :
-                        "bg-slate-50 text-slate-500 border-slate-200"
+                    <td className="px-4 py-2.5 text-center">
+                      <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wide border ${
+                        user.role === 'admin' ? "bg-indigo-50 text-indigo-700 border-indigo-100" :
+                        user.role === 'hr' ? "bg-amber-50 text-amber-700 border-amber-100" :
+                        "bg-slate-50 text-slate-600 border-slate-200"
                       }`}>
                         {user.role === 'admin' && <ShieldCheck className="w-2.5 h-2.5"/>}
                         {user.role}
                       </span>
                     </td>
-                    <td className="px-5 py-3.5 text-center hidden md:table-cell">
+                    <td className="px-4 py-2.5 text-center hidden md:table-cell">
                       {user.isActive ? (
-                        <span className="inline-flex items-center gap-1.5 text-[10px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-1 rounded-lg">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"/> Aktif
+                        <span className="inline-flex items-center gap-1.5 text-[10px] font-bold text-emerald-600">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"/> Aktif
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1 text-[10px] font-bold text-slate-500 bg-slate-50 border border-slate-200 px-2 py-1 rounded-lg">
-                          <span className="w-1.5 h-1.5 rounded-full bg-slate-400"/> Inaktif
+                        <span className="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-500">
+                          <span className="w-1.5 h-1.5 rounded-full bg-slate-300"/> Inaktif
                         </span>
                       )}
                     </td>
@@ -346,7 +333,6 @@ export default function DashboardAdmin() {
             </table>
           </div>
         </div>
-        
       </div>
     </div>
   );

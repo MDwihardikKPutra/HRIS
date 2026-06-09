@@ -194,9 +194,9 @@ export default function UsersPage() {
   };
 
   return (
-    <div className="flex flex-col h-full overflow-hidden w-full space-y-5">
+    <div className="flex flex-col h-full overflow-hidden w-full space-y-4">
       {/* Unified Table Dashboard Card */}
-      <div className="flex-1 min-h-0 bg-white border-2 border-slate-100 rounded-2xl flex flex-col overflow-hidden shadow-sm">
+      <div className="flex-1 min-h-0 bg-white rounded-2xl flex flex-col overflow-hidden">
         
         {/* Top Card Header */}
         <div className="border-b border-slate-100 p-4 bg-white shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4">

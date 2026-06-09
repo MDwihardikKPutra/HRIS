@@ -126,17 +126,18 @@ function FinanceContent() {
  ];
 
  return (
-    <div className="flex flex-col h-[calc(100vh-5.25rem)] overflow-hidden gap-4 w-full">
-      {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 shrink-0">
-        <div>
-          <h1 className="text-lg md:text-xl font-bold text-slate-800 tracking-tight">Approval Pembayaran</h1>
-          <p className="text-xs font-semibold text-slate-500 mt-1">Pantau ringkasan dan persetujuan pengajuan dana</p>
-        </div>
-      </div>
-
+    <div className="flex flex-col h-full overflow-hidden w-full space-y-4">
       {/* Unified Table Dashboard Card */}
-      <div className="flex-1 min-h-0 bg-white border-2 border-slate-100 rounded-2xl flex flex-col overflow-hidden shadow-sm">
+      <div className="flex-1 min-h-0 bg-white rounded-2xl flex flex-col overflow-hidden">
+        
+        {/* Top Header */}
+        <div className="border-b border-slate-100 p-4 shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-xl md:text-2xl font-semibold text-slate-800 tracking-tight">Approval Pembayaran</h1>
+            <p className="text-sm font-medium text-slate-500 mt-1">Pantau ringkasan dan persetujuan pengajuan dana</p>
+          </div>
+        </div>
+
         {/* Symmetrical Metrics Bar - High Density */}
         <div className="grid grid-cols-1 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-slate-100 bg-slate-50/50 border-b border-slate-100 shrink-0">
           
@@ -261,8 +262,8 @@ function FinanceContent() {
         <div className="flex-1 min-h-0 overflow-auto scrollbar-hide">
           <table className="w-full text-xs">
             <thead>
-              <tr className="bg-slate-50/80 border-b border-slate-100 font-semibold text-slate-500 capitalize tracking-wide text-[9px] sticky top-0 z-10 backdrop-blur-md">
-                <th className="text-left py-2 px-4 font-bold">Referensi / Pengaju</th>
+              <tr className="bg-white border-b border-slate-200 font-semibold text-slate-500 capitalize tracking-wide text-[9px] sticky top-0 z-20 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+                <th className="text-left py-3 px-4 font-bold">Referensi / Pengaju</th>
                 <th className="text-left py-2 px-4 hidden md:table-cell font-bold">Tujuan & Deskripsi</th>
                 <th className="text-right py-2 px-4 hidden sm:table-cell font-bold">Kategori & Nominal</th>
                 <th className="text-center py-2 px-4 font-bold w-24">Status</th>

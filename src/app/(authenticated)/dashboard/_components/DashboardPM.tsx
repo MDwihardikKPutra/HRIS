@@ -58,7 +58,7 @@ export default function DashboardPM() {
   ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 10);
 
   return (
-    <div className="flex flex-col h-[calc(100vh-5.5rem)] overflow-hidden gap-5 w-full pb-2">
+    <div className="flex flex-col h-full overflow-hidden w-full space-y-4">
 
       {/* Banner */}
       <div className="relative overflow-hidden rounded-xl p-4 md:p-6 bg-indigo-600">

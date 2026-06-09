@@ -8,20 +8,20 @@
   --sidebar-text-active: #4f46e5; /* Indigo-600 */
   
   --header-bg: rgba(255, 255, 255, 0.8);
-  --content-bg: #ffffff; /* White background as requested */
+  --content-bg: #f4f7fe; /* Very light cool gray/blue background for contrast */
   
   --accent-primary: #4f46e5; /* Indigo-600 */
   --accent-secondary: #6366f1; /* Indigo-500 */
   
   --card-bg: #ffffff;
-  --card-border: #f1f5f9;
+  --card-border: transparent;
   
   --text-primary: #0f172a; /* Slate-900 */
   --text-secondary: #475569; /* Slate-600 */
   --text-muted: #94a3b8; /* Slate-400 */
 
   /* Table colors */
-  --table-header-bg: #f8fafc;
+  --table-header-bg: #ffffff;
   --table-border: #f1f5f9;
   --table-hover: #f8fafc;
 
@@ -29,21 +29,13 @@
   --font-sans: var(--font-plus-jakarta), "Plus Jakarta Sans", "Helvetica", "Arial", sans-serif;
 }
 
-/* Flat design style for all cards (No Shadows) */
+/* Floating Soft Card Style (Based on reference image) */
 .bg-white.rounded-xl,
 .bg-white.rounded-2xl,
 .bg-white.rounded-lg,
 .bg-card-bg {
-  /* box-shadow removed for flat design */
-  border-color: rgba(241, 245, 249, 1) !important; /* border-slate-100 for a very thin/light edge */
-}
-
-@layer utilities {
-  /* Strip all tailwind shadow utilities without breaking focus rings */
-  .shadow-sm, .shadow, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl, .shadow-inner {
-    --tw-shadow: 0 0 #0000 !important;
-    --tw-shadow-colored: 0 0 #0000 !important;
-  }
+  box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.04) !important;
+  border-color: transparent !important; /* No harsh borders */
 }
 
 @theme inline {

@@ -6,6 +6,7 @@ import DashboardFinance from "./_components/DashboardFinance";
 import DashboardHR from "./_components/DashboardHR";
 import DashboardAdmin from "./_components/DashboardAdmin";
 import DashboardKaryawan from "./_components/DashboardKaryawan";
+import DashboardPM from "./_components/DashboardPM";
 
 export default function DashboardPage() {
   const { data: session } = useSession();
@@ -13,6 +14,7 @@ export default function DashboardPage() {
   const access = ROLE_ACCESS[userRole] ?? ROLE_ACCESS.karyawan;
 
   if (userRole === "admin") return <DashboardAdmin />;
+  if (userRole === "project_manager") return <DashboardPM />;
   if (access.canApprovePayment) return <DashboardFinance />;
   if (access.canApproveLeave) return <DashboardHR />;
   return <DashboardKaryawan />;

@@ -58,10 +58,10 @@ export default function Modal({
 
  {/* Modal Container: Flat, no , clean border */}
  <div
- className={`relative w-full ${sizeClasses[size]} bg-white border-2 border-slate-100 rounded-xl overflow-hidden flex flex-col transition-all duration-300 scale-100 opacity-100 animate-in fade-in zoom-in-95`}
+ className={`relative w-full ${sizeClasses[size]} bg-white rounded-2xl overflow-hidden flex flex-col shadow-2xl transition-all duration-300 scale-100 opacity-100 animate-in fade-in zoom-in-95`}
  >
  {/* Header */}
- <div className="flex items-center justify-between px-5 py-3 border-b border-slate-100 bg-white">
+ <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-white">
  <h3 className="text-base font-bold text-slate-800 tracking-tight">{title}</h3>
  <button
  onClick={onClose}
@@ -72,13 +72,13 @@ export default function Modal({
  </div>
  
  {/* Content */}
- <div className="flex-1 overflow-y-auto p-5 text-slate-600">
+ <div className="flex-1 overflow-y-auto p-6 text-slate-600">
  {children}
  </div>
  
  {/* Footer */}
  {footer ? (
- <div className="px-5 py-3 border-t border-slate-100 bg-slate-50/20 flex justify-end gap-2.5">
+ <div className="px-6 py-4 border-t border-slate-100 bg-slate-50/20 flex justify-end gap-2.5">
  {footer}
  </div>
  ) : null}

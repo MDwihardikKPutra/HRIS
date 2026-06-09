@@ -78,7 +78,7 @@ export default function LoginPage() {
             {/* Top Content */}
             <div className="relative z-10 max-w-[480px]">
               <div className="mb-12 flex items-center gap-2.5">
-                <div className="w-10 h-10 bg-indigo-500 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                <div className="w-10 h-10 bg-indigo-500 rounded-xl flex items-center justify-center">
                   <div className="w-3.5 h-3.5 bg-white rounded-sm" />
                 </div>
                 <span className="text-white font-bold text-2xl tracking-tighter">HRIS Next</span>

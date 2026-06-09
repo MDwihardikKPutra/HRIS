@@ -31,48 +31,50 @@ export default function SPDPage() {
   }, [filterStatus, searchQuery, userId]);
 
   return (
-    <div className="space-y-5 w-full">
-      {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-xl md:text-2xl font-semibold text-slate-800 tracking-tight flex items-center gap-2">
-            <Plane className="w-6 h-6 text-indigo-600" /> Perjalanan Dinas (SPD)
-          </h1>
-          <p className="text-sm font-medium text-slate-500 mt-1">Daftar pengajuan Surat Perjalanan Dinas Anda</p>
+    <div className="flex flex-col h-full overflow-hidden w-full space-y-4">
+      {/* Unified Dashboard Card */}
+      <div className="flex-1 min-h-0 bg-white rounded-2xl flex flex-col overflow-hidden">
+        
+        {/* Top Header */}
+        <div className="border-b border-slate-100 p-4 shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-xl md:text-2xl font-semibold text-slate-800 tracking-tight flex items-center gap-2">
+              <Plane className="w-6 h-6 text-indigo-600" /> Perjalanan Dinas (SPD)
+            </h1>
+            <p className="text-sm font-medium text-slate-500 mt-1">Daftar pengajuan Surat Perjalanan Dinas Anda</p>
+          </div>
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs rounded-xl transition-colors self-start sm:self-center shrink-0"
+          >
+            <span>+</span> Pengajuan Baru
+          </button>
         </div>
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs rounded-xl transition-colors self-start sm:self-center"
-        >
-          <span>+</span> Pengajuan Baru
-        </button>
-      </div>
 
-      {/* STANDARDIZED: Filter Bar */}
-      <FilterBar>
-        <StatusFilter
-          options={["Semua", "Pending", "Approved", "Rejected"]}
-          activeStatus={filterStatus}
-          onStatusChange={setFilterStatus}
-        />
-        <TableSearch
-          value={searchQuery}
-          onChange={setSearchQuery}
-          placeholder="Cari referensi atau tujuan..."
-        />
-      </FilterBar>
+        {/* Filter Controls */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 border-b border-slate-50 shrink-0">
+          <StatusFilter
+            options={["Semua", "Pending", "Approved", "Rejected"]}
+            activeStatus={filterStatus}
+            onStatusChange={setFilterStatus}
+          />
+          <TableSearch
+            value={searchQuery}
+            onChange={setSearchQuery}
+            placeholder="Cari referensi atau tujuan..."
+          />
+        </div>
 
-      {/* STANDARDIZED: Main Table */}
-      <div className="bg-white border-2 border-slate-100 rounded-2xl shadow-sm overflow-hidden mt-2">
-        <div className="overflow-x-auto scrollbar-hide">
+        {/* Main Table */}
+        <div className="flex-1 overflow-auto scrollbar-hide">
           <table className="w-full text-xs">
             <thead>
-              <tr className="bg-slate-50/50 border-b border-slate-100 font-semibold text-slate-500 tracking-wide text-[10px]">
-                <th className="text-left py-2.5 px-4 font-bold">Referensi SPD</th>
-                <th className="text-left py-2.5 px-4 hidden sm:table-cell font-bold">Tujuan</th>
-                <th className="text-left py-2.5 px-4 hidden sm:table-cell font-bold">Nominal</th>
-                <th className="text-center py-2.5 px-4 font-bold">Status</th>
-                <th className="text-right py-2.5 px-4 font-bold">Opsi</th>
+              <tr className="bg-white border-b border-slate-200 font-semibold text-slate-500 tracking-wide text-[10px] sticky top-0 z-20 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+                <th className="text-left py-3 px-4 font-bold">Referensi SPD</th>
+                <th className="text-left py-3 px-4 hidden sm:table-cell font-bold">Tujuan</th>
+                <th className="text-left py-3 px-4 hidden sm:table-cell font-bold">Nominal</th>
+                <th className="text-center py-3 px-4 font-bold">Status</th>
+                <th className="text-right py-3 px-4 font-bold">Opsi</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50 group">

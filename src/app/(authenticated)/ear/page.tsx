@@ -46,21 +46,24 @@ export default function EARPage() {
  }, [selectedMonth, selectedUser, selectedProject, searchQuery]);
 
  return (
- <div className="space-y-5 w-full">
- {/* Page Header */}
- <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
- <div>
- <h1 className="text-xl md:text-2xl font-semibold text-slate-800 tracking-tight">Executive Report (EAR)</h1>
- <p className="text-sm font-medium text-slate-500 mt-1">Monitoring Rencana & Realisasi Kerja Karyawan</p>
- </div>
- <button className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 text-slate-600 font-medium text-xs rounded-xl hover:bg-slate-50 transition-colors self-start sm:self-center">
- <Printer className="w-3.5 h-3.5"/>
- Cetak Laporan
- </button>
- </div>
+ <div className="flex flex-col h-full overflow-hidden w-full space-y-4">
+  {/* Unified Dashboard Card */}
+  <div className="flex-1 min-h-0 bg-white rounded-2xl flex flex-col overflow-hidden">
+  
+  {/* Top Header */}
+  <div className="border-b border-slate-100 p-4 shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+  <div>
+  <h1 className="text-xl md:text-2xl font-semibold text-slate-800 tracking-tight">Executive Report (EAR)</h1>
+  <p className="text-sm font-medium text-slate-500 mt-1">Monitoring Rencana & Realisasi Kerja Karyawan</p>
+  </div>
+  <button className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 text-slate-600 font-medium text-xs rounded-xl hover:bg-slate-50 transition-colors self-start sm:self-center shrink-0">
+  <Printer className="w-3.5 h-3.5"/>
+  Cetak Laporan
+  </button>
+  </div>
 
- {/* Filter Bar (Light Mode) */}
- <div className="bg-white rounded-xl border border-slate-100 p-4">
+  {/* Filter Bar (Light Mode) */}
+  <div className="bg-white border-b border-slate-50 p-4 shrink-0">
  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
  {/* Month Filter */}
  <div className="space-y-1.5">
@@ -165,17 +168,16 @@ export default function EARPage() {
  </div>
 
  {/* Main Content Table (Geometric & Compact) */}
- <div className="bg-white rounded-2xl border-2 border-slate-100 shadow-sm overflow-hidden">
- <div className="overflow-x-auto scrollbar-hide">
+ <div className="flex-1 overflow-auto scrollbar-hide">
  {activeTab ==="plans"? (
  <table className="w-full text-xs">
  <thead>
- <tr className="bg-slate-50/50 border-b border-slate-100 font-semibold text-slate-500 capitalize tracking-wide text-[10px]">
- <th className="px-4 py-2.5 text-left font-bold">Waktu</th>
- <th className="px-4 py-2.5 text-left font-bold">Karyawan</th>
- <th className="px-4 py-2.5 text-left font-bold">Aktivitas</th>
- <th className="px-4 py-2.5 text-left hidden md:table-cell font-bold">Project</th>
- <th className="px-4 py-2.5 text-right font-bold">Opsi</th>
+ <tr className="bg-white border-b border-slate-200 font-semibold text-slate-500 capitalize tracking-wide text-[10px] sticky top-0 z-20 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+ <th className="px-4 py-3 text-left font-bold">Waktu</th>
+ <th className="px-4 py-3 text-left font-bold">Karyawan</th>
+ <th className="px-4 py-3 text-left font-bold">Aktivitas</th>
+ <th className="px-4 py-3 text-left hidden md:table-cell font-bold">Project</th>
+ <th className="px-4 py-3 text-right font-bold">Opsi</th>
  </tr>
  </thead>
  <tbody className="divide-y divide-slate-50">
@@ -240,12 +242,12 @@ export default function EARPage() {
  ) : (
  <table className="w-full text-xs">
  <thead>
- <tr className="bg-slate-50/50 border-b border-slate-100 font-semibold text-slate-500 capitalize tracking-wide text-[10px]">
- <th className="px-4 py-2.5 text-left font-bold">Progress</th>
- <th className="px-4 py-2.5 text-left font-bold">Karyawan</th>
- <th className="px-4 py-2.5 text-left font-bold">Aktivitas</th>
- <th className="px-4 py-2.5 text-left hidden md:table-cell font-bold">Project</th>
- <th className="px-4 py-2.5 text-right font-bold">Opsi</th>
+ <tr className="bg-white border-b border-slate-200 font-semibold text-slate-500 capitalize tracking-wide text-[10px] sticky top-0 z-20 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+ <th className="px-4 py-3 text-left font-bold">Progress</th>
+ <th className="px-4 py-3 text-left font-bold">Karyawan</th>
+ <th className="px-4 py-3 text-left font-bold">Aktivitas</th>
+ <th className="px-4 py-3 text-left hidden md:table-cell font-bold">Project</th>
+ <th className="px-4 py-3 text-right font-bold">Opsi</th>
  </tr>
  </thead>
  <tbody className="divide-y divide-slate-50">

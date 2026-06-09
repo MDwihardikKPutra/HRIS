@@ -26,33 +26,35 @@ export default function WorkRealizationsPage() {
   });
 
   return (
-    <div className="space-y-5 w-full">
-      {/* Page header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-xl md:text-2xl font-semibold text-slate-800 tracking-tight">Realisasi Kerja</h1>
-          <p className="text-sm font-medium text-slate-500 mt-1">Laporan pencapaian tugas dan progres harian tim</p>
+    <div className="flex flex-col h-full overflow-hidden w-full space-y-4">
+      {/* Unified Dashboard Card */}
+      <div className="flex-1 min-h-0 bg-white rounded-2xl flex flex-col overflow-hidden">
+        
+        {/* Top Header */}
+        <div className="border-b border-slate-100 p-4 shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-xl md:text-2xl font-semibold text-slate-800 tracking-tight">Realisasi Kerja</h1>
+            <p className="text-sm font-medium text-slate-500 mt-1">Laporan pencapaian tugas dan progres harian tim</p>
+          </div>
+          <div className="flex items-center gap-2.5 shrink-0">
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="px-4 py-2 bg-white border border-slate-200 text-slate-600 font-medium text-xs rounded-xl hover:bg-slate-50 transition-colors"
+            >
+              Export Log
+            </button>
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs rounded-xl transition-colors"
+            >
+              <Plus className="w-3.5 h-3.5" />
+              Lapor Realisasi
+            </button>
+          </div>
         </div>
-        <div className="flex items-center gap-2.5">
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="px-4 py-2 bg-white border border-slate-200 text-slate-600 font-medium text-xs rounded-xl hover:bg-slate-50 transition-colors"
-          >
-            Export Log
-          </button>
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs rounded-xl transition-colors"
-          >
-            <Plus className="w-3.5 h-3.5" />
-            Lapor Realisasi
-          </button>
-        </div>
-      </div>
 
-      {/* STANDARDIZED: Content table */}
-      <div className="bg-white border-2 border-slate-100 rounded-2xl shadow-sm overflow-hidden mt-2">
-        <div className="p-5 border-b border-slate-50 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        {/* Filter Controls */}
+        <div className="p-4 border-b border-slate-50 flex flex-col md:flex-row md:items-center justify-between gap-4 shrink-0">
           <h2 className="text-base font-semibold text-slate-800">Daftar Capaian Harian</h2>
           <div className="relative group min-w-[300px]">
             <Search className="absolute left-3 top-2.5 w-3.5 h-3.5 text-slate-400 group-focus-within:text-indigo-500" />
@@ -66,15 +68,16 @@ export default function WorkRealizationsPage() {
           </div>
         </div>
 
-        <div className="overflow-x-auto scrollbar-hide">
+        {/* Main Table */}
+        <div className="flex-1 overflow-auto scrollbar-hide">
           <table className="w-full text-xs">
             <thead>
-              <tr className="bg-slate-50/50 border-b border-slate-100 font-semibold text-slate-500 tracking-wide text-[10px]">
-                <th className="text-left py-2.5 px-4 font-bold">Pelaksana</th>
-                <th className="text-left py-2.5 px-4 font-bold">Proyek & Aktivitas</th>
-                <th className="text-left py-2.5 px-4 hidden md:table-cell font-bold">Velocity</th>
-                <th className="text-center py-2.5 px-4 whitespace-nowrap font-bold">Status</th>
-                <th className="text-right py-2.5 px-4 font-bold">Opsi</th>
+              <tr className="bg-white border-b border-slate-200 font-semibold text-slate-500 tracking-wide text-[10px] sticky top-0 z-20 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+                <th className="text-left py-3 px-4 font-bold">Pelaksana</th>
+                <th className="text-left py-3 px-4 font-bold">Proyek & Aktivitas</th>
+                <th className="text-left py-3 px-4 hidden md:table-cell font-bold">Velocity</th>
+                <th className="text-center py-3 px-4 font-bold">Status</th>
+                <th className="text-right py-3 px-4 font-bold">Opsi</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50">

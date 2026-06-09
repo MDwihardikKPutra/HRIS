@@ -130,7 +130,7 @@ export default function ManagePayrollPage() {
  }, [enrichedPayrolls]);
 
   return (
-    <div className="flex flex-col h-[calc(100vh-5.5rem)] overflow-hidden w-full pb-2">
+    <div className="flex flex-col h-full overflow-hidden w-full space-y-4">
       {/* Unified Table Dashboard Card */}
       <div className="flex-1 min-h-0 bg-white border-2 border-slate-100 rounded-2xl flex flex-col overflow-hidden shadow-sm">
         

@@ -60,14 +60,17 @@ export default function ProjectsPage() {
  }, [selectedProject]);
 
  return (
- <div className="space-y-5 w-full">
- {/* Page header */}
- <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+ <div className="flex flex-col h-full overflow-hidden w-full space-y-4">
+ {/* Unified Dashboard Card */}
+ <div className="flex-1 min-h-0 bg-white rounded-2xl flex flex-col overflow-hidden">
+ 
+ {/* Top Header */}
+ <div className="border-b border-slate-100 p-4 shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
  <div>
  <h1 className="text-xl md:text-2xl font-semibold text-slate-800 tracking-tight">Project Management</h1>
  <p className="text-sm font-medium text-slate-500 mt-1">Monitoring lifecycle dan alokasi personel proyek</p>
  </div>
- <div className="flex items-center gap-2.5">
+ <div className="flex items-center gap-2.5 shrink-0">
  <button
  className="px-4 py-2 bg-white border border-slate-200 text-slate-600 font-medium text-xs rounded-xl hover:bg-slate-50 transition-colors"
  >
@@ -82,8 +85,8 @@ export default function ProjectsPage() {
  </div>
  </div>
 
- {/* Control Bar */}
- <div className="bg-white p-3 rounded-xl border border-slate-100 mt-4">
+ {/* Filter Controls */}
+ <div className="p-4 border-b border-slate-50 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shrink-0">
  <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
  <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide pb-1 lg:pb-0">
  {["Semua Proyek","active","on_hold","completed"].map((tab) => (
@@ -114,13 +117,12 @@ export default function ProjectsPage() {
  </div>
  </div>
 
- {/* Project Table */}
- <div className="bg-white border-2 border-slate-100 rounded-2xl shadow-sm overflow-hidden mt-2">
- <div className="overflow-x-auto scrollbar-hide">
+ {/* Main Table */}
+ <div className="flex-1 overflow-auto scrollbar-hide">
  <table className="w-full text-xs">
  <thead>
- <tr className="bg-slate-50/50 border-b border-slate-100 font-semibold text-slate-500 tracking-wide text-[10px]">
- <th className="text-left py-2.5 px-4">Informasi Proyek</th>
+ <tr className="bg-white border-b border-slate-200 font-semibold text-slate-500 tracking-wide text-[10px] sticky top-0 z-20 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+ <th className="text-left py-3 px-4 font-bold">Informasi Proyek</th>
  <th className="text-left py-2.5 px-4 hidden md:table-cell">PIC / Manager</th>
  <th className="text-left py-2.5 px-4 hidden lg:table-cell">Timeline</th>
  <th className="text-center py-2.5 px-4">Status</th>
