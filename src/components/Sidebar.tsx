@@ -49,6 +49,7 @@ export default function Sidebar({ role, userName, modules, open, collapsed, onCl
     {
       title: "Layanan Karyawan",
       items: [
+        { label: "Kalender Perusahaan", href: "/calendar", icon: CalendarDays },
         { label: "Rencana Kerja", href: "/work/plans", icon: ClipboardList },
         { label: "Realisasi Kerja", href: "/work/realizations", icon: CheckCircle2 },
         { label: "Cuti & Izin", href: "/my-leave", icon: CalendarDays },
@@ -60,7 +61,6 @@ export default function Sidebar({ role, userName, modules, open, collapsed, onCl
       title: "System Modules",
       roles: ["admin", "hr", "pm", "employee"],
       items: [
-        { label: "Kalender Perusahaan", href: "/calendar", icon: CalendarDays },
         { label: "Cuti & Kehadiran", href: "/leave", icon: CalendarDays },
         { label: "Perjalanan Dinas", href: "/spd", icon: Plane },
         { label: "Procurement", href: "/purchase", icon: ShoppingCart },
