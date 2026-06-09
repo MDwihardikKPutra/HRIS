@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
+import { NotificationProvider } from "@/components/NotificationProvider";
+
 export const metadata: Metadata = {
  title: "HRIS — Human Resource Integration System",
  description: "Sistem manajemen kantor terintegrasi untuk mengelola workflow operasional perusahaan.",
@@ -24,7 +26,9 @@ export default function RootLayout({
    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet" />
  </head>
  <body className="font-sans antialiased" style={{ fontFamily: '"Plus Jakarta Sans", sans-serif' }}>
- {children}
+   <NotificationProvider>
+     {children}
+   </NotificationProvider>
  </body>
  </html>
  );

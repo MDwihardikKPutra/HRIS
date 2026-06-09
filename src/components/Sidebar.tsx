@@ -57,6 +57,17 @@ export default function Sidebar({ role, userName, modules, open, collapsed, onCl
       ],
     },
     {
+      title: "System Modules",
+      roles: ["admin", "hr", "pm", "employee"],
+      items: [
+        { label: "Kalender Perusahaan", href: "/calendar", icon: CalendarDays },
+        { label: "Cuti & Kehadiran", href: "/leave", icon: CalendarDays },
+        { label: "Perjalanan Dinas", href: "/spd", icon: Plane },
+        { label: "Procurement", href: "/purchase", icon: ShoppingCart },
+        { label: "Rencana & Realisasi", href: "/ear", icon: ClipboardList },
+      ],
+    },
+    {
       title: "Human Resource",
       roles: ["admin", "hr"],
       items: [
@@ -248,8 +259,8 @@ export default function Sidebar({ role, userName, modules, open, collapsed, onCl
 
         {/* Footer - User Info */}
         <div className="h-[72px] shrink-0 mt-auto relative border-t border-slate-100">
-          <div className="absolute top-2 left-2 right-2 bottom-2 rounded-2xl hover:bg-slate-50 transition-colors p-2">
-            <div className="absolute left-[8px] top-1/2 -translate-y-1/2 w-8 h-8 rounded-xl bg-indigo-100 flex items-center justify-center text-indigo-700 text-xs font-bold shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+          <Link href="/profile" className="absolute top-2 left-2 right-2 bottom-2 rounded-2xl hover:bg-slate-50 transition-colors p-2 block group">
+            <div className="absolute left-[8px] top-1/2 -translate-y-1/2 w-8 h-8 rounded-xl bg-indigo-100 flex items-center justify-center text-indigo-700 text-xs font-bold shadow-[0_2px_8px_rgba(0,0,0,0.04)] group-hover:bg-indigo-600 group-hover:text-white transition-colors">
               {userName?.charAt(0)?.toUpperCase() || "U"}
             </div>
             <div className={`absolute left-[50px] top-1/2 -translate-y-1/2 w-[170px] flex items-center justify-between transition-opacity duration-300 ease-in-out ${
@@ -259,11 +270,17 @@ export default function Sidebar({ role, userName, modules, open, collapsed, onCl
                 <p className="text-[13px] font-bold text-slate-900 truncate tracking-wide">{userName}</p>
                 <p className="text-[10px] text-slate-500 font-medium capitalize truncate tracking-wider">{role}</p>
               </div>
-              <button onClick={() => signOut()} className="p-2 text-slate-400 hover:text-slate-900 hover:bg-slate-200/50 rounded-xl transition-colors shrink-0">
+              <button 
+                onClick={(e) => {
+                  e.preventDefault();
+                  signOut();
+                }} 
+                className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-colors shrink-0"
+              >
                 <LogOut size={16} />
               </button>
             </div>
-          </div>
+          </Link>
         </div>
       </aside>
     </>

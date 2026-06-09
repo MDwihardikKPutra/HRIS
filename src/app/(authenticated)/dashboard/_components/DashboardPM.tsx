@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 
 export default function DashboardPM() {
   const { data: session, status } = useSession();
@@ -129,66 +130,113 @@ export default function DashboardPM() {
         </Link>
       </div>
 
-      {/* EAR Activity Table */}
-      <div className="flex-1 bg-white rounded-2xl border-2 border-slate-100 shadow-sm overflow-hidden flex flex-col p-5">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-base font-bold text-slate-800 tracking-tight">Aktivitas EAR Proyek</h2>
-          <Link href="/ear" className="text-[10px] font-bold text-indigo-500 hover:text-indigo-700 flex items-center gap-1 transition-colors">
-            Lihat Laporan EAR <ChevronRight className="w-3.5 h-3.5" />
-          </Link>
+      <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-4">
+        {/* EAR Activity Table */}
+        <div className="flex-[2] bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col p-5">
+          <div className="flex items-center justify-between mb-4 shrink-0">
+            <h2 className="text-base font-bold text-slate-800 tracking-tight">Aktivitas EAR Proyek</h2>
+            <Link href="/ear" className="text-[10px] font-bold text-indigo-500 hover:text-indigo-700 flex items-center gap-1 transition-colors">
+              Lihat Laporan EAR <ChevronRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+          <div className="flex-1 overflow-auto scrollbar-hide">
+            {recentEAR.length > 0 ? (
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-slate-50 font-bold text-slate-400 text-[12px] sticky top-0 bg-white z-10">
+                    <th className="text-left py-2.5">Anggota Tim</th>
+                    <th className="text-left py-2.5">Tipe</th>
+                    <th className="text-left py-2.5 hidden md:table-cell">Proyek</th>
+                    <th className="text-center py-2.5">Status</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-50">
+                  {recentEAR.map((act, i) => {
+                    const Icon = act.icon;
+                    const sc = getStatusColor(act.status);
+                    return (
+                      <tr key={i} className="hover:bg-slate-50/80 transition-colors group">
+                        <td className="py-3">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-[10px] font-bold text-slate-600 border border-slate-200 group-hover:border-teal-200 transition-colors shrink-0">
+                              {act.initial}
+                            </div>
+                            <span className="font-bold text-slate-800 group-hover:text-teal-600 transition-colors truncate max-w-[120px]">{act.user}</span>
+                          </div>
+                        </td>
+                        <td className="py-3 px-1">
+                          <div className="flex items-center gap-2">
+                            <div className="p-1.5 rounded-md bg-slate-50 border border-slate-100 text-slate-400 group-hover:text-teal-500 group-hover:bg-teal-50 transition-colors shrink-0">
+                              <Icon className="w-3.5 h-3.5" />
+                            </div>
+                            <span className="font-bold text-slate-600 text-[12px]">{act.type}</span>
+                          </div>
+                        </td>
+                        <td className="py-3 text-slate-500 text-xs hidden md:table-cell truncate max-w-[140px]">{act.project}</td>
+                        <td className="py-3 text-center">
+                          <span className={`inline-flex px-3 py-1 rounded-full text-[11px] font-bold capitalize border ${sc.bg} ${sc.text} ${sc.border}`}>
+                            {act.status}
+                          </span>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            ) : (
+              <div className="text-center py-8 text-slate-400">
+                <BarChart3 className="w-10 h-10 mx-auto text-slate-200 mb-2" />
+                <p className="text-sm">Belum ada laporan EAR untuk proyek Anda.</p>
+              </div>
+            )}
+          </div>
         </div>
-        <div className="flex-1 overflow-auto scrollbar-hide">
-          {recentEAR.length > 0 ? (
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-slate-50 font-bold text-slate-400 text-[12px]">
-                  <th className="text-left py-2.5">Anggota Tim</th>
-                  <th className="text-left py-2.5">Tipe</th>
-                  <th className="text-left py-2.5 hidden md:table-cell">Proyek</th>
-                  <th className="text-left py-2.5 hidden lg:table-cell">Referensi</th>
-                  <th className="text-center py-2.5">Status</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-50">
-                {recentEAR.map((act, i) => {
-                  const Icon = act.icon;
-                  const sc = getStatusColor(act.status);
-                  return (
-                    <tr key={i} className="hover:bg-slate-50/80 transition-colors group">
-                      <td className="py-3">
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-[10px] font-bold text-slate-600 border border-slate-200 group-hover:border-teal-200 transition-colors shrink-0">
-                            {act.initial}
-                          </div>
-                          <span className="font-bold text-slate-800 group-hover:text-teal-600 transition-colors truncate max-w-[120px]">{act.user}</span>
-                        </div>
-                      </td>
-                      <td className="py-3 px-1">
-                        <div className="flex items-center gap-2">
-                          <div className="p-1.5 rounded-md bg-slate-50 border border-slate-100 text-slate-400 group-hover:text-teal-500 group-hover:bg-teal-50 transition-colors shrink-0">
-                            <Icon className="w-3.5 h-3.5" />
-                          </div>
-                          <span className="font-bold text-slate-600 text-[12px]">{act.type}</span>
-                        </div>
-                      </td>
-                      <td className="py-3 text-slate-500 text-xs hidden md:table-cell truncate max-w-[140px]">{act.project}</td>
-                      <td className="py-3 text-slate-400 font-sans text-xs hidden lg:table-cell">#{act.detail}</td>
-                      <td className="py-3 text-center">
-                        <span className={`inline-flex px-3 py-1 rounded-full text-[11px] font-bold capitalize border ${sc.bg} ${sc.text} ${sc.border}`}>
-                          {act.status}
-                        </span>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          ) : (
-            <div className="text-center py-8 text-slate-400">
-              <BarChart3 className="w-10 h-10 mx-auto text-slate-200 mb-2" />
-              <p className="text-sm">Belum ada laporan EAR untuk proyek Anda.</p>
+
+        {/* Analytics Chart */}
+        <div className="flex-1 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col p-5">
+          <div className="flex items-center justify-between mb-4 shrink-0">
+            <h2 className="text-base font-bold text-slate-800 tracking-tight">Kesehatan Proyek</h2>
+          </div>
+          <div className="flex-1 min-h-[200px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={[
+                    { name: 'Selesai Tepat Waktu', value: 65, fill: '#10b981' },
+                    { name: 'Dalam Proses', value: 25, fill: '#6366f1' },
+                    { name: 'Tertunda', value: 10, fill: '#f59e0b' },
+                  ]}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={60}
+                  outerRadius={80}
+                  paddingAngle={5}
+                  dataKey="value"
+                >
+                  <Cell fill="#10b981" />
+                  <Cell fill="#6366f1" />
+                  <Cell fill="#f59e0b" />
+                </Pie>
+                <Tooltip 
+                  contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)', fontSize: '12px', fontWeight: 'bold' }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="shrink-0 mt-4 pt-4 border-t border-slate-100 flex flex-col gap-2">
+            <div className="flex items-center justify-between text-xs">
+              <div className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-emerald-500"/> <span className="font-medium text-slate-600">Selesai</span></div>
+              <span className="font-bold text-slate-900">65%</span>
             </div>
-          )}
+            <div className="flex items-center justify-between text-xs">
+              <div className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-indigo-500"/> <span className="font-medium text-slate-600">Proses</span></div>
+              <span className="font-bold text-slate-900">25%</span>
+            </div>
+            <div className="flex items-center justify-between text-xs">
+              <div className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-amber-500"/> <span className="font-medium text-slate-600">Tertunda</span></div>
+              <span className="font-bold text-slate-900">10%</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

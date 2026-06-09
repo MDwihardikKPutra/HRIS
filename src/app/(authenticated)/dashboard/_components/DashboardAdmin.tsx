@@ -12,6 +12,7 @@ import {
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useMemo } from "react";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 function StatCard({ icon, iconBg, label, value, sub, valueColor, subIcon, trendStr, trendUp }: {
   icon: React.ReactNode; iconBg: string; label: string; value: string | number;
@@ -225,44 +226,33 @@ export default function DashboardAdmin() {
       {/* ── BOTTOM ROW: RECENT ACTIVITIES & DIRECTORY ── */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1 min-h-0">
         
-        {/* RECENT ACTIVITIES */}
+        {/* RECENT ACTIVITIES / CHART */}
         <div className="bg-white border border-slate-200 rounded-xl flex flex-col h-full overflow-hidden">
           <div className="px-4 py-3 border-b border-slate-100 flex items-center justify-between shrink-0">
             <h2 className="text-sm font-black text-slate-900 tracking-tight flex items-center gap-1.5">
-              <Activity className="w-4 h-4 text-slate-400" /> Aktivitas Sistem
+              <BarChart3 className="w-4 h-4 text-slate-400" /> Analisis Kehadiran & Aktivitas
             </h2>
           </div>
-          <div className="p-4 flex-1 overflow-auto">
-            <div className="space-y-4 relative before:absolute before:inset-0 before:ml-2 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-px before:bg-slate-100">
-              {/* Dummy Timeline items based on stats */}
-              <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                <div className="flex items-center justify-center w-4 h-4 rounded-full border-[2px] border-white bg-emerald-500 text-white shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
-                  <CheckCircle2 className="w-2 h-2" />
-                </div>
-                <div className="w-[calc(100%-1.5rem)] md:w-[calc(50%-1rem)] py-1.5">
-                  <p className="font-bold text-slate-900 text-xs">Payroll Selesai</p>
-                  <p className="text-[10px] text-slate-500 mt-0.5">Siklus gaji bulan lalu telah didistribusikan.</p>
-                </div>
-              </div>
-              <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                <div className="flex items-center justify-center w-4 h-4 rounded-full border-[2px] border-white bg-indigo-500 text-white shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
-                  <Users className="w-2 h-2" />
-                </div>
-                <div className="w-[calc(100%-1.5rem)] md:w-[calc(50%-1rem)] py-1.5">
-                  <p className="font-bold text-slate-900 text-xs">2 Karyawan Baru</p>
-                  <p className="text-[10px] text-slate-500 mt-0.5">Berhasil ditambahkan ke sistem HRIS.</p>
-                </div>
-              </div>
-              <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                <div className="flex items-center justify-center w-4 h-4 rounded-full border-[2px] border-white bg-amber-500 text-white shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
-                  <ClipboardList className="w-2 h-2" />
-                </div>
-                <div className="w-[calc(100%-1.5rem)] md:w-[calc(50%-1rem)] py-1.5">
-                  <p className="font-bold text-slate-900 text-xs">{totalWorkPlans} Rencana Kerja</p>
-                  <p className="text-[10px] text-slate-500 mt-0.5">Draft EAR telah disubmit minggu ini.</p>
-                </div>
-              </div>
-            </div>
+          <div className="p-4 flex-1 overflow-hidden min-h-[200px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={[
+                { name: 'Senin', hadir: 18, izin: 2 },
+                { name: 'Selasa', hadir: 19, izin: 1 },
+                { name: 'Rabu', hadir: 17, izin: 3 },
+                { name: 'Kamis', hadir: 20, izin: 0 },
+                { name: 'Jumat', hadir: 16, izin: 4 },
+              ]} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#94a3b8', fontWeight: 600 }} dy={10} />
+                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#94a3b8', fontWeight: 600 }} />
+                <Tooltip 
+                  cursor={{ fill: '#f8fafc' }}
+                  contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)', fontSize: '12px', fontWeight: 'bold' }} 
+                />
+                <Bar dataKey="hadir" name="Kehadiran" fill="#4f46e5" radius={[4, 4, 0, 0]} barSize={16} />
+                <Bar dataKey="izin" name="Cuti/Izin/Sakit" fill="#cbd5e1" radius={[4, 4, 0, 0]} barSize={16} />
+              </BarChart>
+            </ResponsiveContainer>
           </div>
         </div>
 
