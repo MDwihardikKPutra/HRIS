@@ -91,7 +91,7 @@ export default function DashboardFinance() {
       ],
       href: "/finance",
     })),
-  ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 5);
+  ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   // Dynamic monthly trend calculation (Jan - Des 2026)
   const months = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Ags", "Sep", "Okt", "Nov", "Des"];
@@ -149,36 +149,36 @@ export default function DashboardFinance() {
   });
 
   return (
-    <div className="flex flex-col h-[calc(100vh-5.5rem)] overflow-hidden gap-5 w-full text-slate-800 pb-2">
+    <div className="flex flex-col h-full overflow-hidden gap-4 w-full text-slate-800 pb-0">
       {/* Premium Gradient Banner */}
-      <div className="relative overflow-hidden rounded-2xl p-5 bg-indigo-600 border border-indigo-500/20 shadow-sm shrink-0">
+      <div className="relative overflow-hidden rounded-xl p-4 bg-indigo-600 shrink-0">
         <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-3xl" />
         <div className="absolute -bottom-10 left-10 w-32 h-32 bg-indigo-400/20 rounded-full blur-2xl" />
         
         <div className="relative z-10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
-            <span className="px-2 py-0.5 rounded text-[9px] font-bold bg-white/15 text-blue-100 border border-white/20 tracking-widest uppercase mb-1.5 inline-block">
-              DASHBOARD KEUANGAN
+            <span className="text-xs text-indigo-200 font-medium mb-1 inline-block">
+              Dashboard Keuangan
             </span>
-            <h1 className="text-lg md:text-xl font-bold text-white tracking-tight leading-snug">
+            <h1 className="text-xl font-semibold text-white leading-snug">
               {getGreeting()}, {status === "loading" ? <span className="inline-block w-32 h-6 bg-white/20 animate-pulse rounded-md align-middle" /> : userName}
             </h1>
             {pendingCount > 0 ? (
-              <p className="text-xs text-blue-100/90 mt-1">
-                Terdapat <span className="text-white font-bold">{pendingCount} pengajuan dana baru</span> yang memerlukan verifikasi Anda.
+              <p className="text-[13px] text-blue-100 mt-1">
+                Terdapat <span className="text-white font-medium">{pendingCount} pengajuan dana baru</span> yang memerlukan verifikasi Anda.
               </p>
             ) : (
-              <p className="text-xs text-blue-100/90 mt-1">Semua pengajuan pembayaran saat ini telah selesai diproses.</p>
+              <p className="text-[13px] text-blue-100 mt-1">Semua pengajuan pembayaran saat ini telah selesai diproses.</p>
             )}
           </div>
           <Link 
             href="/finance" 
-            className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 hover:shadow-lg hover:shadow-indigo-600/20 active:scale-95 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2 shrink-0 border border-indigo-500/30"
+            className="px-4 py-2 bg-white text-indigo-700 hover:bg-slate-50 active:scale-95 rounded-md text-[13px] font-medium transition-all flex items-center gap-2 shrink-0"
           >
             Approval Pembayaran
             {pendingCount > 0 && (
-              <span className="bg-indigo-500 text-white py-0.5 px-2 rounded-full text-[10px] font-black shadow-inner">
-                {pendingCount}
+              <span className="text-indigo-700 text-[11px]">
+                ({pendingCount})
               </span>
             )}
           </Link>
@@ -189,92 +189,91 @@ export default function DashboardFinance() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 shrink-0">
         <Link 
           href="/finance" 
-          className="bg-white p-5 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 flex flex-col justify-between min-h-[100px] group"
+          className="bg-white p-4 rounded-xl border border-slate-200 hover:bg-slate-50 transition-all flex flex-col justify-between group"
         >
-          <div className="flex justify-between items-start">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Pending</span>
-            <div className="p-1.5 rounded-lg bg-amber-50 text-amber-500 group-hover:bg-amber-100/70 transition-colors">
+          <div className="flex justify-between items-start mb-2">
+            <span className="text-xs text-slate-500">Total Pending</span>
+            <div className="text-amber-500">
               <Wallet className="w-4 h-4" />
             </div>
           </div>
           <div>
-            <h3 className="text-base md:text-lg font-black text-slate-800 tracking-tight leading-none">
+            <h3 className="text-xl font-medium text-slate-900 leading-none">
               Rp {pendingAmount.toLocaleString("id-ID")}
             </h3>
-            <p className="text-[10px] text-slate-400 font-medium mt-1 leading-none">Menunggu approval pembayaran</p>
+            <p className="text-[11px] text-slate-500 mt-1.5 leading-none">Menunggu approval</p>
           </div>
         </Link>
 
         <Link 
           href="/finance" 
-          className="bg-white p-5 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 flex flex-col justify-between min-h-[100px] group"
+          className="bg-white p-4 rounded-xl border border-slate-200 hover:bg-slate-50 transition-all flex flex-col justify-between group"
         >
-          <div className="flex justify-between items-start">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Menunggu Approval</span>
-            <div className="p-1.5 rounded-lg bg-indigo-50 text-indigo-500 group-hover:bg-indigo-100/70 transition-colors">
+          <div className="flex justify-between items-start mb-2">
+            <span className="text-xs text-slate-500">Menunggu Approval</span>
+            <div className="text-indigo-500">
               <Clock className="w-4 h-4" />
             </div>
           </div>
           <div>
-            <h3 className="text-base md:text-lg font-black text-slate-800 tracking-tight leading-none">
-              {pendingCount} <span className="text-xs text-slate-400 font-medium">Tiket</span>
+            <h3 className="text-xl font-medium text-slate-900 leading-none">
+              {pendingCount} <span className="text-[11px] text-slate-400 font-normal">Tiket</span>
             </h3>
-            <p className="text-[10px] text-amber-600 font-semibold mt-1 leading-none">Perlu tindakan segera</p>
+            <p className="text-[11px] text-slate-500 mt-1.5 leading-none">Perlu tindakan segera</p>
           </div>
         </Link>
 
         <Link 
           href="/finance" 
-          className="bg-white p-5 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 flex flex-col justify-between min-h-[100px] group"
+          className="bg-white p-4 rounded-xl border border-slate-200 hover:bg-slate-50 transition-all flex flex-col justify-between group"
         >
-          <div className="flex justify-between items-start">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Telah Disetujui</span>
-            <div className="p-1.5 rounded-lg bg-emerald-50 text-emerald-500 group-hover:bg-emerald-100/70 transition-colors">
+          <div className="flex justify-between items-start mb-2">
+            <span className="text-xs text-slate-500">Telah Disetujui</span>
+            <div className="text-emerald-500">
               <CheckCircle2 className="w-4 h-4" />
             </div>
           </div>
           <div>
-            <h3 className="text-base md:text-lg font-black text-slate-800 tracking-tight leading-none">
-              {approvedCount} <span className="text-xs text-slate-400 font-medium">Tiket</span>
+            <h3 className="text-xl font-medium text-slate-900 leading-none">
+              {approvedCount} <span className="text-[11px] text-slate-400 font-normal">Tiket</span>
             </h3>
-            <p className="text-[10px] text-emerald-600 font-semibold mt-1 leading-none">Berhasil disetujui & diarsip</p>
+            <p className="text-[11px] text-slate-500 mt-1.5 leading-none">Berhasil disetujui</p>
           </div>
         </Link>
 
         <Link 
           href="/payroll" 
-          className="bg-white p-5 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 flex flex-col justify-between min-h-[100px] group"
+          className="bg-white p-4 rounded-xl border border-slate-200 hover:bg-slate-50 transition-all flex flex-col justify-between group"
         >
-          <div className="flex justify-between items-start">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Draft Payroll</span>
-            <div className="p-1.5 rounded-lg bg-violet-50 text-violet-500 group-hover:bg-violet-100/70 transition-colors">
+          <div className="flex justify-between items-start mb-2">
+            <span className="text-xs text-slate-500">Draft Payroll</span>
+            <div className="text-violet-500">
               <FileText className="w-4 h-4" />
             </div>
           </div>
           <div>
-            <h3 className="text-base md:text-lg font-black text-slate-800 tracking-tight leading-none">
-              {draftPayrollCount} <span className="text-xs text-slate-400 font-medium">Karyawan</span>
+            <h3 className="text-xl font-medium text-slate-900 leading-none">
+              {draftPayrollCount} <span className="text-[11px] text-slate-400 font-normal">Karyawan</span>
             </h3>
-            <p className="text-[10px] text-violet-600 font-semibold mt-1 leading-none">Siap untuk diproses</p>
+            <p className="text-[11px] text-slate-500 mt-1.5 leading-none">Siap untuk diproses</p>
           </div>
         </Link>
       </div>
 
       {/* Modern & Symmetrical Analytics Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 shrink-0 h-[225px]">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1 min-h-0">
         {/* Rebuilt Trend Curve Chart */}
-        <div className="lg:col-span-2 bg-white rounded-2xl border-2 border-slate-100 shadow-sm p-5 relative flex flex-col justify-between h-full">
-          <div className="flex items-center justify-between shrink-0">
+        <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 p-4 relative flex flex-col h-full overflow-hidden">
+          <div className="flex items-center justify-between shrink-0 mb-2">
             <div>
-              <h3 className="text-[10px] font-bold text-slate-500 tracking-wider uppercase">
+              <h3 className="text-[13px] font-medium text-slate-900">
                 Tren Pengeluaran
               </h3>
-              <p className="text-[10px] text-slate-400 font-medium mt-0.5">Budget terpakai bulanan (Januari - Desember 2026)</p>
             </div>
           </div>
 
-          <div className="relative flex-1 w-full mt-2 min-h-[140px]">
-            <ChartContainer config={trendChartConfig} className="h-[140px] w-full min-h-[140px] aspect-auto">
+          <div className="relative flex-1 w-full min-h-0">
+            <ChartContainer config={trendChartConfig} className="h-full w-full aspect-auto">
               <AreaChart data={chartPoints} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
                 <defs>
                   <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
@@ -348,18 +347,17 @@ export default function DashboardFinance() {
         </div>
 
         {/* Rebuilt 2-Column Donut Chart Card */}
-        <div className="bg-white rounded-2xl border-2 border-slate-100 shadow-sm p-5 flex flex-col justify-between h-full">
-          <div className="shrink-0">
-            <h3 className="text-[10px] font-bold text-slate-500 tracking-wider uppercase">
+        <div className="bg-white rounded-xl border border-slate-200 p-4 flex flex-col h-full overflow-hidden">
+          <div className="shrink-0 mb-2">
+            <h3 className="text-[13px] font-medium text-slate-900">
               Alokasi Dana
             </h3>
-            <p className="text-[10px] text-slate-400 font-medium mt-0.5">Proporsi anggaran operasional</p>
           </div>
 
-          <div className="flex items-center justify-between gap-4 flex-1 min-h-0 py-2">
+          <div className="flex items-center justify-between gap-4 flex-1 min-h-0">
             {/* Recharts Donut Circle */}
-            <div className="relative flex items-center justify-center shrink-0 w-24 h-24 min-h-[96px] min-w-[96px]">
-              <ChartContainer config={donutConfig} className="w-24 h-24 min-h-[96px] min-w-[96px] aspect-square">
+            <div className="relative flex items-center justify-center shrink-0 w-24 h-24">
+              <ChartContainer config={donutConfig} className="w-24 h-24 aspect-square">
                 <PieChart>
                   <Pie
                     data={[
@@ -377,41 +375,38 @@ export default function DashboardFinance() {
                 </PieChart>
               </ChartContainer>
               <div className="absolute flex flex-col items-center justify-center">
-                <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest leading-none">Total</span>
-                <span className="text-[11px] font-black text-slate-700 mt-1 leading-none">Rp 218M</span>
+                <span className="text-[10px] text-slate-500 leading-none">Total</span>
+                <span className="text-xs font-medium text-slate-900 mt-0.5 leading-none">218M</span>
               </div>
             </div>
 
             {/* Premium Detailed Legends */}
-            <div className="flex-1 flex flex-col justify-center space-y-2">
-              <div className="flex items-center justify-between text-[11px] border-b border-slate-50 pb-1">
-                <div className="flex items-center gap-1.5">
+            <div className="flex-1 flex flex-col justify-center space-y-2 overflow-y-auto pr-1 scrollbar-hide h-full">
+              <div className="flex items-center justify-between text-[11px] border-b border-slate-100 pb-1.5 last:border-0">
+                <div className="flex items-center gap-1.5 min-w-0">
                   <span className="w-2 h-2 rounded-full bg-indigo-500 shrink-0" />
-                  <span className="text-slate-500 font-semibold">Payroll</span>
+                  <span className="text-slate-500 truncate">Payroll</span>
                 </div>
-                <div className="text-right">
-                  <span className="font-bold text-slate-800 block leading-none">55%</span>
-                  <span className="text-[8.5px] text-slate-400 font-medium">Rp 120M</span>
+                <div className="text-right shrink-0">
+                  <span className="font-medium text-slate-900 block leading-none">55%</span>
                 </div>
               </div>
-              <div className="flex items-center justify-between text-[11px] border-b border-slate-50 pb-1">
-                <div className="flex items-center gap-1.5">
+              <div className="flex items-center justify-between text-[11px] border-b border-slate-100 pb-1.5 last:border-0">
+                <div className="flex items-center gap-1.5 min-w-0">
                   <span className="w-2 h-2 rounded-full bg-amber-500 shrink-0" />
-                  <span className="text-slate-500 font-semibold">Pembelian</span>
+                  <span className="text-slate-500 truncate">Pembelian</span>
                 </div>
-                <div className="text-right">
-                  <span className="font-bold text-slate-800 block leading-none">30%</span>
-                  <span className="text-[8.5px] text-slate-400 font-medium">Rp 65M</span>
+                <div className="text-right shrink-0">
+                  <span className="font-medium text-slate-900 block leading-none">30%</span>
                 </div>
               </div>
-              <div className="flex items-center justify-between text-[11px]">
-                <div className="flex items-center gap-1.5">
+              <div className="flex items-center justify-between text-[11px] border-b border-slate-100 pb-1.5 last:border-0">
+                <div className="flex items-center gap-1.5 min-w-0">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
-                  <span className="text-slate-500 font-semibold">Operasional</span>
+                  <span className="text-slate-500 truncate">Operasional</span>
                 </div>
-                <div className="text-right">
-                  <span className="font-bold text-slate-800 block leading-none">15%</span>
-                  <span className="text-[8.5px] text-slate-400 font-medium">Rp 33M</span>
+                <div className="text-right shrink-0">
+                  <span className="font-medium text-slate-900 block leading-none">15%</span>
                 </div>
               </div>
             </div>
@@ -420,113 +415,95 @@ export default function DashboardFinance() {
       </div>
 
       {/* Symmetrical & Clean Recent Activities List */}
-      <div className="flex-1 min-h-0 bg-white rounded-2xl border-2 border-slate-100 shadow-sm flex flex-col p-5 overflow-hidden">
-        <div className="flex items-center justify-between mb-3 shrink-0">
-          <h2 className="text-[10px] font-bold text-slate-500 tracking-wider uppercase">Pengajuan Terbaru</h2>
-          <Link href="/finance" className="text-[10px] font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-0.5 transition-colors">
+      <div className="flex-1 min-h-0 bg-white rounded-xl border border-slate-200 flex flex-col overflow-hidden">
+        <div className="px-4 py-3 border-b border-slate-200 flex items-center justify-between shrink-0 bg-white">
+          <h2 className="text-[13px] font-medium text-slate-900">Pengajuan Terbaru</h2>
+          <Link href="/finance" className="text-xs text-slate-500 hover:text-slate-900 flex items-center gap-1 transition-colors">
             Semua Pengajuan <ChevronRight className="w-3.5 h-3.5" />
           </Link>
         </div>
         
-        <div className="flex-1 overflow-y-auto space-y-2 pr-1 scrollbar-hide">
-          {recentActivities.map((act, i) => {
-            const sc = getStatusColor(act.status);
-            return (
-              <div 
-                key={i} 
-                onClick={() => setSelectedActivity(act)}
-                className="flex items-center justify-between p-3 rounded-xl border border-slate-50 hover:border-slate-100 hover:bg-slate-50/50 transition-all cursor-pointer group"
-              >
-                <div className="flex items-center gap-3">
-                  {/* Badged Avatar Block */}
-                  <div className="relative shrink-0">
-                    <div className="w-9 h-9 rounded-full bg-slate-100/80 border border-slate-200 flex items-center justify-center text-xs font-black text-slate-600">
-                      {act.initial}
-                    </div>
-                    <div className={`absolute -bottom-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center border-2 border-white text-white shadow-sm ${
-                      act.type === "SPD" ? "bg-sky-500" : "bg-indigo-500"
-                    }`}>
-                      <act.icon className="w-2.5 h-2.5" />
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <h4 className="text-xs font-bold text-slate-800 group-hover:text-indigo-600 transition-colors">
-                      {act.user}
-                    </h4>
-                    <div className="flex items-center gap-1.5 mt-1">
-                      <span className="text-[9.5px] text-slate-400 font-semibold font-mono">#{act.detail}</span>
-                      <span className="w-1 h-1 rounded-full bg-slate-200" />
-                      <span className="text-[9.5px] text-slate-400 font-medium">{act.type}</span>
-                      <span className="w-1 h-1 rounded-full bg-slate-200" />
-                      <span className="text-[9.5px] text-slate-400 font-medium">{formatDate(act.date)}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-4">
-                  {/* Price/Cost */}
-                  <div className="text-right">
-                    <span className="text-xs font-black text-slate-800 tracking-tight">
-                      Rp {act.amount.toLocaleString("id-ID")}
-                    </span>
-                  </div>
-                  {/* Status Badges */}
-                  <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-bold border capitalize tracking-wider ${sc.bg} ${sc.text} ${sc.border}`}>
-                    {act.status}
-                  </span>
-                </div>
-              </div>
-            );
-          })}
+        <div className="flex-1 overflow-auto scrollbar-hide">
+          <table className="w-full text-left border-collapse whitespace-nowrap">
+            <thead className="sticky top-0 bg-white z-10 text-xs font-medium text-slate-500">
+              <tr className="border-b border-slate-200 text-xs font-medium text-slate-500">
+                <th className="px-4 py-2 font-medium">Pengaju & Tipe</th>
+                <th className="px-4 py-2 font-medium">Tanggal</th>
+                <th className="px-4 py-2 font-medium text-right">Nilai</th>
+                <th className="px-4 py-2 font-medium text-center">Status</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100 text-[13px] text-slate-700">
+              {recentActivities.map((act, i) => {
+                const sc = getStatusColor(act.status);
+                return (
+                  <tr key={i} onClick={() => setSelectedActivity(act)} className="hover:bg-slate-50/50 transition-colors cursor-pointer group">
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-7 h-7 rounded-full border border-slate-200 text-slate-600 font-medium text-[11px] flex items-center justify-center shrink-0">
+                          {act.initial}
+                        </div>
+                        <div>
+                          <p className="font-medium text-slate-900">{act.user}</p>
+                          <p className="text-[11px] text-slate-500 mt-0.5">{act.type} • #{act.detail}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 text-slate-500 text-xs">{formatDate(act.date)}</td>
+                    <td className="px-4 py-3 text-right font-medium text-slate-900">Rp {act.amount.toLocaleString("id-ID")}</td>
+                    <td className="px-4 py-3 text-center text-xs">
+                      <span className={`capitalize font-medium ${sc.text.replace('text-', 'text-').replace('-800', '-600').replace('-700', '-600')}`}>
+                        {act.status}
+                      </span>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </div>
 
       {/* Detail Modal */}
       <Modal isOpen={!!selectedActivity} onClose={() => setSelectedActivity(null)} title="Detail Pengajuan" size="lg"
         footer={
-          <>
-            <button onClick={() => setSelectedActivity(null)} className="px-4 py-2 bg-white border border-slate-200 text-slate-600 rounded-lg text-xs font-bold hover:bg-slate-50 transition-colors">Tutup</button>
+          <div className="flex justify-end gap-3 w-full">
+            <button onClick={() => setSelectedActivity(null)} className="text-[13px] font-medium text-slate-600 hover:text-slate-900 transition-colors">Tutup</button>
             {selectedActivity?.href && (
-              <button onClick={() => router.push(selectedActivity.href)} className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-xs font-bold hover:bg-indigo-700 transition-colors flex items-center gap-2">
+              <button onClick={() => router.push(selectedActivity.href)} className="px-4 py-1.5 bg-slate-900 text-white rounded-md text-[13px] font-medium hover:bg-slate-800 transition-colors flex items-center gap-2">
                 Approval <ExternalLink className="w-3.5 h-3.5" />
               </button>
             )}
-          </>
+          </div>
         }
       >
         {selectedActivity && (
-          <div className="flex flex-col md:flex-row gap-6 md:gap-8 text-slate-800">
-            <div className="flex-1 space-y-5">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center border border-indigo-100">
-                  <selectedActivity.icon className="w-5 h-5 text-indigo-500" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-slate-800 text-base leading-tight">{selectedActivity.type}</h4>
-                  <p className="text-xs text-slate-500">{new Date(selectedActivity.date).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })}</p>
-                </div>
+          <div className="p-2 space-y-4">
+            <div className="flex items-center gap-3 border-b border-slate-200 pb-3">
+              <div>
+                <h4 className="font-medium text-slate-900 text-[13px]">{selectedActivity.type}</h4>
+                <p className="text-xs text-slate-500">{new Date(selectedActivity.date).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })}</p>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div><p className="text-[11px] font-bold text-slate-400 mb-1">Pengaju</p><p className="text-sm font-semibold text-slate-800">{selectedActivity.user}</p></div>
-                <div>
-                  <p className="text-[11px] font-bold text-slate-400 mb-1">Status</p>
-                  <span className={`inline-flex px-2.5 py-0.5 rounded text-[11px] font-bold capitalize border ${getStatusColor(selectedActivity.status).bg} ${getStatusColor(selectedActivity.status).text} ${getStatusColor(selectedActivity.status).border}`}>{selectedActivity.status}</span>
-                </div>
-                <div className="col-span-2"><p className="text-[11px] font-bold text-slate-400 mb-1">No. Referensi</p><p className="text-sm font-semibold text-slate-800 font-sans">{selectedActivity.detail}</p></div>
-              </div>
-              {selectedActivity.extraDetails?.length > 0 && (
-                <div className="grid grid-cols-2 gap-4 pt-4 border-t border-slate-100">
-                  {selectedActivity.extraDetails.map((f: any, idx: number) => (
-                    <div key={idx}><p className="text-[11px] font-bold text-slate-400 mb-1">{f.label}</p><p className="text-sm font-semibold text-slate-800">{f.value}</p></div>
-                  ))}
-                </div>
-              )}
             </div>
+            <div className="grid grid-cols-2 gap-4 text-[13px]">
+              <div><p className="text-xs text-slate-500 mb-1">Pengaju</p><p className="font-medium text-slate-900">{selectedActivity.user}</p></div>
+              <div>
+                <p className="text-xs text-slate-500 mb-1">Status</p>
+                <span className={`capitalize font-medium text-slate-900`}>{selectedActivity.status}</span>
+              </div>
+              <div className="col-span-2"><p className="text-xs text-slate-500 mb-1">No. Referensi</p><p className="font-medium text-slate-900">{selectedActivity.detail}</p></div>
+            </div>
+            {selectedActivity.extraDetails?.length > 0 && (
+              <div className="grid grid-cols-2 gap-4 pt-3 border-t border-slate-200 text-[13px]">
+                {selectedActivity.extraDetails.map((f: any, idx: number) => (
+                  <div key={idx}><p className="text-xs text-slate-500 mb-1">{f.label}</p><p className="font-medium text-slate-900">{f.value}</p></div>
+                ))}
+              </div>
+            )}
             {selectedActivity.description && (
-              <div className="w-full md:w-5/12 md:border-l border-slate-100 md:pl-8 pt-6 md:pt-0 border-t md:border-t-0 mt-6 md:mt-0">
-                <p className="text-[11px] font-bold text-slate-400 mb-2">Keterangan</p>
-                <div className="p-3 bg-slate-50 rounded-lg text-sm text-slate-700 leading-relaxed border border-slate-100">{selectedActivity.description}</div>
+              <div className="pt-3 border-t border-slate-200">
+                <p className="text-xs text-slate-500 mb-1">Keterangan</p>
+                <div className="text-[13px] text-slate-900 leading-relaxed">{selectedActivity.description}</div>
               </div>
             )}
           </div>

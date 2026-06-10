@@ -144,8 +144,7 @@ export default function DashboardHR() {
       ],
       href: "/leave",
     }))
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, 8);
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   const upcomingLeaves = useMemo(() => {
     // Get approved leave requests
@@ -180,38 +179,38 @@ export default function DashboardHR() {
   }, []);
 
   return (
-    <div className="flex flex-col h-full overflow-hidden gap-5 w-full pb-2">
+    <div className="flex flex-col h-full overflow-hidden gap-4 w-full pb-0">
 
       {/* Banner */}
-      <div className="relative overflow-hidden rounded-xl p-4 md:p-6 bg-indigo-600 shrink-0">
+      <div className="relative overflow-hidden rounded-xl p-4 bg-indigo-600 shrink-0">
         <div className="absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 bg-white opacity-10 rounded-full blur-2xl" />
         <div className="absolute bottom-0 left-10 -mb-4 w-24 h-24 bg-indigo-400 opacity-20 rounded-full blur-xl" />
         <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div className="flex-1">
-            <span className="px-2 py-0.5 rounded text-[9px] font-bold bg-white/15 text-indigo-100 border border-white/20 tracking-widest uppercase mb-1.5 inline-block">
-              DASHBOARD HR
+            <span className="text-xs text-indigo-200 font-medium mb-1 inline-block">
+              Dashboard HR
             </span>
-            <h1 className="text-xl md:text-2xl font-bold text-white tracking-tight">
+            <h1 className="text-xl font-semibold text-white">
               {getGreeting()}, {status === "loading" ? <span className="inline-block w-32 h-6 bg-white/20 animate-pulse rounded-md align-middle" /> : userName} 👋
             </h1>
             {pendingLeaveCount > 0 ? (
-              <p className="text-indigo-100 font-medium text-sm mt-1 max-w-lg leading-relaxed">
-                Ada <span className="font-bold text-white">{pendingLeaveCount} pengajuan cuti</span> menunggu persetujuan Anda.
+              <p className="text-indigo-100 text-xs mt-1 leading-relaxed">
+                Ada <span className="font-medium text-white">{pendingLeaveCount} pengajuan cuti</span> menunggu persetujuan Anda.
               </p>
             ) : (
-              <p className="text-indigo-100 font-medium text-sm mt-1">Semua pengajuan cuti sudah diproses.</p>
+              <p className="text-indigo-100 text-xs mt-1">Semua pengajuan cuti sudah diproses.</p>
             )}
             
             {/* Quick Actions inside Banner */}
-            <div className="flex flex-wrap items-center gap-2 mt-4">
-              <Link href="/users" className="px-3 py-1.5 bg-white/10 hover:bg-white/20 border border-white/10 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5">
+            <div className="flex flex-wrap items-center gap-2 mt-3">
+              <Link href="/users" className="px-3 py-1.5 bg-white/10 hover:bg-white/20 border border-white/10 text-white rounded-md text-[13px] font-medium transition-all flex items-center gap-1.5">
                 <Users className="w-3.5 h-3.5" /> Tambah Karyawan
               </Link>
-              <Link href="/leave" className="px-3 py-1.5 bg-white text-indigo-700 hover:bg-slate-50 text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 shadow-sm">
+              <Link href="/leave" className="px-3 py-1.5 bg-white text-indigo-700 hover:bg-slate-50 text-[13px] font-medium rounded-md transition-all flex items-center gap-1.5 shadow-sm">
                 <CheckCircle2 className="w-3.5 h-3.5" /> Verifikasi Cuti
-                {pendingLeaveCount > 0 && <span className="bg-indigo-100 text-indigo-750 py-0.2 px-1.5 rounded-md text-[10px] font-black">{pendingLeaveCount}</span>}
+                {pendingLeaveCount > 0 && <span className="text-[11px] font-medium">({pendingLeaveCount})</span>}
               </Link>
-              <Link href="/ear" className="px-3 py-1.5 bg-white/10 hover:bg-white/20 border border-white/10 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5">
+              <Link href="/ear" className="px-3 py-1.5 bg-white/10 hover:bg-white/20 border border-white/10 text-white rounded-md text-[13px] font-medium transition-all flex items-center gap-1.5">
                 <ClipboardList className="w-3.5 h-3.5" /> Laporan EAR
               </Link>
             </div>
@@ -222,89 +221,88 @@ export default function DashboardHR() {
       {/* Stats Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 shrink-0">
         <Link href="/leave"
-          className="bg-white p-5 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 flex flex-col justify-between min-h-[100px] group"
+          className="bg-white p-4 rounded-xl border border-slate-200 hover:bg-slate-50 transition-all flex flex-col justify-between group"
         >
-          <div className="flex justify-between items-start">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Cuti Pending</span>
-            <div className="p-1.5 rounded-lg bg-amber-50 text-amber-500 group-hover:bg-amber-100/70 transition-colors">
+          <div className="flex justify-between items-start mb-2">
+            <span className="text-xs text-slate-500">Cuti Pending</span>
+            <div className="text-amber-500">
               <Clock className="w-4 h-4" />
             </div>
           </div>
           <div>
-            <h3 className="text-base md:text-lg font-black text-slate-800 tracking-tight leading-none">
-              {pendingLeaveCount} <span className="text-xs text-slate-400 font-medium">Pengajuan</span>
+            <h3 className="text-xl font-medium text-slate-900 leading-none">
+              {pendingLeaveCount} <span className="text-xs text-slate-400 font-normal">Pengajuan</span>
             </h3>
-            <p className="text-[10px] text-amber-600 font-semibold mt-1 leading-none">Perlu tindakan segera</p>
+            <p className="text-[11px] text-slate-500 mt-1.5 leading-none">Perlu tindakan segera</p>
           </div>
         </Link>
 
         <Link href="/leave"
-          className="bg-white p-5 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 flex flex-col justify-between min-h-[100px] group"
+          className="bg-white p-4 rounded-xl border border-slate-200 hover:bg-slate-50 transition-all flex flex-col justify-between group"
         >
-          <div className="flex justify-between items-start">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Sedang Cuti</span>
-            <div className="p-1.5 rounded-lg bg-emerald-50 text-emerald-500 group-hover:bg-emerald-100/70 transition-colors">
+          <div className="flex justify-between items-start mb-2">
+            <span className="text-xs text-slate-500">Sedang Cuti</span>
+            <div className="text-emerald-500">
               <UserCheck className="w-4 h-4" />
             </div>
           </div>
           <div>
-            <h3 className="text-base md:text-lg font-black text-slate-800 tracking-tight leading-none">
-              {approvedLeaveCount} <span className="text-xs text-slate-400 font-medium">Karyawan</span>
+            <h3 className="text-xl font-medium text-slate-900 leading-none">
+              {approvedLeaveCount} <span className="text-xs text-slate-400 font-normal">Karyawan</span>
             </h3>
-            <p className="text-[10px] text-emerald-600 font-semibold mt-1 leading-none">Telah disetujui & aktif</p>
+            <p className="text-[11px] text-slate-500 mt-1.5 leading-none">Telah disetujui & aktif</p>
           </div>
         </Link>
 
         <Link href="/users"
-          className="bg-white p-5 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 flex flex-col justify-between min-h-[100px] group"
+          className="bg-white p-4 rounded-xl border border-slate-200 hover:bg-slate-50 transition-all flex flex-col justify-between group"
         >
-          <div className="flex justify-between items-start">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Karyawan</span>
-            <div className="p-1.5 rounded-lg bg-indigo-50 text-indigo-500 group-hover:bg-indigo-100/70 transition-colors">
+          <div className="flex justify-between items-start mb-2">
+            <span className="text-xs text-slate-500">Total Karyawan</span>
+            <div className="text-indigo-500">
               <Users className="w-4 h-4" />
             </div>
           </div>
           <div>
-            <h3 className="text-base md:text-lg font-black text-slate-800 tracking-tight leading-none">
-              {activeEmployees} <span className="text-xs text-slate-400 font-medium">Aktif</span>
+            <h3 className="text-xl font-medium text-slate-900 leading-none">
+              {activeEmployees} <span className="text-xs text-slate-400 font-normal">Aktif</span>
             </h3>
-            <p className="text-[10px] text-indigo-600 font-semibold mt-1 leading-none">Personel aktif terdaftar</p>
+            <p className="text-[11px] text-slate-500 mt-1.5 leading-none">Personel aktif terdaftar</p>
           </div>
         </Link>
 
         <Link href="/ear"
-          className="bg-white p-5 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 flex flex-col justify-between min-h-[100px] group"
+          className="bg-white p-4 rounded-xl border border-slate-200 hover:bg-slate-50 transition-all flex flex-col justify-between group"
         >
-          <div className="flex justify-between items-start">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Rencana Kerja</span>
-            <div className="p-1.5 rounded-lg bg-slate-50 text-slate-500 group-hover:bg-slate-100/70 transition-colors">
+          <div className="flex justify-between items-start mb-2">
+            <span className="text-xs text-slate-500">Rencana Kerja</span>
+            <div className="text-slate-500">
               <ClipboardList className="w-4 h-4" />
             </div>
           </div>
           <div>
-            <h3 className="text-base md:text-lg font-black text-slate-800 tracking-tight leading-none">
-              {totalWorkPlans} <span className="text-xs text-slate-400 font-medium">Rencana</span>
+            <h3 className="text-xl font-medium text-slate-900 leading-none">
+              {totalWorkPlans} <span className="text-xs text-slate-400 font-normal">Rencana</span>
             </h3>
-            <p className="text-[10px] text-slate-400 font-medium mt-1 leading-none">Pengajuan rencana bulan ini</p>
+            <p className="text-[11px] text-slate-500 mt-1.5 leading-none">Pengajuan bulan ini</p>
           </div>
         </Link>
       </div>
 
       {/* HR Analytics Charts Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 shrink-0 h-[225px]">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 shrink-0 flex-1 min-h-0">
         {/* Department Distribution (Horizontal Bar Chart) */}
-        <div className="lg:col-span-2 bg-white rounded-2xl border-2 border-slate-100 shadow-sm p-5 relative flex flex-col justify-between h-full">
+        <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 p-4 relative flex flex-col h-full overflow-hidden">
           <div className="flex items-center justify-between shrink-0">
             <div>
-              <h3 className="text-[10px] font-bold text-slate-500 tracking-wider uppercase">
+              <h3 className="text-[13px] font-medium text-slate-900">
                 Distribusi Karyawan per Departemen
               </h3>
-              <p className="text-[10px] text-slate-400 font-medium mt-0.5">Proporsi staf aktif terdaftar per departemen</p>
             </div>
           </div>
 
-          <div className="relative flex-1 w-full mt-2 min-h-[140px]">
-            <ChartContainer config={deptChartConfig} className="h-[140px] w-full min-h-[140px] aspect-auto">
+          <div className="relative flex-1 w-full mt-2 min-h-0">
+            <ChartContainer config={deptChartConfig} className="h-full w-full aspect-auto">
               <BarChart data={deptData} layout="vertical" margin={{ top: 5, right: 10, left: 30, bottom: 5 }}>
                 <CartesianGrid horizontal={false} strokeDasharray="3 3" stroke="#f1f5f9" />
                 <XAxis type="number" hide />
@@ -314,10 +312,10 @@ export default function DashboardHR() {
                   axisLine={false} 
                   tickLine={false} 
                   width={100}
-                  style={{ fontSize: "9px", fill: "#64748b", fontWeight: "bold" }}
+                  style={{ fontSize: "11px", fill: "#64748b", fontWeight: 500 }}
                 />
                 <ChartTooltip content={<ChartTooltipContent />} />
-                <Bar dataKey="count" radius={[0, 4, 4, 0]} barSize={12}>
+                <Bar dataKey="count" radius={[0, 4, 4, 0]} barSize={16}>
                   {deptData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.fill} />
                   ))}
@@ -328,18 +326,17 @@ export default function DashboardHR() {
         </div>
 
         {/* Leave Reason Allocation (Donut Chart) */}
-        <div className="bg-white rounded-2xl border-2 border-slate-100 shadow-sm p-5 flex flex-col justify-between h-full">
-          <div className="shrink-0">
-            <h3 className="text-[10px] font-bold text-slate-500 tracking-wider uppercase">
+        <div className="bg-white rounded-xl border border-slate-200 p-4 flex flex-col h-full overflow-hidden">
+          <div className="shrink-0 mb-2">
+            <h3 className="text-[13px] font-medium text-slate-900">
               Alokasi Jenis Cuti
             </h3>
-            <p className="text-[10px] text-slate-400 font-medium mt-0.5">Proporsi pengambilan jenis cuti disetujui</p>
           </div>
 
-          <div className="flex items-center justify-between gap-4 flex-1 min-h-0 py-2">
+          <div className="flex items-center justify-between gap-4 flex-1 min-h-0">
             {/* Donut Circle */}
-            <div className="relative flex items-center justify-center shrink-0 w-24 h-24 min-h-[96px] min-w-[96px]">
-              <ChartContainer config={leaveDonutConfig} className="w-24 h-24 min-h-[96px] min-w-[96px] aspect-square">
+            <div className="relative flex items-center justify-center shrink-0 w-24 h-24">
+              <ChartContainer config={leaveDonutConfig} className="w-24 h-24 aspect-square">
                 <PieChart>
                   <Pie
                     data={leaveData}
@@ -353,21 +350,21 @@ export default function DashboardHR() {
                 </PieChart>
               </ChartContainer>
               <div className="absolute flex flex-col items-center justify-center">
-                <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest leading-none">Total</span>
-                <span className="text-[12px] font-black text-slate-700 mt-1 leading-none">{totalLeaveDays} Hari</span>
+                <span className="text-[10px] text-slate-500 leading-none">Total</span>
+                <span className="text-xs font-medium text-slate-900 mt-0.5 leading-none">{totalLeaveDays}</span>
               </div>
             </div>
 
             {/* Legends Breakdown */}
-            <div className="flex-1 flex flex-col justify-center space-y-1.5 overflow-y-auto max-h-[140px] pr-1 scrollbar-hide">
+            <div className="flex-1 flex flex-col justify-center space-y-2 overflow-y-auto pr-1 scrollbar-hide h-full">
               {leaveData.map((d, idx) => (
-                <div key={idx} className="flex items-center justify-between text-[10px] border-b border-slate-50 pb-1">
+                <div key={idx} className="flex items-center justify-between text-[11px] border-b border-slate-100 pb-1.5 last:border-0 last:pb-0">
                   <div className="flex items-center gap-1.5 min-w-0">
                     <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: d.fill }} />
-                    <span className="text-slate-500 font-semibold truncate max-w-[80px]">{d.name}</span>
+                    <span className="text-slate-500 truncate">{d.name}</span>
                   </div>
                   <div className="text-right shrink-0">
-                    <span className="font-bold text-slate-800">{d.value} Hari</span>
+                    <span className="font-medium text-slate-900">{d.value}</span>
                   </div>
                 </div>
               ))}
@@ -380,40 +377,39 @@ export default function DashboardHR() {
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 flex-1 min-h-0">
         
         {/* Left 2 Columns: Recent Leave Requests */}
-        <div className="xl:col-span-2 bg-white rounded-2xl border-2 border-slate-100 shadow-sm overflow-hidden flex flex-col p-5">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-base font-bold text-slate-800 tracking-tight">Pengajuan Cuti Terbaru</h2>
-            <Link href="/leave" className="text-[10px] font-bold text-indigo-500 hover:text-indigo-700 flex items-center gap-1 transition-colors">
+        <div className="xl:col-span-2 bg-white rounded-xl border border-slate-200 overflow-hidden flex flex-col">
+          <div className="px-4 py-3 border-b border-slate-200 flex items-center justify-between shrink-0 bg-white">
+            <h2 className="text-[13px] font-medium text-slate-900">Pengajuan Cuti Terbaru</h2>
+            <Link href="/leave" className="text-xs text-slate-500 hover:text-slate-900 flex items-center gap-1 transition-colors">
               Lihat Semua <ChevronRight className="w-3.5 h-3.5" />
             </Link>
           </div>
           <div className="flex-1 overflow-auto scrollbar-hide">
             {recentActivities.length > 0 ? (
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-slate-50 font-bold text-slate-400 text-[12px]">
-                    <th className="text-left py-2.5">Karyawan</th>
-                    <th className="text-left py-2.5">Referensi</th>
-                    <th className="text-left py-2.5 hidden lg:table-cell">Durasi</th>
-                    <th className="text-center py-2.5">Status</th>
+              <table className="w-full text-left border-collapse whitespace-nowrap">
+                <thead className="sticky top-0 bg-white z-10 text-xs font-medium text-slate-500">
+                  <tr className="border-b border-slate-200 text-xs font-medium text-slate-500">
+                    <th className="px-4 py-2 font-medium">Karyawan</th>
+                    <th className="px-4 py-2 font-medium">Referensi</th>
+                    <th className="px-4 py-2 font-medium hidden lg:table-cell">Durasi</th>
+                    <th className="px-4 py-2 font-medium text-center">Status</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-50">
+                <tbody className="divide-y divide-slate-100 text-[13px] text-slate-700">
                   {recentActivities.map((act, i) => {
                     const sc = getStatusColor(act.status);
-                    const extra = act.extraDetails;
                     return (
-                      <tr key={i} onClick={() => setSelectedActivity(act)} className="hover:bg-slate-50/80 transition-colors cursor-pointer group">
-                        <td className="py-3">
+                      <tr key={i} onClick={() => setSelectedActivity(act)} className="hover:bg-slate-50/50 transition-colors cursor-pointer group">
+                        <td className="px-4 py-3">
                           <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-[10px] font-bold text-slate-600 border border-slate-200 group-hover:border-indigo-200 transition-colors shrink-0">{act.initial}</div>
-                            <span className="font-bold text-slate-800 group-hover:text-indigo-600 transition-colors truncate max-w-[140px]">{act.user}</span>
+                            <div className="w-7 h-7 rounded-full border border-slate-200 text-slate-600 font-medium text-[11px] flex items-center justify-center shrink-0">{act.initial}</div>
+                            <span className="font-medium text-slate-900 truncate max-w-[140px]">{act.user}</span>
                           </div>
                         </td>
-                        <td className="py-3 text-slate-400 font-sans text-xs">#{act.detail}</td>
-                        <td className="py-3 text-slate-600 text-xs hidden lg:table-cell">{extra?.[2]?.value ?? "-"}</td>
-                        <td className="py-3 text-center">
-                          <span className={`inline-flex px-3 py-1 rounded-full text-[11px] font-bold capitalize border ${sc.bg} ${sc.text} ${sc.border}`}>{act.status}</span>
+                        <td className="px-4 py-3 text-slate-500 text-xs">#{act.detail}</td>
+                        <td className="px-4 py-3 text-slate-600 text-xs hidden lg:table-cell">{act.extraDetails?.[2]?.value ?? "-"}</td>
+                        <td className="px-4 py-3 text-center text-xs">
+                          <span className={`capitalize font-medium ${sc.text.replace('text-', 'text-').replace('-800', '-600').replace('-700', '-600')}`}>{act.status}</span>
                         </td>
                       </tr>
                     );
@@ -421,47 +417,44 @@ export default function DashboardHR() {
                 </tbody>
               </table>
             ) : (
-              <div className="text-center py-8 text-slate-400">
-                <FileText className="w-10 h-10 mx-auto text-slate-200 mb-2" />
-                <p className="text-sm">Belum ada pengajuan cuti.</p>
+              <div className="h-full flex flex-col items-center justify-center text-slate-400">
+                <FileText className="w-8 h-8 text-slate-200 mb-2" />
+                <p className="text-xs">Belum ada pengajuan cuti.</p>
               </div>
             )}
           </div>
         </div>
 
         {/* Right 1 Column: Karyawan Cuti Minggu Ini */}
-        <div className="bg-white rounded-2xl border-2 border-slate-100 shadow-sm overflow-hidden flex flex-col p-5">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-base font-bold text-slate-800 tracking-tight">Karyawan Cuti Minggu Ini</h2>
-            <span className="px-2 py-0.5 bg-emerald-50 border border-emerald-100 rounded text-[9px] font-bold text-emerald-700 capitalize">
-              Aktif
-            </span>
+        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden flex flex-col">
+          <div className="px-4 py-3 border-b border-slate-200 flex items-center justify-between shrink-0 bg-white">
+            <h2 className="text-[13px] font-medium text-slate-900">Cuti Minggu Ini</h2>
           </div>
           
-          <div className="flex-1 overflow-auto scrollbar-hide space-y-3 pr-1">
+          <div className="flex-1 overflow-auto scrollbar-hide">
             {upcomingLeaves.length > 0 ? (
-              upcomingLeaves.map((leave, i) => (
-                <div key={i} className="flex items-center justify-between p-3 bg-slate-50/40 hover:bg-slate-50 border border-slate-100/50 hover:border-slate-200/85 rounded-xl transition-all group">
+              <div className="divide-y divide-slate-100">
+              {upcomingLeaves.map((leave, i) => (
+                <div key={i} className="flex items-center justify-between p-3 hover:bg-slate-50 transition-all group">
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="w-8 h-8 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center text-[10px] font-bold text-emerald-600 shrink-0">
+                    <div className="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center text-[11px] font-medium text-slate-600 shrink-0">
                       {leave.initial}
                     </div>
                     <div className="min-w-0">
-                      <p className="font-bold text-slate-800 text-xs truncate group-hover:text-indigo-650 transition-colors">{leave.userName}</p>
-                      <p className="text-[10px] text-slate-400 font-semibold truncate leading-none mt-1">{leave.position} • {leave.department}</p>
+                      <p className="font-medium text-slate-900 text-[13px] truncate">{leave.userName}</p>
+                      <p className="text-xs text-slate-500 truncate mt-0.5">{leave.position}</p>
                     </div>
                   </div>
                   <div className="text-right shrink-0">
-                    <span className="px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-100/50 rounded-md text-[9px] font-black tracking-wide block w-fit ml-auto mb-1">
-                      {leave.typeName}
-                    </span>
-                    <p className="text-[10px] text-slate-500 font-bold leading-none">{leave.startDateFormatted}</p>
+                    <p className="text-xs text-slate-900 font-medium">{leave.typeName}</p>
+                    <p className="text-[11px] text-slate-500 mt-0.5">{leave.startDateFormatted}</p>
                   </div>
                 </div>
-              ))
+              ))}
+              </div>
             ) : (
-              <div className="h-full flex flex-col items-center justify-center text-center py-12 text-slate-400">
-                <CalendarDays className="w-9 h-9 text-slate-200 mb-2" />
+              <div className="h-full flex flex-col items-center justify-center text-center py-8 text-slate-400">
+                <CalendarDays className="w-8 h-8 text-slate-200 mb-2" />
                 <p className="text-xs">Tidak ada karyawan yang cuti minggu ini.</p>
               </div>
             )}
@@ -472,41 +465,38 @@ export default function DashboardHR() {
       {/* Detail Modal */}
       <Modal isOpen={!!selectedActivity} onClose={() => setSelectedActivity(null)} title="Detail Pengajuan Cuti" size="lg"
         footer={
-          <>
-            <button onClick={() => setSelectedActivity(null)} className="px-4 py-2 bg-white border border-slate-200 text-slate-600 rounded-lg text-sm font-bold hover:bg-slate-50 transition-colors">Tutup</button>
+          <div className="flex justify-end gap-3 w-full">
+            <button onClick={() => setSelectedActivity(null)} className="text-[13px] font-medium text-slate-600 hover:text-slate-900 transition-colors">Tutup</button>
             {selectedActivity?.href && (
-              <button onClick={() => router.push(selectedActivity.href)} className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-bold hover:bg-indigo-700 transition-colors flex items-center gap-2">
+              <button onClick={() => router.push(selectedActivity.href)} className="px-4 py-1.5 bg-slate-900 text-white rounded-md text-[13px] font-medium hover:bg-slate-800 transition-colors flex items-center gap-2">
                 Proses <ExternalLink className="w-3.5 h-3.5" />
               </button>
             )}
-          </>
+          </div>
         }
       >
         {selectedActivity && (
-          <div className="space-y-5">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center border border-emerald-100">
-                <CalendarDays className="w-5 h-5 text-emerald-500" />
-              </div>
+          <div className="p-2 space-y-4">
+            <div className="flex items-center gap-3 border-b border-slate-200 pb-3">
               <div>
-                <h4 className="font-bold text-slate-800 text-base">{selectedActivity.type}</h4>
+                <h4 className="font-medium text-slate-900 text-[13px]">{selectedActivity.type}</h4>
                 <p className="text-xs text-slate-500">{new Date(selectedActivity.date).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })}</p>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div><p className="text-[11px] font-bold text-slate-400 mb-1">Pengaju</p><p className="text-sm font-semibold text-slate-800">{selectedActivity.user}</p></div>
+            <div className="grid grid-cols-2 gap-4 text-[13px]">
+              <div><p className="text-xs text-slate-500 mb-1">Pengaju</p><p className="font-medium text-slate-900">{selectedActivity.user}</p></div>
               <div>
-                <p className="text-[11px] font-bold text-slate-400 mb-1">Status</p>
-                <span className={`inline-flex px-2.5 py-0.5 rounded text-[11px] font-bold capitalize border ${getStatusColor(selectedActivity.status).bg} ${getStatusColor(selectedActivity.status).text} ${getStatusColor(selectedActivity.status).border}`}>{selectedActivity.status}</span>
+                <p className="text-xs text-slate-500 mb-1">Status</p>
+                <span className={`capitalize font-medium text-slate-900`}>{selectedActivity.status}</span>
               </div>
               {selectedActivity.extraDetails?.map((f: any, idx: number) => (
-                <div key={idx}><p className="text-[11px] font-bold text-slate-400 mb-1">{f.label}</p><p className="text-sm font-semibold text-slate-800">{f.value}</p></div>
+                <div key={idx}><p className="text-xs text-slate-500 mb-1">{f.label}</p><p className="font-medium text-slate-900">{f.value}</p></div>
               ))}
             </div>
             {selectedActivity.description && (
-              <div className="pt-4 border-t border-slate-100">
-                <p className="text-[11px] font-bold text-slate-400 mb-2">Alasan</p>
-                <div className="p-3 bg-slate-50 rounded-lg text-sm text-slate-700 leading-relaxed border border-slate-100">{selectedActivity.description}</div>
+              <div className="pt-3 border-t border-slate-200">
+                <p className="text-xs text-slate-500 mb-1">Alasan</p>
+                <div className="text-[13px] text-slate-900 leading-relaxed">{selectedActivity.description}</div>
               </div>
             )}
           </div>

@@ -29,10 +29,10 @@ export default function PDFPreviewModal({
  <div className="flex gap-2 text-[10px] text-slate-400 font-medium">
  <span className="flex items-center gap-1"><CheckCircle2 className="w-3 h-3 text-emerald-500" /> Digital Signature Verified</span>
  </div>
- <div className="flex gap-2">
+ <div className="flex gap-4">
  <button
  onClick={onClose}
- className="px-4 py-2 text-xs font-semibold text-slate-500 hover:text-slate-800 transition-colors"
+ className="text-[13px] font-medium text-slate-600 hover:text-slate-900 transition-colors"
  >
  Tutup
  </button>
@@ -41,7 +41,7 @@ export default function PDFPreviewModal({
  alert("Simulasi: File sedang diunduh ke folder Downloads Anda.");
  onClose();
  }}
- className="inline-flex items-center gap-2 px-5 py-2 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-all active:scale-95"
+ className="inline-flex items-center gap-2 px-4 py-1.5 text-[13px] font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-md transition-all active:scale-95"
  >
  <Download className="w-3.5 h-3.5" /> Download PDF
  </button>
@@ -51,80 +51,80 @@ export default function PDFPreviewModal({
  >
  <div className="space-y-6">
  {/* Simulated PDF Header */}
- <div className="bg-slate-50 p-6 border-b border-slate-100 flex justify-between items-start rounded-xl">
+ <div className="pb-6 border-b border-slate-200 flex justify-between items-start">
  <div className="flex items-center gap-4">
- <div className="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center text-white -indigo-200">
- <FileText className="w-6 h-6" />
+ <div className="w-10 h-10 border border-slate-200 rounded-md flex items-center justify-center text-slate-900">
+ <FileText className="w-5 h-5" />
  </div>
  <div>
- <h3 className="text-lg font-black text-slate-800 tracking-tighter uppercase leading-none mb-1">HRIS NEXT SYSTEM</h3>
- <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Official Document Generator</p>
+ <h3 className="text-base font-medium text-slate-900 mb-1">HRIS NEXT SYSTEM</h3>
+ <p className="text-xs text-slate-500">Official Document Generator</p>
  </div>
  </div>
  <div className="text-right">
- <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Document No.</p>
- <p className="text-sm font-sans font-bold text-indigo-600">#{documentNumber}</p>
+ <p className="text-xs text-slate-500 mb-1">Document No.</p>
+ <p className="text-[13px] font-medium text-slate-900">#{documentNumber}</p>
  </div>
  </div>
 
  {/* Simulated Document Content */}
- <div className="bg-white border-2 border-slate-50 p-8 rounded-xl space-y-8 relative overflow-hidden">
+ <div className="py-6 space-y-8 relative overflow-hidden">
  {/* Watermark */}
- <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none rotate-12 select-none">
- <p className="text-8xl font-black text-slate-900 leading-none">HRIS-NEXT</p>
+ <div className="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none rotate-12 select-none">
+ <p className="text-6xl font-medium text-slate-900 leading-none">HRIS-NEXT</p>
  </div>
 
  <div className="text-center space-y-1">
- <h2 className="text-xl font-bold text-slate-900 uppercase tracking-tight underline decoration-indigo-200 decoration-4 underline-offset-4">{title}</h2>
- <p className="text-[12px] text-slate-400 font-bold uppercase tracking-widest pt-1">Salinan Dokumen Digital Legal</p>
+ <h2 className="text-lg font-medium text-slate-900 underline decoration-slate-200 underline-offset-4">{title}</h2>
+ <p className="text-[12px] text-slate-500 pt-1">Salinan Dokumen Digital Legal</p>
  </div>
 
- <div className="grid grid-cols-2 gap-8 text-xs border-y border-slate-50 py-6">
+ <div className="grid grid-cols-2 gap-8 text-[13px] border-y border-slate-200 py-6">
  <div className="space-y-4">
  <div>
- <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1.5">Diterbitkan Untuk:</p>
- <p className="font-bold text-slate-800 text-sm">{itemData?.user?.name || itemData?.name || "Karyawan Lintas"}</p>
- <p className="text-slate-500 font-medium">#{itemData?.user?.employeeId || "EM-001"}</p>
+ <p className="text-xs text-slate-500 mb-1">Diterbitkan Untuk:</p>
+ <p className="font-medium text-slate-900">{itemData?.user?.name || itemData?.name || "Karyawan Lintas"}</p>
+ <p className="text-slate-500 text-xs">#{itemData?.user?.employeeId || "EM-001"}</p>
  </div>
  <div>
- <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1.5">Departemen:</p>
- <p className="font-bold text-slate-700">{itemData?.user?.department || "Operasional"}</p>
+ <p className="text-xs text-slate-500 mb-1">Departemen:</p>
+ <p className="font-medium text-slate-900">{itemData?.user?.department || "Operasional"}</p>
  </div>
  </div>
  <div className="space-y-4">
  <div>
- <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1.5">Tanggal Dokumen:</p>
- <p className="font-bold text-slate-800">{new Date().toLocaleDateString("id-ID", { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+ <p className="text-xs text-slate-500 mb-1">Tanggal Dokumen:</p>
+ <p className="font-medium text-slate-900">{new Date().toLocaleDateString("id-ID", { day: 'numeric', month: 'long', year: 'numeric' })}</p>
  </div>
  <div>
- <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1.5">Status Akhir:</p>
- <span className="text-emerald-600 font-black uppercase tracking-tighter">SUCCESSFULLY APPROVED</span>
+ <p className="text-xs text-slate-500 mb-1">Status Akhir:</p>
+ <span className="text-slate-900 font-medium">Approved</span>
  </div>
  </div>
  </div>
 
- <div className="space-y-3">
- <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest">Detail Informasi:</p>
- <div className="p-4 bg-slate-50/50 rounded-xl border border-slate-100 text-slate-600 text-sm italic leading-relaxed">
+ <div className="space-y-2">
+ <p className="text-xs text-slate-500">Detail Informasi:</p>
+ <div className="text-slate-900 text-[13px] leading-relaxed">
  &quot;{itemData?.description || itemData?.purpose || "Detail permohonan telah divalidasi oleh sistem dan disetujui oleh otoritas terkait sesuai dengan prosedur perusahaan yang berlaku."}&quot;
  </div>
  </div>
 
  <div className="flex justify-end pt-12 pb-4">
  <div className="text-center space-y-2">
- <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Digital Signatory</p>
- <div className="w-24 h-24 bg-slate-50 rounded-xl border border-dashed border-slate-200 flex items-center justify-center mx-auto opacity-40">
- <Shield className="w-10 h-10 text-slate-300" />
+ <p className="text-xs text-slate-500">Digital Signatory</p>
+ <div className="w-24 h-24 rounded-md border border-slate-200 flex items-center justify-center mx-auto opacity-40">
+ <Shield className="w-8 h-8 text-slate-300" />
  </div>
- <p className="text-xs font-bold text-slate-800 border-t border-slate-100 pt-2 px-4 italic">HRIS AUTOMATION</p>
+ <p className="text-[13px] font-medium text-slate-900 border-t border-slate-200 pt-2 px-4">HRIS Automation</p>
  </div>
  </div>
  </div>
 
- <div className="bg-indigo-50/50 p-4 rounded-xl border border-indigo-100 flex items-center gap-3">
- <Eye className="w-4 h-4 text-indigo-400" />
- <p className="text-[12px] text-indigo-700 font-medium italic">
- Ini adalah simulasi priview PDF. Pada sistem produksi, tombol di bawah akan menggenerasi file .pdf asli menggunakan library pdf-lib atau jsPDF.
+ <div className="pt-4 flex items-center gap-3">
+ <Eye className="w-4 h-4 text-slate-400" />
+ <p className="text-[12px] text-slate-500">
+ Simulasi file PDF. Pada sistem produksi akan menggunakan library untuk generate PDF.
  </p>
  </div>
  </div>

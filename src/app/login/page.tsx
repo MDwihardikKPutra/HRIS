@@ -196,12 +196,13 @@ export default function LoginPage() {
               </button>
               
               {showDemo && (
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 mt-2 border-t border-slate-200/60 animate-in fade-in slide-in-from-top-2 duration-300">
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-4 mt-2 border-t border-slate-200/60 animate-in fade-in slide-in-from-top-2 duration-300">
                   {[
                     { role: "Admin", email: "admin@hris.local", icon: ShieldCheck, color: "text-indigo-600", bg: "bg-indigo-100" },
                     { role: "HR", email: "hr@hris.local", icon: Users, color: "text-emerald-600", bg: "bg-emerald-100" },
                     { role: "Finance", email: "finance@hris.local", icon: CreditCard, color: "text-amber-600", bg: "bg-amber-100" },
                     { role: "Project Mgr", email: "pm@hris.local", icon: Briefcase, color: "text-purple-600", bg: "bg-purple-100" },
+                    { role: "Karyawan", email: "budi@hris.local", icon: Users, color: "text-rose-600", bg: "bg-rose-100" },
                   ].map((demo) => {
                     const Icon = demo.icon;
                     return (

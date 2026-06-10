@@ -52,17 +52,17 @@ export default function Modal({
  <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
  {/* Backdrop */}
  <div
- className="absolute inset-0 bg-slate-900/20 backdrop-blur-sm transition-opacity"
+ className="absolute inset-0 bg-slate-900/40 transition-opacity"
  onClick={onClose}
  />
 
  {/* Modal Container: Flat, no , clean border */}
  <div
- className={`relative w-full ${sizeClasses[size]} bg-white rounded-2xl overflow-hidden flex flex-col shadow-2xl transition-all duration-300 scale-100 opacity-100 animate-in fade-in zoom-in-95`}
+ className={`relative w-full max-h-[90vh] ${sizeClasses[size]} bg-white rounded-xl overflow-hidden flex flex-col shadow-xl border border-slate-200 transition-all duration-300 scale-100 opacity-100 animate-in fade-in zoom-in-95`}
  >
  {/* Header */}
- <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-white">
- <h3 className="text-base font-bold text-slate-800 tracking-tight">{title}</h3>
+ <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-white">
+ <h3 className="text-base font-medium text-slate-900">{title}</h3>
  <button
  onClick={onClose}
  className="p-1 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 transition-colors"
@@ -78,7 +78,7 @@ export default function Modal({
  
  {/* Footer */}
  {footer ? (
- <div className="px-6 py-4 border-t border-slate-100 bg-slate-50/20 flex justify-end gap-2.5">
+ <div className="px-6 py-4 border-t border-slate-200 bg-slate-50 flex justify-end gap-3">
  {footer}
  </div>
  ) : null}

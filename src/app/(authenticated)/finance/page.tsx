@@ -128,92 +128,92 @@ function FinanceContent() {
  return (
     <div className="flex flex-col h-full overflow-hidden w-full space-y-4">
       {/* Unified Table Dashboard Card */}
-      <div className="flex-1 min-h-0 bg-white rounded-2xl flex flex-col overflow-hidden">
+      <div className="flex-1 min-h-0 bg-white border border-slate-200 rounded-xl flex flex-col overflow-hidden">
         
         {/* Top Header */}
-        <div className="border-b border-slate-100 p-4 shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="border-b border-slate-200 p-4 shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-xl md:text-2xl font-semibold text-slate-800 tracking-tight">Approval Pembayaran</h1>
-            <p className="text-sm font-medium text-slate-500 mt-1">Pantau ringkasan dan persetujuan pengajuan dana</p>
+            <h1 className="text-lg font-medium text-slate-900">Approval Pembayaran</h1>
+            <p className="text-[13px] text-slate-500 mt-1">Pantau ringkasan dan persetujuan pengajuan dana</p>
           </div>
         </div>
 
         {/* Symmetrical Metrics Bar - High Density */}
-        <div className="grid grid-cols-1 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-slate-100 bg-slate-50/50 border-b border-slate-100 shrink-0">
+        <div className="grid grid-cols-1 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-slate-100 border-b border-slate-200 shrink-0">
           
           {/* Total Dana Pending */}
-          <div className="p-3.5 flex flex-col justify-center bg-white/60">
-            <div className="flex items-center gap-2 mb-2.5">
-              <div className="w-6 h-6 rounded-md bg-amber-50 flex items-center justify-center text-amber-600 shrink-0 border border-amber-100/40">
+          <div className="p-4 flex flex-col justify-center">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-6 h-6 rounded bg-amber-50 flex items-center justify-center text-amber-600 shrink-0">
                 <Wallet className="w-3.5 h-3.5" />
               </div>
-              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider leading-none">Dana Pending</span>
+              <span className="text-[11px] font-medium text-slate-500">Dana Pending</span>
             </div>
-            <h3 className="text-base font-black text-slate-800 leading-none">{formatCurrency(metrics.pendingAmount)}</h3>
-            <p className="text-[9px] text-slate-400 font-medium mt-1.5 leading-none">Menunggu verifikasi pembayaran</p>
+            <h3 className="text-lg font-semibold text-slate-900">{formatCurrency(metrics.pendingAmount)}</h3>
+            <p className="text-xs text-slate-500 mt-1">Menunggu verifikasi pembayaran</p>
           </div>
 
           {/* Menunggu Persetujuan */}
-          <div className="p-3.5 flex flex-col justify-center bg-white/60">
-            <div className="flex items-center gap-2 mb-2.5">
-              <div className="w-6 h-6 rounded-md bg-indigo-50 flex items-center justify-center text-indigo-600 shrink-0 border border-indigo-100/40">
+          <div className="p-4 flex flex-col justify-center">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-6 h-6 rounded bg-indigo-50 flex items-center justify-center text-indigo-600 shrink-0">
                 <Clock className="w-3.5 h-3.5" />
               </div>
-              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider leading-none">Antrean Approval</span>
+              <span className="text-[11px] font-medium text-slate-500">Antrean Approval</span>
             </div>
-            <h3 className="text-base font-black text-slate-800 leading-none">{metrics.pendingCount} <span className="text-[10px] font-bold text-slate-400 ml-1">Tugas</span></h3>
-            <p className="text-[9px] text-amber-600 font-bold mt-1.5 leading-none">Memerlukan tindakan segera</p>
+            <h3 className="text-lg font-semibold text-slate-900">{metrics.pendingCount} <span className="text-xs font-normal text-slate-500 ml-1">Tugas</span></h3>
+            <p className="text-xs text-slate-500 mt-1">Memerlukan tindakan segera</p>
           </div>
 
           {/* Selesai Diproses */}
-          <div className="p-3.5 flex flex-col justify-center bg-white/60">
-            <div className="flex items-center gap-2 mb-2.5">
-              <div className="w-6 h-6 rounded-md bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0 border border-emerald-100/40">
+          <div className="p-4 flex flex-col justify-center">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-6 h-6 rounded bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0">
                 <CheckCircle className="w-3.5 h-3.5" />
               </div>
-              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider leading-none">Selesai Diproses</span>
+              <span className="text-[11px] font-medium text-slate-500">Selesai Diproses</span>
             </div>
-            <h3 className="text-base font-black text-slate-800 leading-none">{metrics.approvedCount} <span className="text-[10px] font-bold text-slate-400 ml-1">Pengajuan</span></h3>
-            <p className="text-[9px] text-emerald-600 font-bold mt-1.5 leading-none">Telah disetujui & diarsipkan</p>
+            <h3 className="text-lg font-semibold text-slate-900">{metrics.approvedCount} <span className="text-xs font-normal text-slate-500 ml-1">Pengajuan</span></h3>
+            <p className="text-xs text-slate-500 mt-1">Telah disetujui & diarsipkan</p>
           </div>
 
           {/* Proporsi Pengeluaran (Mini Chart) */}
-          <div className="p-3.5 flex flex-col justify-center bg-slate-50/80">
+          <div className="p-4 flex flex-col justify-center">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider leading-none">Proporsi Dana</span>
-              <span className="text-[10px] font-black text-slate-800 leading-none">{formatCurrency(metrics.totalAmount)}</span>
+              <span className="text-[11px] font-medium text-slate-500">Proporsi Dana</span>
+              <span className="text-sm font-semibold text-slate-900">{formatCurrency(metrics.totalAmount)}</span>
             </div>
             {/* Progress Bar */}
-            <div className="w-full h-2.5 bg-slate-200/50 rounded-full flex overflow-hidden mb-2">
+            <div className="w-full h-1.5 bg-slate-100 rounded-full flex overflow-hidden mb-2">
               <div className="bg-sky-500 h-full transition-all duration-500" style={{ width: `${metrics.spdPercentage}%` }} title={`SPD: ${metrics.spdPercentage}%`} />
               <div className="bg-purple-500 h-full transition-all duration-500" style={{ width: `${metrics.purchasePercentage}%` }} title={`Pembelian: ${metrics.purchasePercentage}%`} />
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between text-xs text-slate-500">
               <div className="flex items-center gap-1.5">
                 <div className="w-1.5 h-1.5 rounded-full bg-sky-500" />
-                <span className="text-[9px] font-bold text-slate-500 leading-none">SPD ({metrics.spdPercentage}%)</span>
+                <span>SPD ({metrics.spdPercentage}%)</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="w-1.5 h-1.5 rounded-full bg-purple-500" />
-                <span className="text-[9px] font-bold text-slate-500 leading-none">Pembelian ({metrics.purchasePercentage}%)</span>
+                <span>Pembelian ({metrics.purchasePercentage}%)</span>
               </div>
             </div>
           </div>
         </div>
 
         {/* Unified Controls Toolbar - High Density */}
-        <div className="flex items-center justify-between gap-3 p-2.5 border-b border-slate-100 bg-white shrink-0 overflow-x-auto scrollbar-hide">
-          <div className="flex items-center gap-3 min-w-max">
+        <div className="flex items-center justify-between gap-4 p-4 border-b border-slate-200 shrink-0 overflow-x-auto scrollbar-hide">
+          <div className="flex items-center gap-4 min-w-max">
             {/* Tabs Control */}
-            <div className="bg-slate-100/80 p-0.5 rounded-lg flex items-center">
+            <div className="flex items-center gap-2">
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as any)}
-                  className={`px-2.5 py-1 text-[10px] font-bold rounded-md transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                  className={`px-3 py-1.5 text-[13px] font-medium rounded-md transition-colors flex items-center gap-2 ${
                     activeTab === tab.id 
-                      ? "bg-white text-indigo-600 shadow-sm" 
-                      : "text-slate-500 hover:text-slate-800 hover:bg-slate-50"
+                      ? "bg-slate-100 text-slate-900" 
+                      : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
                   }`}
                 >
                   {tab.icon && tab.icon}
@@ -225,18 +225,18 @@ function FinanceContent() {
             <div className="w-px h-4 bg-slate-200 hidden sm:block" />
 
             {/* Status Filters */}
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-2">
               {["Semua", "Pending", "Approved", "Rejected"].map((status) => (
                 <button
                   key={status}
                   onClick={() => setFilterStatus(status)}
-                  className={`px-2 py-0.5 text-[9px] font-bold rounded-md whitespace-nowrap transition-all border ${
+                  className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors border ${
                     filterStatus === status
                       ? (status === "Pending" ? "bg-amber-50 text-amber-700 border-amber-200"
-                        : status === "Semua" ? "bg-indigo-50 text-indigo-700 border-indigo-100"
+                        : status === "Semua" ? "bg-indigo-50 text-indigo-700 border-indigo-200"
                         : status === "Approved" ? "bg-emerald-50 text-emerald-700 border-emerald-200"
                         : "bg-red-50 text-red-700 border-red-200")
-                      : "bg-white text-slate-500 border-slate-100 hover:bg-slate-50"
+                      : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
                   }`}
                 >
                   {status}
@@ -246,66 +246,66 @@ function FinanceContent() {
           </div>
 
           {/* Search Box */}
-          <div className="relative group w-48 xl:w-64 shrink-0">
-            <Search className="absolute left-2.5 top-1.5 w-3 h-3 text-slate-400" />
+          <div className="relative group min-w-[240px] shrink-0">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input
               type="text"
               placeholder="Cari referensi, pengaju..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-7 pr-3 py-1 bg-slate-50/40 border border-slate-200 rounded-md text-[10px] focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium"
+              className="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-md text-[13px] focus:outline-none focus:border-indigo-500 transition-colors"
             />
           </div>
         </div>
 
         {/* Table Viewport - High Density */}
-        <div className="flex-1 min-h-0 overflow-auto scrollbar-hide">
-          <table className="w-full text-xs">
-            <thead>
-              <tr className="bg-white border-b border-slate-200 font-semibold text-slate-500 capitalize tracking-wide text-[9px] sticky top-0 z-20 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
-                <th className="text-left py-3 px-4 font-bold">Referensi / Pengaju</th>
-                <th className="text-left py-2 px-4 hidden md:table-cell font-bold">Tujuan & Deskripsi</th>
-                <th className="text-right py-2 px-4 hidden sm:table-cell font-bold">Kategori & Nominal</th>
-                <th className="text-center py-2 px-4 font-bold w-24">Status</th>
-                <th className="text-right py-2 px-4 font-bold w-24">Aksi</th>
+        <div className="flex-1 overflow-auto scrollbar-hide bg-white">
+          <table className="w-full text-left border-collapse whitespace-nowrap">
+            <thead className="sticky top-0 bg-white z-10 text-xs font-medium text-slate-500">
+              <tr className="border-b border-slate-200 text-xs font-medium text-slate-500">
+                <th className="py-3 px-4 font-medium">Referensi / Pengaju</th>
+                <th className="py-3 px-4 hidden md:table-cell font-medium">Tujuan & Deskripsi</th>
+                <th className="py-3 px-4 hidden sm:table-cell font-medium text-right">Kategori & Nominal</th>
+                <th className="py-3 px-4 font-medium text-center">Status</th>
+                <th className="py-3 px-4 font-medium text-right">Opsi</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-50">
+            <tbody className="divide-y divide-slate-100 text-[13px] text-slate-700">
               {currentData.map((item: any) => {
                 const sc = getStatusColor(item.status);
 
                 return (
-                  <tr key={item.id} className="group hover:bg-slate-50/60 transition-colors">
-                    <td className="py-1.5 px-4">
-                      <div className="flex items-center gap-2.5">
-                        <div className="w-7 h-7 rounded-md bg-indigo-50 border border-indigo-100 flex items-center justify-center text-[10px] font-bold text-indigo-600 shrink-0">
+                  <tr key={item.id} className="hover:bg-slate-50/50 transition-colors group">
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-xs font-medium text-slate-600 shrink-0">
                           {item.user?.name?.charAt(0) || "?"}
                         </div>
                         <div className="min-w-0">
-                          <p className="text-xs font-semibold text-slate-800 leading-none mb-0.5 truncate">{item.user?.name || "-"}</p>
-                          <p className="text-[9px] text-slate-400 font-medium font-sans truncate">#{item.number}</p>
+                          <p className="font-medium text-slate-900 mb-0.5 truncate">{item.user?.name || "-"}</p>
+                          <p className="text-xs text-slate-500 font-mono truncate">#{item.number}</p>
                         </div>
                       </div>
                     </td>
-                    <td className="py-1.5 px-4 hidden md:table-cell">
-                      <p className="text-[10px] font-bold text-slate-700 truncate max-w-[150px] lg:max-w-[250px]" title={item.target}>{item.target}</p>
-                      <p className="text-[9px] text-slate-400 font-medium truncate max-w-[150px] lg:max-w-[250px] leading-tight">{item.description}</p>
+                    <td className="px-4 py-3 hidden md:table-cell">
+                      <p className="font-medium text-slate-900 truncate max-w-[150px] lg:max-w-[250px]" title={item.target}>{item.target}</p>
+                      <p className="text-[13px] text-slate-500 truncate max-w-[150px] lg:max-w-[250px]">{item.description}</p>
                     </td>
-                    <td className="py-1.5 px-4 hidden sm:table-cell text-right">
-                      <p className="text-xs font-black text-slate-700 leading-none mb-0.5">{formatCurrency(item.amount)}</p>
-                      <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">{item.type} • {formatDate(item.date)}</p>
+                    <td className="px-4 py-3 hidden sm:table-cell text-right">
+                      <p className="font-medium text-slate-900 mb-0.5">{formatCurrency(item.amount)}</p>
+                      <p className="text-xs text-slate-500">{item.type} • {formatDate(item.date)}</p>
                     </td>
-                    <td className="py-1.5 px-4 text-center">
-                      <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[9px] font-bold border uppercase tracking-widest bg-transparent ${sc.text} ${sc.border === 'border-slate-200' ? 'border-slate-300' : sc.border}`}>
-                        {item.status === 'pending' ? 'Pending' : item.status}
+                    <td className="px-4 py-3 text-center">
+                      <span className={`inline-flex px-2 py-0.5 rounded text-xs font-medium border ${sc.bg} ${sc.text} ${sc.border === 'border-slate-200' ? 'border-slate-300' : sc.border}`}>
+                        {item.status.replace('_', ' ').replace(/\b\w/g, (l: string) => l.toUpperCase())}
                       </span>
                     </td>
-                    <td className="py-1.5 px-4 text-right">
-                      <div className="flex items-center justify-end gap-1 opacity-70 group-hover:opacity-100 transition-opacity">
+                    <td className="px-4 py-3 text-right">
+                      <div className="flex items-center justify-end gap-2">
                         {item.status === "pending" ? (
                           <button
                             onClick={() => setSelectedApprovalItem(item)}
-                            className="px-2.5 py-1 text-[9px] font-bold text-indigo-600 hover:text-white bg-indigo-50 hover:bg-indigo-600 rounded-md transition-colors border border-indigo-100 hover:border-indigo-600"
+                            className="px-3 py-1.5 text-[13px] font-medium text-indigo-700 bg-indigo-50 hover:bg-indigo-100 rounded-md transition-colors border border-indigo-200"
                           >
                             Proses
                           </button>
@@ -313,17 +313,17 @@ function FinanceContent() {
                           <>
                             <button
                               onClick={(e) => { e.stopPropagation(); openPDFPreview(item); }}
-                              className="p-1 text-slate-400 hover:text-indigo-600 transition-colors bg-white hover:bg-indigo-50 border border-slate-200 hover:border-indigo-200 rounded-md shadow-sm"
+                              className="p-1.5 text-slate-500 hover:text-slate-900 bg-white hover:bg-slate-50 border border-slate-200 rounded-md transition-colors"
                               title="Preview PDF"
                             >
-                              <Printer className="w-3.5 h-3.5" />
+                              <Printer className="w-4 h-4" />
                             </button>
                             <button
                               onClick={() => setSelectedApprovalItem(item)}
-                              className="p-1 text-slate-400 hover:text-slate-600 transition-colors bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-md shadow-sm"
+                              className="p-1.5 text-slate-500 hover:text-slate-900 bg-white hover:bg-slate-50 border border-slate-200 rounded-md transition-colors"
                               title="Detail"
                             >
-                              <Search className="w-3.5 h-3.5" />
+                              <Search className="w-4 h-4" />
                             </button>
                           </>
                         )}
@@ -334,8 +334,7 @@ function FinanceContent() {
               })}
               {currentData.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="py-12 text-center text-slate-400 font-medium text-sm">
-                    <CheckCircle2 className="w-10 h-10 mx-auto text-slate-200 mb-2" />
+                  <td colSpan={5} className="py-12 text-center text-slate-500 text-[13px]">
                     Tidak ada pengajuan ditemukan.
                   </td>
                 </tr>

@@ -47,19 +47,19 @@ export function DataTable<T>({
   return (
     <div className={`bg-white border border-slate-100 rounded-xl overflow-hidden mt-2 ${className}`}>
       <div className="overflow-x-auto scrollbar-hide">
-        <table className="w-full text-xs">
+        <table className="w-full text-left border-collapse whitespace-nowrap">
           <thead>
-            <tr className="bg-slate-50/50 border-b border-slate-100 font-semibold text-slate-500 tracking-wide text-[10px]">
+            <tr className="border-b border-slate-200 text-xs font-medium text-slate-500">
               {visibleColumns.map((col) => (
                 <th
                   key={col.key}
-                  className={`text-left py-2.5 px-4 font-bold ${col.className || ""}`}
+                  className={`text-left py-3 px-4 font-medium ${col.className || ""}`}
                 >
                   {col.label}
                 </th>
               ))}
               {renderRowExtra && (
-                <th className="text-right py-2.5 px-4 font-bold">Opsi</th>
+                <th className="text-right py-3 px-4 font-medium">Opsi</th>
               )}
             </tr>
           </thead>
@@ -97,7 +97,7 @@ export function DataTable<T>({
                       </td>
                     ))}
                     {renderRowExtra && (
-                      <td className="py-2.5 px-4 text-right">
+                      <td className="px-4 py-3 text-right">
                         <div className="flex items-center justify-end gap-1.5 transition-opacity opacity-0 group-hover:opacity-100">
                           {renderRowExtra(item)}
                         </div>
@@ -122,7 +122,7 @@ interface FilterBarProps {
 
 export function FilterBar({ children, className = "" }: FilterBarProps) {
   return (
-    <div className={`bg-white rounded-xl border border-slate-100 p-3 mt-4 ${className}`}>
+    <div className={`py-3 mt-4 border-b border-slate-200 ${className}`}>
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
         {children}
       </div>
@@ -139,15 +139,15 @@ interface StatusFilterProps {
 
 export function StatusFilter({ options, activeStatus, onStatusChange }: StatusFilterProps) {
   return (
-    <div className="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0 scrollbar-hide">
+    <div className="flex items-center gap-4 overflow-x-auto pb-1 md:pb-0 scrollbar-hide">
       {options.map((status) => (
         <button
           key={status}
           onClick={() => onStatusChange(status)}
-          className={`px-3 py-1.5 text-[12px] font-bold rounded-lg whitespace-nowrap transition-all tracking-wide ${
+          className={`py-1 text-[13px] font-medium whitespace-nowrap transition-colors border-b-2 ${
             activeStatus === status
-              ? "bg-indigo-50 text-indigo-600 border border-indigo-100"
-              : "bg-transparent text-slate-400 border border-transparent hover:bg-slate-50 hover:text-slate-600"
+              ? "text-slate-900 border-slate-900"
+              : "text-slate-500 border-transparent hover:text-slate-700"
           }`}
         >
           {status}
@@ -173,13 +173,13 @@ export function TableSearch({
 }: TableSearchProps) {
   return (
     <div className={`relative group min-w-[280px] ${className}`}>
-      <Search className="absolute left-3 top-2.5 w-3.5 h-3.5 text-slate-400 group-focus-within:text-indigo-500 transition-colors" />
+      <Search className="absolute left-3 top-2.5 w-3.5 h-3.5 text-slate-400 group-focus-within:text-slate-700 transition-colors" />
       <input
         type="text"
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium"
+        className="w-full pl-9 pr-4 py-2 bg-transparent border border-slate-200 rounded-md text-[13px] focus:outline-none focus:border-slate-400 transition-all font-medium"
       />
     </div>
   );
@@ -197,16 +197,27 @@ interface StatusBadgeProps {
 
 export function StatusBadge({ status, statusColor }: StatusBadgeProps) {
   const sc = statusColor || {
-    text: "text-slate-600",
-    border: "border-slate-200",
-    bg: "bg-transparent",
+    text: "text-slate-500",
   };
 
+  const LABELS: Record<string, string> = {
+    pending: "Menunggu",
+    approved: "Disetujui",
+    accepted: "Diterima",
+    rejected: "Ditolak",
+    declined: "Ditolak",
+    extended: "Diperpanjang",
+    completed: "Selesai",
+    active: "Aktif",
+    on_hold: "Ditahan",
+  };
+
+  const label = LABELS[status] || status;
+
   return (
-    <span
-      className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-lg text-[10px] font-black border capitalize tracking-wide ${sc.text} ${sc.border === "border-slate-200" ? "border-slate-300" : sc.border}`}
-    >
-      {status}
+    <span className={`inline-flex items-center gap-1.5 text-[12px] font-medium ${sc.text}`}>
+      <span className={`w-1.5 h-1.5 rounded-full ${sc.text.replace('text-', 'bg-')}`} />
+      {label}
     </span>
   );
 }
@@ -228,10 +239,10 @@ export function ActionButton({
   className = "",
 }: ActionButtonProps) {
   const variantClasses = {
-    default: "text-slate-400 hover:text-slate-600 bg-white hover:bg-slate-50 border-slate-100",
-    primary: "text-indigo-600 hover:text-white bg-indigo-50 hover:bg-indigo-600 border-indigo-100 hover:border-indigo-600",
-    danger: "text-red-600 hover:text-white bg-red-50 hover:bg-red-600 border-red-100 hover:border-red-600",
-    success: "text-emerald-600 hover:text-white bg-emerald-50 hover:bg-emerald-600 border-emerald-100 hover:border-emerald-600",
+    default: "text-slate-400 hover:text-slate-700 hover:bg-slate-50",
+    primary: "text-indigo-600 hover:text-indigo-800 hover:bg-indigo-50",
+    danger: "text-red-500 hover:text-red-700 hover:bg-red-50",
+    success: "text-emerald-500 hover:text-emerald-700 hover:bg-emerald-50",
   };
 
   return (
@@ -241,7 +252,7 @@ export function ActionButton({
         onClick?.(e);
       }}
       title={title}
-      className={`p-2 transition-colors rounded-lg border ${variantClasses[variant]} ${className}`}
+      className={`p-1.5 transition-colors rounded-md ${variantClasses[variant]} ${className}`}
     >
       {icon}
     </button>
@@ -284,11 +295,11 @@ interface UserCellProps {
 
 export function UserCell({ name, subtitle, subtitlePrefix = "#" }: UserCellProps) {
   return (
-    <div className="flex items-center gap-2.5">
-      <AvatarInitial name={name} />
+    <div className="flex items-center gap-3">
+      <AvatarInitial name={name} size="sm" />
       <div>
-        <p className="font-semibold text-slate-800 leading-none mb-1">{name || "-"}</p>
-        <p className="text-[10px] text-slate-400 font-medium">
+        <p className="font-medium text-slate-900 leading-none mb-1">{name || "-"}</p>
+        <p className="text-[11px] text-slate-500">
           {subtitlePrefix}{subtitle || "—"}
         </p>
       </div>

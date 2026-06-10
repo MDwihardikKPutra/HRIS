@@ -77,71 +77,68 @@ export default function LeavePage() {
   return (
     <div className="flex flex-col h-full overflow-hidden w-full space-y-4">
       {/* Unified Table Dashboard Card */}
-      <div className="flex-1 min-h-0 bg-white rounded-2xl flex flex-col overflow-hidden">
+      <div className="flex-1 min-h-0 bg-white border border-slate-200 rounded-xl flex flex-col overflow-hidden">
         
         {/* Top Card Header (Title and description) */}
-        <div className="border-b border-slate-100 p-4 bg-white shrink-0 flex flex-col gap-4">
+        <div className="border-b border-slate-200 p-4 bg-white shrink-0 flex flex-col gap-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h1 className="text-lg md:text-xl font-bold text-slate-800 tracking-tight">Daftar Cuti & Izin</h1>
-              <p className="text-xs font-semibold text-slate-500 mt-1">Kelola dan pantau seluruh pengajuan cuti karyawan</p>
+              <h1 className="text-lg font-medium text-slate-900">Daftar Cuti & Izin</h1>
+              <p className="text-[13px] text-slate-500 mt-1">Kelola dan pantau seluruh pengajuan cuti karyawan</p>
             </div>
           </div>
         </div>
 
         {/* Symmetrical Metrics Bar */}
-        <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-100 bg-slate-50/30 border-b border-slate-100 shrink-0">
+        <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200 bg-slate-50/50 border-b border-slate-200 shrink-0">
           {/* Menunggu Persetujuan */}
-          <div className="py-3 px-5 flex items-center gap-3.5">
-            <div className="w-9 h-9 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 shrink-0 border border-amber-100/40">
-              <Clock className="w-4.5 h-4.5" />
+          <div className="py-3 px-4 flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 shrink-0">
+              <Clock className="w-4 h-4" />
             </div>
             <div>
-              <span className="text-[9px] font-bold text-slate-400 block uppercase tracking-wider leading-none mb-1">Menunggu Persetujuan</span>
-              <h3 className="text-sm font-black text-slate-800 leading-none">{metrics.pendingCount} Pengajuan</h3>
-              <p className="text-[9px] text-amber-600 font-bold mt-1 leading-none">Memerlukan tindakan segera</p>
+              <span className="text-[11px] font-medium text-slate-500 block uppercase tracking-wider mb-0.5">Menunggu Persetujuan</span>
+              <h3 className="text-sm font-semibold text-slate-900">{metrics.pendingCount} Pengajuan</h3>
             </div>
           </div>
 
           {/* Selesai Disetujui */}
-          <div className="py-3 px-5 flex items-center gap-3.5">
-            <div className="w-9 h-9 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0 border border-emerald-100/40">
-              <CheckCircle className="w-4.5 h-4.5" />
+          <div className="py-3 px-4 flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
+              <CheckCircle className="w-4 h-4" />
             </div>
             <div>
-              <span className="text-[9px] font-bold text-slate-400 block uppercase tracking-wider leading-none mb-1">Cuti Disetujui</span>
-              <h3 className="text-sm font-black text-slate-800 leading-none">{metrics.approvedCount} Pengajuan</h3>
-              <p className="text-[9px] text-emerald-600 font-bold mt-1 leading-none">Telah disetujui & aktif</p>
+              <span className="text-[11px] font-medium text-slate-500 block uppercase tracking-wider mb-0.5">Cuti Disetujui</span>
+              <h3 className="text-sm font-semibold text-slate-900">{metrics.approvedCount} Pengajuan</h3>
             </div>
           </div>
 
           {/* Total Seluruh Pengajuan */}
-          <div className="py-3 px-5 flex items-center gap-3.5">
-            <div className="w-9 h-9 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 shrink-0 border border-indigo-100/40">
-              <Calendar className="w-4.5 h-4.5" />
+          <div className="py-3 px-4 flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 shrink-0">
+              <Calendar className="w-4 h-4" />
             </div>
             <div>
-              <span className="text-[9px] font-bold text-slate-400 block uppercase tracking-wider leading-none mb-1">Total Pengajuan</span>
-              <h3 className="text-sm font-black text-slate-800 leading-none">{metrics.totalCount} Pengajuan</h3>
-              <p className="text-[9px] text-slate-400 font-medium mt-1 leading-none">Total riwayat pengajuan cuti</p>
+              <span className="text-[11px] font-medium text-slate-500 block uppercase tracking-wider mb-0.5">Total Pengajuan</span>
+              <h3 className="text-sm font-semibold text-slate-900">{metrics.totalCount} Pengajuan</h3>
             </div>
           </div>
         </div>
 
         {/* Unified Controls Toolbar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 border-b border-slate-50 bg-white shrink-0">
-          <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-hide">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 border-b border-slate-200 shrink-0">
+          <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide">
             {["Semua Status", "Pending", "Approved", "Rejected"].map((status) => (
               <button
                 key={status}
                 onClick={() => setFilterStatus(status)}
-                className={`px-2.5 py-1 text-[10px] font-bold rounded-lg whitespace-nowrap transition-all border ${
+                className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors border ${
                   filterStatus === status
                     ? (status === "Pending" ? "bg-amber-50 text-amber-700 border-amber-200"
-                      : status === "Semua Status" ? "bg-indigo-50 text-indigo-700 border-indigo-100"
+                      : status === "Semua Status" ? "bg-indigo-50 text-indigo-700 border-indigo-200"
                       : status === "Approved" ? "bg-emerald-50 text-emerald-700 border-emerald-200"
                       : "bg-red-50 text-red-700 border-red-200")
-                    : "bg-white text-slate-500 border-slate-100 hover:bg-slate-50"
+                    : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
                 }`}
               >
                 {status}
@@ -150,31 +147,31 @@ export default function LeavePage() {
           </div>
 
           {/* Search Box */}
-          <div className="relative group w-full sm:w-72 shrink-0">
-            <Search className="absolute left-3 top-2.5 w-3.5 h-3.5 text-slate-400 group-focus-within:text-indigo-500" />
+          <div className="relative group min-w-[240px] shrink-0">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input
               type="text"
               placeholder="Cari nama karyawan atau nomor surat..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-4 py-1.5 bg-slate-50/40 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium"
+              className="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-md text-[13px] focus:outline-none focus:border-indigo-500 transition-colors"
             />
           </div>
         </div>
 
         {/* Table Viewport */}
-        <div className="flex-1 overflow-auto scrollbar-hide">
-          <table className="w-full text-xs">
-            <thead>
-              <tr className="bg-slate-50/50 border-b border-slate-100 font-semibold text-slate-500 tracking-wide text-[10px] sticky top-0 z-10">
-                <th className="text-left py-3 px-4 font-bold">Info Karyawan</th>
-                <th className="text-left py-3 px-4 hidden sm:table-cell font-bold">Kategori / Durasi</th>
-                <th className="text-left py-3 px-4 hidden md:table-cell font-bold">Keterangan</th>
-                <th className="text-center py-3 px-4 font-bold">Status</th>
-                <th className="text-right py-3 px-4 font-bold">Opsi</th>
+        <div className="flex-1 overflow-auto scrollbar-hide bg-white">
+          <table className="w-full text-left border-collapse whitespace-nowrap">
+            <thead className="sticky top-0 bg-white z-10 text-xs font-medium text-slate-500">
+              <tr className="border-b border-slate-200 text-xs font-medium text-slate-500">
+                <th className="py-3 px-4 font-medium">Info Karyawan</th>
+                <th className="py-3 px-4 hidden sm:table-cell font-medium">Kategori / Durasi</th>
+                <th className="py-3 px-4 hidden md:table-cell font-medium">Keterangan</th>
+                <th className="py-3 px-4 font-medium text-center">Status</th>
+                <th className="py-3 px-4 font-medium text-right">Opsi</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-50 group">
+            <tbody className="divide-y divide-slate-100 text-[13px] text-slate-700">
               {filteredLeaves.map((item: any) => {
                 const user = item.user;
                 const sc = getStatusColor(item.status);
@@ -182,55 +179,53 @@ export default function LeavePage() {
                 return (
                   <tr
                     key={item.id}
-                    className="group hover:bg-slate-50/40 transition-colors"
+                    className="hover:bg-slate-50/50 transition-colors cursor-pointer group"
                     onClick={() => setSelectedApprovalItem(item)}
                   >
-                    <td className="py-3 px-4">
-                      <div className="flex items-center gap-2.5">
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-3">
                         <AvatarInitial name={user?.name || "?"} />
                         <div>
-                          <p className="font-semibold text-slate-800 leading-none mb-1">{user?.name || "-"}</p>
-                          <p className="text-[10px] text-slate-400 font-medium">#{user?.employeeId || item.number}</p>
+                          <p className="font-medium text-slate-900 mb-0.5">{user?.name || "-"}</p>
+                          <p className="text-xs text-slate-500">#{user?.employeeId || item.number}</p>
                         </div>
                       </div>
                     </td>
-                    <td className="py-3 px-4 hidden sm:table-cell">
-                      <p className="font-bold text-slate-700 leading-tight mb-0.5">{item.type}</p>
-                      <p className="text-[10px] text-slate-400 font-bold tracking-tight">{item.totalDays || "3"} Hari Cuti</p>
+                    <td className="px-4 py-3 hidden sm:table-cell">
+                      <p className="font-medium text-slate-900 mb-0.5">{item.type}</p>
+                      <p className="text-xs text-slate-500">{item.totalDays || "3"} Hari Cuti</p>
                     </td>
-                    <td className="py-3 px-4 hidden md:table-cell text-[11px] text-slate-500 max-w-[200px] truncate leading-tight">
-                      {item.description}
+                    <td className="px-4 py-3 hidden md:table-cell">
+                      <p className="text-slate-500 truncate max-w-[200px]">{item.description}</p>
                     </td>
-                    <td className="py-3 px-4 text-center">
-                      <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-lg text-[10px] font-bold border tracking-wide bg-transparent ${sc.text} ${sc.border === 'border-slate-200' ? 'border-slate-300' : sc.border}`}>
-                        {item.status}
+                    <td className="px-4 py-3 text-center">
+                      <span className={`inline-flex px-2 py-0.5 rounded text-xs font-medium border ${sc.bg} ${sc.text} ${sc.border === 'border-slate-200' ? 'border-slate-300' : sc.border}`}>
+                        {item.status.replace('_', ' ').replace(/\b\w/g, (l: string) => l.toUpperCase())}
                       </span>
                     </td>
-                    <td className="py-3 px-4 text-right">
-                      <div className="flex items-center justify-end gap-1">
+                    <td className="px-4 py-3 text-right">
+                      <div className="flex items-center justify-end gap-2">
                         {item.status === "pending" ? (
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
                               setSelectedApprovalItem(item);
                             }}
-                            className="px-3 py-1.5 text-[10px] font-bold text-indigo-600 hover:text-white bg-indigo-50 hover:bg-indigo-600 rounded-lg transition-colors border border-indigo-100 hover:border-indigo-600"
+                            className="px-3 py-1.5 text-xs font-medium text-indigo-600 hover:text-indigo-700 bg-indigo-50 hover:bg-indigo-100 rounded-md transition-colors"
                           >
-                            Proses Form
+                            Proses
                           </button>
                         ) : (
-                          <>
-                            <button
-                              onClick={(e: any) => {
-                                e.stopPropagation();
-                                openPDFPreview(item);
-                              }}
-                              className="p-2 text-slate-400 hover:text-indigo-600 transition-colors bg-white hover:bg-indigo-50 border border-slate-100 hover:border-indigo-100 rounded-lg inline-flex"
-                              title="Download PDF"
-                            >
-                              <Printer className="w-3.5 h-3.5" />
-                            </button>
-                          </>
+                          <button
+                            onClick={(e: any) => {
+                              e.stopPropagation();
+                              openPDFPreview(item);
+                            }}
+                            className="p-1.5 text-slate-500 hover:text-slate-900 transition-colors bg-white hover:bg-slate-50 border border-slate-200 rounded-md inline-flex"
+                            title="Download PDF"
+                          >
+                            <Printer className="w-4 h-4" />
+                          </button>
                         )}
                       </div>
                     </td>
@@ -239,7 +234,7 @@ export default function LeavePage() {
               })}
               {filteredLeaves.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="py-12 text-center text-slate-400 font-medium text-sm">
+                  <td colSpan={5} className="py-12 text-center text-slate-500 text-[13px]">
                     Tidak ada pengajuan ditemukan.
                   </td>
                 </tr>

@@ -132,50 +132,48 @@ export default function ManagePayrollPage() {
   return (
     <div className="flex flex-col h-full overflow-hidden w-full space-y-4">
       {/* Unified Table Dashboard Card */}
-      <div className="flex-1 min-h-0 bg-white border-2 border-slate-100 rounded-2xl flex flex-col overflow-hidden shadow-sm">
+      <div className="flex-1 min-h-0 bg-white border border-slate-200 rounded-xl flex flex-col overflow-hidden">
         
         {/* Top Card Header (Title, description, actions, and tabs all unified in one card) */}
-        <div className="border-b border-slate-100 p-4 bg-white shrink-0 flex flex-col gap-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="border-b border-slate-200 shrink-0 flex flex-col">
+          <div className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h1 className="text-lg md:text-xl font-bold text-slate-800 tracking-tight">Kelola Payroll</h1>
-              <p className="text-xs font-semibold text-slate-500 mt-1">Sistem manajemen dan persetujuan gaji karyawan</p>
+              <h1 className="text-lg font-medium text-slate-900">Kelola Payroll</h1>
+              <p className="text-[13px] text-slate-500 mt-1">Sistem manajemen dan persetujuan gaji karyawan</p>
             </div>
-            <div className="flex items-center gap-2.5 shrink-0">
+            <div className="flex items-center gap-3 shrink-0">
               <button
                 onClick={handleGenerate}
                 disabled={isProcessing}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl transition-all disabled:opacity-50 hover:shadow-lg hover:shadow-indigo-600/20 active:scale-95 border border-indigo-500/20"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-[13px] rounded-md transition-colors disabled:opacity-50"
               >
-                {isProcessing ? <RefreshCcw className="w-3.5 h-3.5 animate-spin" /> : <RefreshCcw className="w-3.5 h-3.5" />}
+                {isProcessing ? <RefreshCcw className="w-4 h-4 animate-spin" /> : <RefreshCcw className="w-4 h-4" />}
                 Generate {filterPeriod}
               </button>
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between border-t border-slate-50 pt-3 gap-3">
-            <div className="bg-slate-100/80 p-0.5 rounded-lg flex items-center shrink-0">
-              <button 
-                onClick={() => setActiveTab("pencairan")}
-                className={`px-3.5 py-1.5 text-xs font-bold rounded-md transition-all whitespace-nowrap ${
-                  activeTab === "pencairan" 
-                    ? "bg-white text-indigo-600 shadow-xs" 
-                    : "text-slate-500 hover:text-slate-800"
-                }`}
-              >
-                Pencairan Payroll
-              </button>
-              <button 
-                onClick={() => setActiveTab("master")}
-                className={`px-3.5 py-1.5 text-xs font-bold rounded-md transition-all whitespace-nowrap ${
-                  activeTab === "master" 
-                    ? "bg-white text-indigo-600 shadow-xs" 
-                    : "text-slate-500 hover:text-slate-800"
-                }`}
-              >
-                Master Gaji Karyawan
-              </button>
-            </div>
+          <div className="px-4 flex gap-6 overflow-x-auto scrollbar-hide">
+            <button 
+              onClick={() => setActiveTab("pencairan")}
+              className={`pb-3 text-[13px] font-medium whitespace-nowrap border-b-2 transition-colors ${
+                activeTab === "pencairan" 
+                  ? "border-indigo-600 text-indigo-600" 
+                  : "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300"
+              }`}
+            >
+              Pencairan Payroll
+            </button>
+            <button 
+              onClick={() => setActiveTab("master")}
+              className={`pb-3 text-[13px] font-medium whitespace-nowrap border-b-2 transition-colors ${
+                activeTab === "master" 
+                  ? "border-indigo-600 text-indigo-600" 
+                  : "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300"
+              }`}
+            >
+              Master Gaji Karyawan
+            </button>
           </div>
         </div>
 
@@ -183,54 +181,49 @@ export default function ManagePayrollPage() {
         {activeTab === "pencairan" ? (
           <>
             {/* Symmetrical Metrics Bar */}
-            <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-100 bg-slate-50/30 border-b border-slate-100 shrink-0">
+            <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200 bg-slate-50/50 border-b border-slate-200 shrink-0">
               {/* Total Payroll (Net) */}
-              <div className="py-3 px-5 flex items-center gap-3.5">
-                <div className="w-9 h-9 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 shrink-0 border border-indigo-100/40">
-                  <Banknote className="w-4.5 h-4.5" />
+              <div className="py-3 px-4 flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 shrink-0">
+                  <Banknote className="w-4 h-4" />
                 </div>
                 <div>
-                  <span className="text-[9px] font-bold text-slate-400 block uppercase tracking-wider leading-none mb-1">Total Payroll (Net)</span>
-                  <h3 className="text-sm font-black text-slate-800 leading-none">Rp {summary.total.toLocaleString('id-ID')}</h3>
-                  <p className="text-[9px] text-slate-400 font-medium mt-1 leading-none">Total seluruh gaji bersih karyawan</p>
+                  <span className="text-[11px] font-medium text-slate-500 block uppercase tracking-wider mb-0.5">Total Payroll (Net)</span>
+                  <h3 className="text-sm font-semibold text-slate-900">Rp {summary.total.toLocaleString('id-ID')}</h3>
                 </div>
               </div>
 
               {/* Sudah Dibayar */}
-              <div className="py-3 px-5 flex items-center gap-3.5">
-                <div className="w-9 h-9 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0 border border-emerald-100/40">
-                  <CheckCircle className="w-4.5 h-4.5" />
+              <div className="py-3 px-4 flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
+                  <CheckCircle className="w-4 h-4" />
                 </div>
                 <div>
-                  <span className="text-[9px] font-bold text-slate-400 block uppercase tracking-wider leading-none mb-1">Sudah Dibayar</span>
-                  <h3 className="text-sm font-black text-slate-800 leading-none">{summary.paidCount} Karyawan</h3>
-                  <p className="text-[9px] text-emerald-600 font-bold mt-1 leading-none">Pencairan selesai diproses</p>
+                  <span className="text-[11px] font-medium text-slate-500 block uppercase tracking-wider mb-0.5">Sudah Dibayar</span>
+                  <h3 className="text-sm font-semibold text-slate-900">{summary.paidCount} Karyawan</h3>
                 </div>
               </div>
 
               {/* Menunggu */}
-              <div className="py-3 px-5 flex items-center gap-3.5">
-                <div className="w-9 h-9 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 shrink-0 border border-amber-100/40">
-                  <Banknote className="w-4.5 h-4.5 text-amber-500" />
+              <div className="py-3 px-4 flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 shrink-0">
+                  <Banknote className="w-4 h-4" />
                 </div>
                 <div>
-                  <span className="text-[9px] font-bold text-slate-400 block uppercase tracking-wider leading-none mb-1">Menunggu</span>
-                  <h3 className="text-sm font-black text-slate-800 leading-none">{summary.pendingCount} Karyawan</h3>
-                  <p className="text-[9px] text-amber-600 font-bold mt-1 leading-none">Menunggu approval transfer</p>
+                  <span className="text-[11px] font-medium text-slate-500 block uppercase tracking-wider mb-0.5">Menunggu</span>
+                  <h3 className="text-sm font-semibold text-slate-900">{summary.pendingCount} Karyawan</h3>
                 </div>
               </div>
             </div>
 
             {/* Unified Controls Toolbar */}
-            <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 p-4 border-b border-slate-50 bg-white shrink-0">
+            <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 p-4 border-b border-slate-200 shrink-0">
               <div className="flex flex-wrap items-center gap-3">
-                <h2 className="text-xs font-bold text-slate-700 uppercase tracking-wider">Daftar Pencairan</h2>
-                <div className="w-px h-4 bg-slate-200 hidden sm:block" />
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-2">
                   <select
                     value={filterMonth}
                     onChange={(e) => setFilterMonth(e.target.value)}
-                    className="px-2.5 py-1 bg-slate-50 border border-slate-200 rounded-lg text-[10px] font-bold text-slate-600 focus:outline-none focus:border-indigo-400 transition-all cursor-pointer"
+                    className="px-3 py-1.5 bg-white border border-slate-200 rounded-md text-[13px] font-medium text-slate-700 focus:outline-none focus:border-indigo-500 transition-colors cursor-pointer"
                   >
                     {["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"].map((m) => (
                       <option key={m} value={m}>{m}</option>
@@ -239,7 +232,7 @@ export default function ManagePayrollPage() {
                   <select
                     value={filterYear}
                     onChange={(e) => setFilterYear(e.target.value)}
-                    className="px-2.5 py-1 bg-slate-50 border border-slate-200 rounded-lg text-[10px] font-bold text-slate-600 focus:outline-none focus:border-indigo-400 transition-all cursor-pointer"
+                    className="px-3 py-1.5 bg-white border border-slate-200 rounded-md text-[13px] font-medium text-slate-700 focus:outline-none focus:border-indigo-500 transition-colors cursor-pointer"
                   >
                     {["2024", "2025", "2026", "2027"].map((y) => (
                       <option key={y} value={y}>{y}</option>
@@ -250,66 +243,66 @@ export default function ManagePayrollPage() {
 
               {/* Search Box */}
               <div className="relative group w-full xl:w-64 shrink-0">
-                <Search className="absolute left-3 top-2.5 w-3.5 h-3.5 text-slate-400" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                 <input
                   type="text"
                   placeholder="Cari nama karyawan / NIK..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-9 pr-4 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium"
+                  className="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-md text-[13px] focus:outline-none focus:border-indigo-500 transition-colors"
                 />
               </div>
             </div>
 
             {/* Table Viewport */}
-            <div className="flex-1 overflow-auto scrollbar-hide">
-              <table className="w-full text-xs">
-                <thead>
-                  <tr className="bg-slate-50/50 border-b border-slate-100 font-semibold text-slate-500 tracking-wide text-[10px] sticky top-0 z-10">
-                    <th className="text-left py-3 px-4 font-bold">Karyawan</th>
-                    <th className="text-left py-3 px-4 font-bold hidden sm:table-cell">Gaji Pokok</th>
-                    <th className="text-left py-3 px-4 font-bold hidden md:table-cell">Tunjangan</th>
-                    <th className="text-left py-3 px-4 font-bold hidden md:table-cell">Potongan</th>
-                    <th className="text-left py-3 px-4 font-bold text-slate-800">Net Take Home</th>
-                    <th className="text-center py-3 px-4 font-bold">Status</th>
-                    <th className="text-right py-3 px-4 font-bold">Aksi</th>
+            <div className="flex-1 overflow-auto scrollbar-hide bg-white">
+              <table className="w-full text-left border-collapse whitespace-nowrap">
+                <thead className="sticky top-0 bg-white z-10 text-xs font-medium text-slate-500">
+                  <tr className="border-b border-slate-200 text-xs font-medium text-slate-500">
+                    <th className="py-3 px-4 font-medium">Karyawan</th>
+                    <th className="py-3 px-4 font-medium hidden sm:table-cell">Gaji Pokok</th>
+                    <th className="py-3 px-4 font-medium hidden md:table-cell">Tunjangan</th>
+                    <th className="py-3 px-4 font-medium hidden md:table-cell">Potongan</th>
+                    <th className="py-3 px-4 font-medium text-slate-800">Net Take Home</th>
+                    <th className="py-3 px-4 font-medium text-center">Status</th>
+                    <th className="py-3 px-4 font-medium text-right">Aksi</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-50">
+                <tbody className="divide-y divide-slate-100 text-[13px] text-slate-700">
                   {enrichedPayrolls.map((item) => (
-                    <tr key={item.id} className="group hover:bg-slate-50/40 transition-colors">
-                      <td className="py-3 px-4">
-                        <div className="flex items-center gap-2.5">
-                          <div className="w-8 h-8 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center text-[10px] font-bold text-indigo-600 shrink-0">
+                    <tr key={item.id} className="hover:bg-slate-50/50 transition-colors group">
+                      <td className="px-4 py-3">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-xs font-medium text-slate-600 shrink-0">
                             {item.user?.name.charAt(0)}
                           </div>
                           <div>
-                            <p className="font-semibold text-slate-800 leading-none mb-1">{item.user?.name}</p>
-                            <p className="text-[10px] text-slate-400 font-medium">{item.user?.employeeId} • {item.user?.department}</p>
+                            <p className="font-medium text-slate-900 mb-0.5">{item.user?.name}</p>
+                            <p className="text-xs text-slate-500">{item.user?.employeeId} • {item.user?.department}</p>
                           </div>
                         </div>
                       </td>
-                      <td className="py-3 px-4 hidden sm:table-cell font-medium text-slate-600">
+                      <td className="px-4 py-3 hidden sm:table-cell font-medium text-slate-700">
                         Rp {item.baseSalary.toLocaleString('id-ID')}
                       </td>
-                      <td className="py-3 px-4 hidden md:table-cell font-medium text-emerald-600">
+                      <td className="px-4 py-3 hidden md:table-cell text-emerald-600">
                         + Rp {item.allowances.toLocaleString('id-ID')}
                       </td>
-                      <td className="py-3 px-4 hidden md:table-cell font-medium text-red-500">
+                      <td className="px-4 py-3 hidden md:table-cell text-red-500">
                         - Rp {item.deductions.toLocaleString('id-ID')}
                       </td>
-                      <td className="py-3 px-4 font-bold text-slate-800">
+                      <td className="px-4 py-3 font-medium text-slate-900">
                         Rp {item.netSalary.toLocaleString('id-ID')}
                       </td>
-                      <td className="py-3 px-4 text-center">
-                        <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-lg text-[10px] font-bold border tracking-wide bg-transparent ${item.status === 'paid' ? 'text-emerald-600 border-emerald-200' : 'text-amber-600 border-amber-200'}`}>
+                      <td className="px-4 py-3 text-center">
+                        <span className={`inline-flex px-2 py-0.5 rounded text-xs font-medium border ${item.status === 'paid' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-amber-50 text-amber-700 border-amber-200'}`}>
                           {item.status === 'paid' ? 'Paid' : 'Pending'}
                         </span>
                       </td>
-                      <td className="py-3 px-4 text-right">
+                      <td className="px-4 py-3 text-right">
                         <button 
                           onClick={() => openManageModal(item)}
-                          className="px-3 py-1.5 text-[10px] font-bold text-slate-600 bg-white border border-slate-200 hover:bg-slate-50 hover:text-indigo-600 hover:border-indigo-200 transition-colors rounded-lg flex items-center justify-center gap-1.5 ml-auto"
+                          className="px-3 py-1.5 text-xs font-medium text-slate-700 bg-white border border-slate-200 hover:bg-slate-50 hover:text-indigo-600 rounded-md transition-colors inline-flex items-center justify-center"
                           title="Kelola Payroll"
                         >
                           Kelola
@@ -319,7 +312,7 @@ export default function ManagePayrollPage() {
                   ))}
                   {enrichedPayrolls.length === 0 && (
                     <tr>
-                      <td colSpan={7} className="py-12 text-center text-slate-400 font-medium text-sm">
+                      <td colSpan={7} className="py-12 text-center text-slate-500 text-[13px]">
                         Data payroll periode {filterPeriod} belum digenerate atau tidak ditemukan.
                       </td>
                     </tr>
@@ -331,71 +324,65 @@ export default function ManagePayrollPage() {
         ) : (
           /* Tab Content 2: Master Gaji */
           <>
-            <div className="p-4 border-b border-slate-50 bg-slate-50/15 shrink-0 flex flex-col md:flex-row md:items-center justify-between gap-4">
-              <div>
-                <h2 className="text-xs font-bold text-slate-700 uppercase tracking-wider">Master Gaji Karyawan</h2>
-                <p className="text-[10px] text-slate-400 font-medium mt-1 leading-none">
-                  Atur gaji pokok, tunjangan, dan persentase potongan masing-masing karyawan.
-                </p>
-              </div>
+            <div className="p-4 border-b border-slate-200 shrink-0 flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div className="relative group w-full md:w-64 shrink-0">
-                <Search className="absolute left-3 top-2.5 w-3.5 h-3.5 text-slate-400" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                 <input
                   type="text"
                   placeholder="Cari nama karyawan / NIK..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-9 pr-4 py-1.5 bg-slate-50/40 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium"
+                  className="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-md text-[13px] focus:outline-none focus:border-indigo-500 transition-colors"
                 />
               </div>
             </div>
             
-            <div className="flex-1 overflow-auto scrollbar-hide">
-              <table className="w-full text-xs text-left relative">
-                <thead className="bg-slate-50/50 border-b border-slate-200 sticky top-0 z-10">
-                  <tr className="font-semibold text-slate-500 tracking-wide text-[10px] uppercase">
-                    <th className="px-5 py-3 font-bold">Karyawan</th>
-                    <th className="px-5 py-3 font-bold">Jabatan & Dept</th>
-                    <th className="px-5 py-3 font-bold">Gaji Pokok (Rp)</th>
-                    <th className="px-5 py-3 font-bold">Total Tunjangan</th>
-                    <th className="px-5 py-3 font-bold">Total Potongan</th>
-                    <th className="px-5 py-3 font-bold text-right">Aksi</th>
+            <div className="flex-1 overflow-auto scrollbar-hide bg-white">
+              <table className="w-full text-left border-collapse whitespace-nowrap">
+                <thead className="sticky top-0 bg-white z-10 text-xs font-medium text-slate-500">
+                  <tr className="border-b border-slate-200 text-xs font-medium text-slate-500">
+                    <th className="py-3 px-4 font-medium">Karyawan</th>
+                    <th className="py-3 px-4 font-medium">Jabatan & Dept</th>
+                    <th className="py-3 px-4 font-medium">Gaji Pokok (Rp)</th>
+                    <th className="py-3 px-4 font-medium">Total Tunjangan</th>
+                    <th className="py-3 px-4 font-medium">Total Potongan</th>
+                    <th className="py-3 px-4 font-medium text-right">Aksi</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100">
+                <tbody className="divide-y divide-slate-100 text-[13px] text-slate-700">
                   {masterUsers.filter(u => u.name.toLowerCase().includes(searchQuery.toLowerCase()) || u.employeeId.toLowerCase().includes(searchQuery.toLowerCase())).map((user) => (
-                    <tr key={user.id} className="hover:bg-slate-50/40 transition-colors">
-                      <td className="px-5 py-3">
-                        <p className="font-semibold text-slate-800">{user.name}</p>
-                        <p className="text-[10px] text-slate-500">{user.employeeId}</p>
+                    <tr key={user.id} className="hover:bg-slate-50/50 transition-colors group">
+                      <td className="px-4 py-3">
+                        <p className="font-medium text-slate-900 mb-0.5">{user.name}</p>
+                        <p className="text-xs text-slate-500">{user.employeeId}</p>
                       </td>
-                      <td className="px-5 py-3 text-slate-600 font-medium">
+                      <td className="px-4 py-3 text-slate-500">
                         {user.position} • {user.department}
                       </td>
-                      <td className="px-5 py-3 text-slate-800 font-bold">
+                      <td className="px-4 py-3 font-medium text-slate-900">
                         Rp {(user.baseSalary || 5000000).toLocaleString('id-ID')}
                       </td>
-                      <td className="px-5 py-3">
-                        <div className="font-bold text-emerald-600">
+                      <td className="px-4 py-3">
+                        <div className="text-emerald-600">
                           + Rp {((user.allowanceMeal ?? 500000) + (user.allowanceTransport ?? 500000) + ((user.baseSalary || 5000000) * ((user.allowancePositionPct ?? 10) / 100))).toLocaleString('id-ID')}
                         </div>
-                        <div className="mt-1 flex flex-col gap-0.5 text-[9px] text-slate-500 font-medium">
+                        <div className="mt-0.5 flex flex-col gap-0.5 text-xs text-slate-500">
                           <span>Makan: Rp {(user.allowanceMeal ?? 500000).toLocaleString('id-ID')}</span>
                           <span>Transport: Rp {(user.allowanceTransport ?? 500000).toLocaleString('id-ID')}</span>
                           <span>Jabatan: {user.allowancePositionPct ?? 10}%</span>
                         </div>
                       </td>
-                      <td className="px-5 py-3">
-                        <div className="font-bold text-red-500">
+                      <td className="px-4 py-3">
+                        <div className="text-red-500">
                           - Rp {((user.baseSalary || 5000000) * (((user.deductionBpjsKesehatanPct ?? 1) + (user.deductionBpjsKetenagakerjaanPct ?? 2) + (user.deductionPph21Pct ?? 5)) / 100)).toLocaleString('id-ID')}
                         </div>
-                        <div className="mt-1 flex flex-col gap-0.5 text-[9px] text-slate-500 font-medium">
+                        <div className="mt-0.5 flex flex-col gap-0.5 text-xs text-slate-500">
                           <span>BPJS Kes: {user.deductionBpjsKesehatanPct ?? 1}%</span>
                           <span>BPJS TK: {user.deductionBpjsKetenagakerjaanPct ?? 2}%</span>
                           <span>PPh21: {user.deductionPph21Pct ?? 5}%</span>
                         </div>
                       </td>
-                      <td className="px-5 py-3 text-right">
+                      <td className="px-4 py-3 text-right">
                         <button 
                           onClick={() => {
                             setEditingMasterUser(user);
@@ -409,9 +396,9 @@ export default function ManagePayrollPage() {
                               deductionPph21Pct: user.deductionPph21Pct ?? 5
                             });
                           }}
-                          className="px-3 py-1.5 text-[10px] font-bold text-slate-600 bg-white border border-slate-200 hover:bg-slate-50 hover:text-indigo-600 hover:border-indigo-200 transition-colors rounded-lg flex items-center justify-center gap-1.5 ml-auto"
+                          className="px-3 py-1.5 text-xs font-medium text-slate-700 bg-white border border-slate-200 hover:bg-slate-50 hover:text-indigo-600 rounded-md transition-colors inline-flex items-center justify-center gap-1.5 ml-auto"
                         >
-                          <Edit3 className="w-3.5 h-3.5" />
+                          <Edit3 className="w-4 h-4" />
                           Edit
                         </button>
                       </td>

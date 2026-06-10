@@ -10,14 +10,16 @@ import {
   Briefcase, Settings, FileText, ShieldCheck, HeartPulse,
   ChevronLeft, ChevronRight
 } from "lucide-react";
-import { signOut } from "next-auth/react";
-import { ROLE_ACCESS, UserRole } from "@/lib/data";
+import { signOut, useSession } from "next-auth/react";
+import { ROLE_ACCESS, UserRole, workPlans } from "@/lib/data";
 
 interface MenuItem {
   label: string;
   href: string;
   icon: React.ComponentType<{ className?: string }>;
+  color?: string;
   badge?: number;
+  hasNotification?: boolean;
 }
 
 interface MenuSection {
@@ -38,66 +40,60 @@ interface SidebarProps {
 
 export default function Sidebar({ role, userName, modules, open, collapsed, onClose, onToggleCollapse }: SidebarProps) {
   const pathname = usePathname();
+  const { data: session } = useSession();
+
+  const unacknowledgedTasksCount = workPlans.filter(
+    (wp) => wp.userId === Number(session?.user?.id) && wp.assignedBy && !wp.isAcknowledged
+  ).length;
 
   const rawMenuSections: MenuSection[] = [
     {
       title: "Beranda",
       items: [
-        { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+        { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard, color: "text-indigo-500" },
       ],
     },
     {
       title: "Layanan Karyawan",
       items: [
-        { label: "Kalender Perusahaan", href: "/calendar", icon: CalendarDays },
-        { label: "Rencana Kerja", href: "/work/plans", icon: ClipboardList },
-        { label: "Realisasi Kerja", href: "/work/realizations", icon: CheckCircle2 },
-        { label: "Cuti & Izin", href: "/my-leave", icon: CalendarDays },
-        { label: "Slip Gaji", href: "/my-payroll", icon: Banknote },
-        { label: "Perjalanan Dinas", href: "/spd", icon: Plane },
-      ],
-    },
-    {
-      title: "System Modules",
-      roles: ["admin", "hr", "pm", "employee"],
-      items: [
-        { label: "Cuti & Kehadiran", href: "/leave", icon: CalendarDays },
-        { label: "Perjalanan Dinas", href: "/spd", icon: Plane },
-        { label: "Procurement", href: "/purchase", icon: ShoppingCart },
-        { label: "Rencana & Realisasi", href: "/ear", icon: ClipboardList },
+        { label: "Kalender Perusahaan", href: "/calendar", icon: CalendarDays, color: "text-sky-500" },
+        { label: "Aktivitas Pekerjaan", href: "/work/plans", icon: ClipboardList, color: "text-emerald-500", hasNotification: unacknowledgedTasksCount > 0 },
+        { label: "Cuti & Izin", href: "/my-leave", icon: CalendarDays, color: "text-amber-500" },
+        { label: "Slip Gaji", href: "/my-payroll", icon: Banknote, color: "text-emerald-600" },
+        { label: "Perjalanan Dinas", href: "/spd", icon: Plane, color: "text-purple-500" },
+        { label: "Pengajuan Pembelian", href: "/my-purchase", icon: ShoppingCart, color: "text-orange-500" },
       ],
     },
     {
       title: "Human Resource",
       roles: ["admin", "hr"],
       items: [
-        { label: "Direktori Karyawan", href: "/users", icon: Users },
-        { label: "Approval Cuti", href: "/leave", icon: ShieldCheck },
-        { label: "Laporan EAR", href: "/ear", icon: BarChart3 },
+        { label: "Direktori Karyawan", href: "/users", icon: Users, color: "text-blue-500" },
+        { label: "Approval Cuti", href: "/leave", icon: ShieldCheck, color: "text-rose-500" },
+        { label: "Laporan EAR", href: "/ear", icon: BarChart3, color: "text-violet-500" },
       ],
     },
     {
       title: "Finance",
       roles: ["admin", "finance"],
       items: [
-        { label: "Approval Keuangan", href: "/finance", icon: Wallet },
-        { label: "Kelola Payroll", href: "/payroll", icon: Banknote },
-        { label: "Pembelian", href: "/purchase", icon: ShoppingCart },
+        { label: "Approval Keuangan", href: "/finance", icon: Wallet, color: "text-emerald-500" },
+        { label: "Kelola Payroll", href: "/payroll", icon: Banknote, color: "text-green-600" },
       ],
     },
     {
       title: "Project Management",
       roles: ["admin", "project_manager"],
       items: [
-        { label: "Kelola Proyek", href: "/projects", icon: FolderKanban },
-        { label: "Laporan EAR", href: "/ear", icon: BarChart3 },
+        { label: "Kelola Proyek", href: "/projects", icon: FolderKanban, color: "text-blue-600" },
+        { label: "Laporan EAR", href: "/ear", icon: BarChart3, color: "text-violet-500" },
       ],
     },
     {
       title: "Administrator",
       roles: ["admin"],
       items: [
-        { label: "Dokumentasi", href: "/documentation", icon: BookOpen },
+        { label: "Dokumentasi", href: "/documentation", icon: BookOpen, color: "text-slate-500" },
       ],
     },
   ];
@@ -133,6 +129,9 @@ export default function Sidebar({ role, userName, modules, open, collapsed, onCl
   };
 
   const isActive = (href: string): boolean => {
+    if (href === "/work/plans") {
+      return pathname === "/work/plans" || pathname === "/work/realizations" || pathname?.startsWith("/work/");
+    }
     return pathname === href || pathname?.startsWith(href + "/");
   };
 
@@ -158,7 +157,7 @@ export default function Sidebar({ role, userName, modules, open, collapsed, onCl
             <div className={`w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center transition-transform duration-300 ${collapsed ? "mx-auto" : ""}`}>
               <div className="w-2.5 h-2.5 bg-white rounded-sm" />
             </div>
-            <span className={`ml-3 font-extrabold text-slate-800 text-[17px] tracking-tight whitespace-nowrap transition-opacity duration-300 ${
+            <span className={`ml-3 font-medium text-slate-900 text-base whitespace-nowrap transition-opacity duration-300 ${
               collapsed ? "opacity-0 pointer-events-none" : "opacity-100"
             }`}>
               HRIS Next
@@ -168,7 +167,7 @@ export default function Sidebar({ role, userName, modules, open, collapsed, onCl
           <div className={`w-full flex transition-all duration-300 z-20 ${collapsed ? "justify-center opacity-0 pointer-events-none" : "justify-end"}`}>
             <button 
               onClick={onToggleCollapse} 
-              className="w-7 h-7 flex items-center justify-center bg-white border border-slate-200 shadow-sm text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-all duration-200"
+              className="w-7 h-7 flex items-center justify-center bg-white border border-slate-200 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-all duration-200"
               title="Collapse Sidebar"
             >
               <ChevronLeft size={14} />
@@ -179,7 +178,7 @@ export default function Sidebar({ role, userName, modules, open, collapsed, onCl
           <div className={`absolute inset-0 flex items-center justify-center transition-all duration-300 z-20 ${collapsed ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
              <button 
               onClick={onToggleCollapse} 
-              className="absolute -right-3.5 top-1/2 -translate-y-1/2 w-7 h-7 flex items-center justify-center bg-white border border-slate-200 shadow-sm text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-all duration-200"
+              className="absolute -right-3.5 top-1/2 -translate-y-1/2 w-7 h-7 flex items-center justify-center bg-white border border-slate-200 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-all duration-200"
               title="Expand Sidebar"
             >
               <ChevronRight size={14} />
@@ -202,7 +201,7 @@ export default function Sidebar({ role, userName, modules, open, collapsed, onCl
                     {collapsed ? (
                       <div className="w-5 h-px bg-slate-200 rounded-full" />
                     ) : (
-                      <span className="text-[10px] font-extrabold tracking-wider text-indigo-600 uppercase truncate">
+                      <span className="text-xs font-medium text-slate-500 truncate">
                         {section.title}
                       </span>
                     )}
@@ -219,27 +218,33 @@ export default function Sidebar({ role, userName, modules, open, collapsed, onCl
                       href={item.href}
                       onClick={onClose}
                       prefetch={true}
-                      className={`group flex items-center relative w-full h-[36px] px-3 rounded-xl transition-all duration-200 ${
+                      className={`group flex items-center relative w-full h-[36px] px-3 rounded-md transition-all duration-200 ${
                         active
-                          ? "bg-indigo-50/80 text-indigo-700 font-bold"
-                          : "text-slate-500 hover:text-slate-900 hover:bg-slate-50"
+                          ? "bg-slate-100 text-slate-900 font-medium"
+                          : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                       }`}
                     >
                       {active && (
                         <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-4 bg-indigo-600 rounded-r-full" />
                       )}
                       
-                      <Icon className={`w-[18px] h-[18px] mr-3 shrink-0 transition-colors ${active ? "text-indigo-600" : "text-slate-400 group-hover:text-slate-600"}`} />
+                      <Icon className={`w-[18px] h-[18px] mr-3 shrink-0 transition-all ${item.color || "text-slate-400"} ${active ? "opacity-100 scale-110" : "opacity-60 group-hover:opacity-100"}`} />
                       
                       <div className={`flex-1 flex items-center justify-between transition-opacity duration-300 ease-in-out ${
                         collapsed ? "opacity-0 pointer-events-none absolute" : "opacity-100"
                       }`}>
-                        <span className="text-[13px] tracking-wide whitespace-nowrap">
+                        <span className="text-[13px] whitespace-nowrap">
                           {item.label}
                         </span>
                         {item.badge && item.badge > 0 && (
-                          <span className={`text-[9px] font-black px-1.5 py-0.5 rounded-full shrink-0 ${active ? "bg-indigo-600 text-white" : "bg-slate-200 text-slate-600"}`}>
+                          <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded-full shrink-0 ${active ? "bg-indigo-600 text-white" : "bg-slate-200 text-slate-600"}`}>
                             {item.badge}
+                          </span>
+                        )}
+                        {item.hasNotification && (
+                          <span className="relative flex h-2.5 w-2.5 shrink-0 mr-1">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500 border border-white"></span>
                           </span>
                         )}
                       </div>
@@ -259,16 +264,16 @@ export default function Sidebar({ role, userName, modules, open, collapsed, onCl
 
         {/* Footer - User Info */}
         <div className="h-[72px] shrink-0 mt-auto relative border-t border-slate-100">
-          <Link href="/profile" className="absolute top-2 left-2 right-2 bottom-2 rounded-2xl hover:bg-slate-50 transition-colors p-2 block group">
-            <div className="absolute left-[8px] top-1/2 -translate-y-1/2 w-8 h-8 rounded-xl bg-indigo-100 flex items-center justify-center text-indigo-700 text-xs font-bold shadow-[0_2px_8px_rgba(0,0,0,0.04)] group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+          <Link href="/profile" className="absolute top-2 left-2 right-2 bottom-2 rounded-md hover:bg-slate-50 transition-colors p-2 block group">
+            <div className="absolute left-[8px] top-1/2 -translate-y-1/2 w-8 h-8 rounded-md bg-slate-100 flex items-center justify-center text-slate-700 text-xs font-medium group-hover:bg-slate-200 transition-colors">
               {userName?.charAt(0)?.toUpperCase() || "U"}
             </div>
             <div className={`absolute left-[50px] top-1/2 -translate-y-1/2 w-[170px] flex items-center justify-between transition-opacity duration-300 ease-in-out ${
               collapsed ? "opacity-0 pointer-events-none" : "opacity-100"
             }`}>
               <div className="flex-1 min-w-0 pr-2">
-                <p className="text-[13px] font-bold text-slate-900 truncate tracking-wide">{userName}</p>
-                <p className="text-[10px] text-slate-500 font-medium capitalize truncate tracking-wider">{role}</p>
+                <p className="text-[13px] font-medium text-slate-900 truncate">{userName}</p>
+                <p className="text-[11px] text-slate-500 capitalize truncate">{role}</p>
               </div>
               <button 
                 onClick={(e) => {

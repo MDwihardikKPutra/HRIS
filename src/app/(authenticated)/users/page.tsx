@@ -196,38 +196,39 @@ export default function UsersPage() {
   return (
     <div className="flex flex-col h-full overflow-hidden w-full space-y-4">
       {/* Unified Table Dashboard Card */}
-      <div className="flex-1 min-h-0 bg-white rounded-2xl flex flex-col overflow-hidden">
+      <div className="flex-1 min-h-0 bg-white rounded-xl border border-slate-200 flex flex-col overflow-hidden">
         
         {/* Top Card Header */}
-        <div className="border-b border-slate-100 p-4 bg-white shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="border-b border-slate-200 p-4 shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-lg md:text-xl font-bold text-slate-800 tracking-tight">Manajemen Personel</h1>
-            <p className="text-xs font-semibold text-slate-500 mt-1">Konfigurasi hak akses modul, detail kontrak, dan direktori karyawan</p>
+            <h1 className="text-lg font-medium text-slate-900">Manajemen Personel</h1>
+            <p className="text-[13px] text-slate-500 mt-1">Konfigurasi hak akses modul, detail kontrak, dan direktori karyawan</p>
           </div>
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-3">
             <button
               onClick={() => setIsAddModalOpen(true)}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl transition-all hover:shadow-lg hover:shadow-indigo-600/20 active:scale-95 border border-indigo-500/20"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-[13px] rounded-md transition-colors active:scale-95"
             >
-              <Plus className="w-3.5 h-3.5" />
+              <Plus className="w-4 h-4" />
               Tambah Karyawan
             </button>
           </div>
         </div>
 
         {/* Symmetrical Metrics Bar */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-slate-100 bg-slate-50/30 border-b border-slate-100 shrink-0">
+        <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-slate-200 border-b border-slate-200 shrink-0">
           {stats.map((s) => {
             const Icon = s.icon;
             return (
-              <div key={s.label} className="py-3 px-5 flex items-center gap-3.5">
-                <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border border-slate-100/40 ${s.bg} ${s.color}`}>
-                  <Icon className="w-4.5 h-4.5" />
+              <div key={s.label} className="p-4 flex items-center gap-3">
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-slate-50 border border-slate-100 ${s.color}`}>
+                  <Icon className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-[9px] font-bold text-slate-400 block uppercase tracking-wider leading-none mb-1">{s.label}</span>
-                  <h3 className="text-sm font-black text-slate-800 leading-none">{s.value}</h3>
-                  <p className="text-[9px] text-slate-400 font-medium mt-1 leading-none">Status dalam sistem</p>
+                  <span className="text-xs text-slate-500 block mb-0.5">{s.label}</span>
+                  <div className="flex items-baseline gap-2">
+                    <h3 className="text-lg font-medium text-slate-900 leading-none">{s.value}</h3>
+                  </div>
                 </div>
               </div>
             );
@@ -235,132 +236,123 @@ export default function UsersPage() {
         </div>
 
         {/* Unified Controls Toolbar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 border-b border-slate-50 bg-white shrink-0">
-          <h2 className="text-xs font-bold text-slate-700 uppercase tracking-wider">Direktori Personel</h2>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 border-b border-slate-200 shrink-0">
+          <h2 className="text-[13px] font-medium text-slate-900">Direktori Personel</h2>
           
           {/* Search Box */}
           <div className="relative group w-full sm:w-72 shrink-0">
-            <Search className="absolute left-3 top-2.5 w-3.5 h-3.5 text-slate-400 group-focus-within:text-indigo-500" />
+            <Search className="absolute left-3 top-2.5 w-4 h-4 text-slate-400 group-focus-within:text-indigo-500 transition-colors" />
             <input
               type="text"
-              placeholder="Cari nama, NIK, kontrak, atau departemen..."
+              placeholder="Cari karyawan..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-4 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium"
+              className="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-md text-[13px] focus:outline-none focus:border-indigo-500 transition-colors"
             />
           </div>
         </div>
 
         {/* Table Viewport */}
         <div className="flex-1 overflow-auto scrollbar-hide">
-          <table className="w-full text-xs">
-            <thead>
-              <tr className="bg-white border-b border-slate-200 font-semibold text-slate-500 tracking-wide text-[10px] sticky top-0 z-20 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
-                <th className="text-left py-3 px-4 font-bold">Karyawan (NIK)</th>
-                <th className="text-left py-3 px-4 font-bold">Penempatan</th>
-                <th className="text-center py-3 px-4 font-bold">Hubungan Kerja</th>
-                <th className="text-left py-3 px-4 font-bold">Masa Kontrak</th>
-                <th className="text-center py-3 px-4 font-bold">Role</th>
-                <th className="text-center py-3 px-4 font-bold">Status</th>
-                <th className="text-right py-3 px-4 font-bold">Aksi</th>
+          <table className="w-full text-left border-collapse whitespace-nowrap">
+            <thead className="sticky top-0 bg-white z-10 text-xs font-medium text-slate-500">
+              <tr className="border-b border-slate-200 text-xs font-medium text-slate-500">
+                <th className="px-4 py-3 font-medium">Karyawan (NIK)</th>
+                <th className="px-4 py-3 font-medium">Penempatan</th>
+                <th className="px-4 py-3 font-medium text-center">Hubungan Kerja</th>
+                <th className="px-4 py-3 font-medium">Masa Kontrak</th>
+                <th className="px-4 py-3 font-medium text-center">Role</th>
+                <th className="px-4 py-3 font-medium text-center">Status</th>
+                <th className="px-4 py-3 font-medium text-right">Aksi</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-50 group">
+            <tbody className="divide-y divide-slate-100 text-[13px] text-slate-700">
               {filteredUsers.map((u) => (
-                <tr key={u.id} className="hover:bg-slate-50/40 transition-colors">
+                <tr key={u.id} className="hover:bg-slate-50/50 transition-colors">
                   {/* Karyawan (Name, Email, NIK) */}
-                  <td className="py-3 px-4">
-                    <div className="flex items-center gap-2.5">
+                  <td className="px-4 py-3">
+                    <div className="flex items-center gap-3">
                       <AvatarInitial name={u.name} />
                       <div>
-                        <p className="font-bold text-slate-800 leading-none mb-1 text-[11px] flex items-center gap-1.5">
-                          {u.name}
-                          <span className="text-[9px] font-bold text-indigo-500 bg-indigo-50 border border-indigo-100/50 px-1 py-0.2 rounded-md font-mono uppercase">
+                        <div className="flex items-center gap-2 mb-0.5">
+                          <span className="font-medium text-slate-900">{u.name}</span>
+                          <span className="text-[10px] text-slate-500 font-mono">
                             {u.employeeId}
                           </span>
-                        </p>
-                        <p className="text-[10px] text-slate-400 font-bold tracking-tight">{u.email}</p>
+                        </div>
+                        <p className="text-xs text-slate-500">{u.email}</p>
                       </div>
                     </div>
                   </td>
                   
                   {/* Penempatan */}
-                  <td className="py-3 px-4">
-                    <p className="font-bold text-slate-700 leading-none mb-1 text-[11px]">{u.position}</p>
-                    <p className="text-[10px] text-slate-400 font-bold tracking-tight">{u.department}</p>
+                  <td className="px-4 py-3">
+                    <p className="font-medium text-slate-900 mb-0.5">{u.position}</p>
+                    <p className="text-xs text-slate-500">{u.department}</p>
                   </td>
 
                   {/* Hubungan Kerja */}
-                  <td className="py-3 px-4 text-center">
-                    <span className={`inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-bold border tracking-wide uppercase ${
+                  <td className="px-4 py-3 text-center">
+                    <span className={`font-medium ${
                       u.statusKontrak === 'Tetap (PKWTT)' 
-                        ? 'bg-blue-50 text-blue-700 border-blue-100' 
+                        ? 'text-blue-600' 
                         : u.statusKontrak === 'Magang (Intern)'
-                          ? 'bg-amber-50 text-amber-700 border-amber-200/55'
-                          : 'bg-indigo-50 text-indigo-750 border-indigo-100'
+                          ? 'text-amber-600'
+                          : 'text-indigo-600'
                     }`}>
                       {u.statusKontrak || "Kontrak (PKWT)"}
                     </span>
                   </td>
 
                   {/* Masa Kontrak */}
-                  <td className="py-3 px-4">
+                  <td className="px-4 py-3">
+                    <p className="font-medium text-slate-900 mb-0.5">
+                      {formatDisplayDate(u.joinDate)}
+                    </p>
                     <div className="flex items-center gap-2">
-                      <div className="min-w-[125px]">
-                        <p className="font-bold text-slate-700 leading-none mb-1 text-[10px]">
-                          {formatDisplayDate(u.joinDate)}
-                        </p>
-                        <p className="text-[9px] text-slate-400 font-bold">
-                          s/d {u.endDate === "-" ? "Permanen" : formatDisplayDate(u.endDate)}
-                        </p>
-                      </div>
-                      <span className={`inline-flex px-1.5 py-0.2 rounded text-[9px] font-black border ${
-                        u.durationStr === 'Permanen' ? 'bg-slate-50 text-slate-500 border-slate-200' : 'bg-amber-50 text-amber-700 border-amber-100'
-                      }`}>
-                        {u.durationStr}
+                      <span className="text-xs text-slate-500">
+                        s/d {u.endDate === "-" ? "Permanen" : formatDisplayDate(u.endDate)}
                       </span>
+                      <span className="text-[10px] text-slate-400">({u.durationStr})</span>
                     </div>
                   </td>
 
                   {/* Role */}
-                  <td className="py-3 px-4 text-center">
-                    <span className={`inline-flex items-center gap-1.5 px-1.5 py-0.5 rounded-lg text-[10px] font-bold border capitalize tracking-wide ${
-                      u.role === 'admin' ? 'bg-indigo-50 text-indigo-600 border-indigo-100' : 'bg-slate-50 text-slate-500 border-slate-100'
-                    }`}>
-                      {u.role === 'admin' && <Shield className="w-2.5 h-2.5" />}
+                  <td className="px-4 py-3 text-center">
+                    <span className="font-medium text-slate-700 capitalize">
                       {ROLE_LABELS[u.role as UserRole] || u.role}
                     </span>
                   </td>
 
                   {/* Status */}
-                  <td className="py-3 px-4 text-center">
+                  <td className="px-4 py-3 text-center">
                     <button
                       onClick={() => toggleUserActiveStatus(u.id)}
-                      className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-lg text-[10px] font-bold border tracking-wide cursor-pointer transition-all active:scale-90 ${
-                        u.isActive ? 'text-emerald-600 bg-emerald-50 border-emerald-100 hover:bg-emerald-100/50' : 'text-slate-400 bg-slate-50 border-slate-100 hover:bg-slate-100/50'
+                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium cursor-pointer transition-colors ${
+                        u.isActive ? 'text-emerald-700 hover:bg-emerald-50' : 'text-slate-500 hover:bg-slate-50'
                       }`}
                     >
-                      <span className={`w-1 h-1 rounded-full ${u.isActive ? 'bg-emerald-500' : 'bg-slate-300'}`} />
+                      <span className={`w-1.5 h-1.5 rounded-full ${u.isActive ? 'bg-emerald-500' : 'bg-slate-400'}`} />
                       {u.isActive ? 'Aktif' : 'Nonaktif'}
                     </button>
                   </td>
 
                   {/* Aksi */}
-                  <td className="py-3 px-4 text-right">
-                    <div className="flex items-center justify-end gap-1.5">
+                  <td className="px-4 py-3 text-right">
+                    <div className="flex items-center justify-end gap-2">
                       <button
                         onClick={() => setProfileDetailUser(u)}
                         title="Lihat Detail Profil"
-                        className="p-1.5 text-slate-400 hover:text-blue-600 transition-colors bg-white hover:bg-blue-50 border border-slate-100 hover:border-blue-100 rounded-lg inline-flex"
+                        className="text-slate-400 hover:text-slate-900 transition-colors"
                       >
-                        <Eye className="w-3.5 h-3.5" />
+                        <Eye className="w-4 h-4" />
                       </button>
                       <button
                         onClick={() => openManageModal(u)}
                         title="Kelola Role"
-                        className="p-1.5 text-slate-400 hover:text-indigo-600 transition-colors bg-white hover:bg-indigo-50 border border-slate-100 hover:border-indigo-100 rounded-lg inline-flex"
+                        className="text-slate-400 hover:text-indigo-600 transition-colors"
                       >
-                        <ShieldCheck className="w-3.5 h-3.5" />
+                        <ShieldCheck className="w-4 h-4" />
                       </button>
                     </div>
                   </td>
@@ -373,210 +365,178 @@ export default function UsersPage() {
 
       {/* ===== DETAIL PROFIL KARYAWAN MODAL ===== */}
       {profileDetailUser && (
-        <Modal
-          isOpen={!!profileDetailUser}
-          onClose={() => setProfileDetailUser(null)}
-          title="Profil Detil Karyawan"
-          size="lg"
-          footer={
-            <>
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm" 
+            onClick={() => setProfileDetailUser(null)} 
+          />
+          
+          {/* Modal Container */}
+          <div className="relative w-full max-w-2xl bg-white rounded-xl overflow-hidden flex flex-col shadow-xl animate-in fade-in zoom-in-95">
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200">
+              <h3 className="text-[15px] font-medium text-slate-900">Detail Profil Karyawan</h3>
+              <button 
+                onClick={() => setProfileDetailUser(null)} 
+                className="text-slate-400 hover:text-slate-600 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Body Layout */}
+            <div className="flex flex-col sm:flex-row h-full max-h-[70vh] overflow-auto">
+              {/* Left Side (Avatar Area) */}
+              <div className="w-full sm:w-[220px] shrink-0 bg-slate-50 p-6 flex flex-col items-center sm:border-r border-slate-200">
+                <div className="w-32 h-40 border border-slate-200 bg-white flex flex-col items-center justify-center mb-4 rounded-md">
+                  <UserCheck className="w-8 h-8 text-slate-300 mb-2" />
+                  <span className="text-[11px] text-slate-400 font-mono">3 × 4</span>
+                </div>
+              </div>
+
+              {/* Right Side (Details) */}
+              <div className="flex-1 p-6 flex flex-col space-y-6">
+                {/* Name & Basic Info */}
+                <div>
+                  <div className="flex items-center gap-3 mb-1">
+                    <h2 className="text-xl font-medium text-slate-900">{profileDetailUser.name}</h2>
+                    <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${profileDetailUser.isActive ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-600'}`}>
+                      {profileDetailUser.isActive ? 'Aktif' : 'Nonaktif'}
+                    </span>
+                  </div>
+                  <p className="text-[13px] text-slate-500">{profileDetailUser.employeeId} • {profileDetailUser.email}</p>
+                </div>
+
+                {/* Grid 1: Penempatan */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-xs text-slate-500 mb-1">Departemen</p>
+                    <p className="text-[13px] font-medium text-slate-900">{profileDetailUser.department}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-slate-500 mb-1">Jabatan</p>
+                    <p className="text-[13px] font-medium text-slate-900">{profileDetailUser.position}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-slate-500 mb-1">Role Sistem</p>
+                    <p className="text-[13px] font-medium text-slate-900 capitalize">{ROLE_LABELS[profileDetailUser.role as UserRole] || profileDetailUser.role}</p>
+                  </div>
+                </div>
+
+                <div className="h-px w-full bg-slate-100" />
+
+                {/* Grid 2: Kontrak */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-xs text-slate-500 mb-1">Hubungan Kerja</p>
+                    <p className="text-[13px] font-medium text-slate-900">{profileDetailUser.statusKontrak}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-slate-500 mb-1">Tipe Karyawan</p>
+                    <p className="text-[13px] font-medium text-slate-900">{profileDetailUser.tipeKaryawan}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-slate-500 mb-1">Mulai Kerja</p>
+                    <p className="text-[13px] font-medium text-slate-900">{formatDisplayDate(profileDetailUser.joinDate)}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-slate-500 mb-1">Akhir Kontrak</p>
+                    <p className="text-[13px] font-medium text-slate-900">{profileDetailUser.endDate === "-" ? "Permanen" : formatDisplayDate(profileDetailUser.endDate)}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="px-6 py-4 border-t border-slate-200 bg-white flex items-center justify-between mt-auto shrink-0">
               <button 
                 onClick={() => {
                   toggleUserActiveStatus(profileDetailUser.id);
                   setProfileDetailUser(prev => prev ? { ...prev, isActive: !prev.isActive } : null);
                 }} 
-                className={`px-4 py-2 text-xs font-bold rounded-lg transition-colors border ${
-                  profileDetailUser.isActive 
-                    ? "bg-white text-red-600 border-red-200 hover:bg-red-50" 
-                    : "bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100"
+                className={`text-[13px] font-medium transition-colors ${
+                  profileDetailUser.isActive ? "text-red-600 hover:text-red-700" : "text-emerald-600 hover:text-emerald-700"
                 }`}
               >
                 {profileDetailUser.isActive ? "Nonaktifkan Karyawan" : "Aktifkan Karyawan"}
               </button>
               <button 
                 onClick={() => setProfileDetailUser(null)} 
-                className="px-4 py-2 bg-white border border-slate-200 text-slate-600 rounded-lg text-xs font-bold hover:bg-slate-50 transition-colors"
+                className="px-4 py-2 bg-slate-900 text-white rounded-md text-[13px] font-medium hover:bg-slate-800 transition-colors"
               >
                 Tutup
               </button>
-            </>
-          }
-        >
-          <div className="flex flex-col md:flex-row gap-4 items-start text-slate-800">
-            {/* Kiri: Foto Placeholder 3x4 */}
-            <div className="w-24 sm:w-32 md:w-[160px] shrink-0 mx-auto md:mx-0">
-              <div className="w-full aspect-[3/4] rounded-2xl bg-indigo-50 border-2 border-indigo-100 flex items-center justify-center relative overflow-hidden shadow-sm group">
-                <div className="absolute inset-0 bg-gradient-to-br from-indigo-100/40 to-white/20" />
-                <span className="text-[64px] md:text-[80px] font-black text-indigo-200 group-hover:scale-110 transition-transform duration-300 relative z-10 leading-none">
-                  {profileDetailUser.name.charAt(0)}
-                </span>
-              </div>
-            </div>
-
-            {/* Kanan: Detail Information */}
-            <div className="flex-1 min-w-0 flex flex-col gap-4">
-              
-              {/* Header Info */}
-              <div className="bg-white border border-slate-100 p-4 rounded-2xl shadow-sm shrink-0">
-                 <div className="flex items-center gap-2 flex-wrap mb-1.5">
-                   <h3 className="text-xl font-black text-slate-900 leading-none">{profileDetailUser.name}</h3>
-                   <span className="text-slate-300 mx-1">•</span>
-                   <div className="flex items-center gap-1.5">
-                     <span className={`w-2 h-2 rounded-full ${profileDetailUser.isActive ? "bg-emerald-500" : "bg-red-500"}`} />
-                     <span className={`text-[10px] font-black tracking-widest uppercase ${profileDetailUser.isActive ? "text-emerald-600" : "text-red-600"}`}>
-                       {profileDetailUser.isActive ? "Aktif" : "Nonaktif"}
-                     </span>
-                   </div>
-                   <span className="text-slate-300 mx-1">•</span>
-                   <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-100 font-mono tracking-wide uppercase">
-                     NIK: {profileDetailUser.employeeId}
-                   </span>
-                 </div>
-                 <p className="text-sm font-bold text-slate-500 tracking-tight">{profileDetailUser.email}</p>
-              </div>
-
-              {/* Grid 2 kolom informasi */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-1 items-stretch">
-                {/* Box 1: Informasi Penempatan */}
-                <div className="bg-white border border-slate-100 p-4 rounded-2xl flex flex-col shadow-sm">
-                  <h4 className="text-xs font-bold text-slate-800 tracking-wide border-b border-slate-50 pb-2 mb-3 flex items-center gap-1.5 shrink-0">
-                    <Award className="w-4 h-4 text-blue-500" /> Informasi Penempatan
-                  </h4>
-                  <div className="grid grid-cols-2 gap-3 text-xs flex-1 content-start">
-                    <div className="col-span-2 sm:col-span-1">
-                      <span className="text-[10px] font-semibold text-slate-400 block mb-0.5">Departemen</span>
-                      <span className="font-bold text-slate-700">{profileDetailUser.department}</span>
-                    </div>
-                    <div className="col-span-2 sm:col-span-1">
-                      <span className="text-[10px] font-semibold text-slate-400 block mb-0.5">Jabatan</span>
-                      <span className="font-bold text-slate-700">{profileDetailUser.position}</span>
-                    </div>
-                    <div className="col-span-2 mt-auto pt-3 border-t border-slate-50">
-                      <span className="text-[10px] font-semibold text-slate-400 block mb-1.5">Role Otorisasi Sistem</span>
-                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-slate-50 text-slate-600 border border-slate-100 capitalize font-bold">
-                        <Shield className="w-3.5 h-3.5 text-slate-400" />
-                        {ROLE_LABELS[profileDetailUser.role as UserRole] || profileDetailUser.role}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Box 2: Hubungan Kerja & Kontrak */}
-                <div className="bg-white border border-slate-100 p-4 rounded-2xl flex flex-col shadow-sm">
-                  <div className="border-b border-slate-50 pb-2 mb-3 flex items-center justify-between shrink-0">
-                    <h4 className="text-xs font-bold text-slate-800 tracking-wide flex items-center gap-1.5">
-                      <Calendar className="w-4 h-4 text-indigo-500" /> Hubungan & Kontrak
-                    </h4>
-                    {/* Tooltip Kepatuhan (replacing large block) */}
-                    <div className="relative group cursor-help">
-                      <AlertCircle className="w-4 h-4 text-slate-400 hover:text-indigo-500 transition-colors" />
-                      <div className="absolute right-0 bottom-full mb-2 w-64 p-3 bg-slate-800 text-white text-[10px] leading-relaxed rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
-                        Data durasi kontrak digunakan untuk pelaporan audit kepatuhan ketenagakerjaan dan master penggajian. Tanggal pengakhiran kontrak PKWT harus diperbarui sekurang-kurangnya 30 hari sebelum berakhir.
-                        <div className="absolute right-1.5 -bottom-1 w-2 h-2 bg-slate-800 rotate-45" />
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="grid grid-cols-2 gap-3 text-xs flex-1 content-start">
-                    <div>
-                      <span className="text-[10px] font-semibold text-slate-400 block mb-0.5">Hubungan Kerja</span>
-                      <span className="inline-flex px-1.5 py-0.5 bg-indigo-50 text-indigo-700 border border-indigo-100 rounded font-bold">
-                        {profileDetailUser.statusKontrak}
-                      </span>
-                    </div>
-                    <div>
-                      <span className="text-[10px] font-semibold text-slate-400 block mb-0.5">Tipe Karyawan</span>
-                      <span className="font-bold text-slate-700">{profileDetailUser.tipeKaryawan}</span>
-                    </div>
-                    <div className="mt-2">
-                      <span className="text-[10px] font-semibold text-slate-400 block mb-0.5">Mulai Kerja</span>
-                      <span className="font-bold text-slate-700">{formatDisplayDate(profileDetailUser.joinDate)}</span>
-                    </div>
-                    <div className="mt-2">
-                      <span className="text-[10px] font-semibold text-slate-400 block mb-0.5">Akhir Kontrak</span>
-                      <span className="font-bold text-slate-700">{profileDetailUser.endDate === "-" ? "Permanen" : formatDisplayDate(profileDetailUser.endDate)}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
-        </Modal>
+        </div>
       )}
 
       {/* ===== MANAGE MODULE MODAL ===== */}
       {managingUser && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm" onClick={() => setManagingUser(null)} />
-          <div className="relative bg-white rounded-2xl w-full max-w-lg overflow-hidden animate-in fade-in zoom-in-95 duration-200 text-slate-800">
+          <div className="relative bg-white rounded-xl w-full max-w-md overflow-hidden shadow-xl animate-in fade-in zoom-in-95 text-slate-800">
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-slate-100">
+            <div className="flex items-center justify-between p-6 border-b border-slate-200">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-sm">
-                  {managingUser.name.charAt(0)}
-                </div>
+                <AvatarInitial name={managingUser.name} />
                 <div>
-                  <p className="font-bold text-slate-900 text-sm">{managingUser.name}</p>
-                  <p className="text-[10px] text-slate-400 font-medium">{managingUser.position} · {managingUser.department}</p>
+                  <p className="font-medium text-slate-900 text-[15px]">{managingUser.name}</p>
+                  <p className="text-xs text-slate-500">{managingUser.position}</p>
                 </div>
               </div>
-              <button onClick={() => setManagingUser(null)} className="p-2 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-slate-600 transition-colors">
-                <X className="w-4 h-4" />
+              <button onClick={() => setManagingUser(null)} className="text-slate-400 hover:text-slate-600 transition-colors">
+                <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Body */}
-            <div className="p-6">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between mb-2">
-                  <p className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
-                    <Shield className="w-3.5 h-3.5 text-indigo-500" /> Pengaturan Role Sistem
-                  </p>
-                </div>
-                <div className="grid grid-cols-1 gap-3">
-                  {(Object.keys(ROLE_LABELS) as UserRole[]).map((r) => (
-                    <button
-                      key={r}
-                      onClick={() => handleDraftRoleChange(r)}
-                      className={`flex flex-col items-start gap-1 p-4 rounded-xl border transition-all text-left ${
-                        draftRole === r ? "bg-indigo-50/60 border-indigo-500 ring-4 ring-indigo-50" : "bg-white border-slate-100 hover:border-slate-200"
-                      }`}
-                    >
-                      <div className="flex items-center justify-between w-full">
-                        <p className={`text-sm font-bold capitalize ${draftRole === r ? "text-indigo-700" : "text-slate-700"}`}>
-                          {ROLE_LABELS[r]}
-                        </p>
-                        <div className={`w-4 h-4 rounded-full border flex items-center justify-center transition-all ${
-                          draftRole === r ? "border-indigo-600 bg-indigo-600" : "border-slate-200 bg-white"
-                        }`}>
-                          {draftRole === r && <div className="w-1.5 h-1.5 bg-white rounded-full" />}
-                        </div>
-                      </div>
-                      <p className="text-xs text-slate-500 mt-1">
-                        {r === "admin" && "Akses penuh ke semua fitur, modul operasional, dan manajemen data referensi."}
-                        {r === "hr" && "Dapat mengelola data karyawan, menyetujui cuti, dan melihat laporan performa (EAR)."}
-                        {r === "finance" && "Dapat melihat dan memproses persetujuan transaksi keuangan, SPD, serta pembelian."}
-                        {r === "karyawan" && "Akses terbatas ke modul operasional mandiri seperti pengajuan cuti, pekerjaan, dan SPD."}
+            <div className="p-6 space-y-4">
+              <p className="text-[13px] font-medium text-slate-900">Pengaturan Role Sistem</p>
+              <div className="grid grid-cols-1 gap-2">
+                {(Object.keys(ROLE_LABELS) as UserRole[]).map((r) => (
+                  <button
+                    key={r}
+                    onClick={() => handleDraftRoleChange(r)}
+                    className={`flex items-center justify-between p-3 rounded-md border transition-all text-left ${
+                      draftRole === r ? "bg-indigo-50 border-indigo-500" : "bg-white border-slate-200 hover:border-slate-300"
+                    }`}
+                  >
+                    <div>
+                      <p className={`text-[13px] font-medium capitalize ${draftRole === r ? "text-indigo-900" : "text-slate-900"}`}>
+                        {ROLE_LABELS[r]}
                       </p>
-                    </button>
-                  ))}
-                </div>
+                      <p className="text-xs text-slate-500 mt-0.5">
+                        {r === "admin" && "Akses penuh semua fitur."}
+                        {r === "hr" && "Kelola karyawan & EAR."}
+                        {r === "finance" && "Proses keuangan & SPD."}
+                        {r === "karyawan" && "Akses modul mandiri."}
+                      </p>
+                    </div>
+                    <div className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${
+                      draftRole === r ? "border-indigo-600 bg-indigo-600" : "border-slate-300"
+                    }`}>
+                      {draftRole === r && <div className="w-1.5 h-1.5 bg-white rounded-full" />}
+                    </div>
+                  </button>
+                ))}
               </div>
             </div>
 
             {/* Footer */}
-            <div className="flex items-center justify-end gap-3 px-6 py-4 bg-slate-50/50 border-t border-slate-100">
+            <div className="flex items-center justify-end gap-3 p-6 pt-2">
               <button
                 onClick={() => setManagingUser(null)}
-                className="px-4 py-2 text-xs font-medium text-slate-600 hover:text-slate-900 transition-colors"
+                className="px-4 py-2 text-[13px] font-medium text-slate-600 hover:text-slate-900 transition-colors"
               >
                 Batal
               </button>
               <button
                 onClick={saveRole}
-                className="px-5 py-2 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-colors"
+                className="px-4 py-2 text-[13px] font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-md transition-colors"
               >
-                Simpan Perubahan Role
+                Simpan
               </button>
             </div>
           </div>
@@ -590,60 +550,60 @@ export default function UsersPage() {
         title="Tambah Karyawan Baru"
         size="lg"
         footer={
-          <>
-            <button onClick={() => setIsAddModalOpen(false)} className="px-5 py-2.5 text-xs font-medium text-slate-550 hover:text-slate-950 transition-colors">Batal</button>
-            <button onClick={handleAddUser} className="px-5 py-2.5 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition-all">Simpan Personel</button>
-          </>
+          <div className="flex justify-end gap-3 w-full">
+            <button onClick={() => setIsAddModalOpen(false)} className="px-4 py-2 text-[13px] font-medium text-slate-600 hover:text-slate-900 transition-colors">Batal</button>
+            <button onClick={handleAddUser} className="px-4 py-2 text-[13px] font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-md transition-colors">Simpan Personel</button>
+          </div>
         }
       >
-        <div className="space-y-5 text-slate-800">
+        <div className="space-y-4 p-2">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-700 tracking-wide">Nama Lengkap</label>
+              <label className="text-[13px] font-medium text-slate-700">Nama Lengkap</label>
               <input 
                 type="text" 
                 placeholder="Masukkan nama..." 
                 value={newUserName}
                 onChange={(e) => setNewUserName(e.target.value)}
-                className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-blue-400 focus:bg-white transition-all font-medium" 
+                className="w-full px-3 py-2 bg-white border border-slate-200 rounded-md text-[13px] focus:outline-none focus:border-indigo-500 transition-colors" 
               />
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-700 tracking-wide">Email Pekerjaan</label>
+              <label className="text-[13px] font-medium text-slate-700">Email Pekerjaan</label>
               <input 
                 type="email" 
                 placeholder="email@perusahaan.com" 
                 value={newUserEmail}
                 onChange={(e) => setNewUserEmail(e.target.value)}
-                className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-blue-400 focus:bg-white transition-all font-medium" 
+                className="w-full px-3 py-2 bg-white border border-slate-200 rounded-md text-[13px] focus:outline-none focus:border-indigo-500 transition-colors" 
               />
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-700 tracking-wide">NIK (Nomor Induk Karyawan)</label>
+              <label className="text-[13px] font-medium text-slate-700">NIK (Nomor Induk Karyawan)</label>
               <input 
                 type="text" 
                 placeholder="EMP000" 
                 value={newUserEmpId}
                 onChange={(e) => setNewUserEmpId(e.target.value)}
-                className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-blue-400 focus:bg-white transition-all font-medium font-mono uppercase" 
+                className="w-full px-3 py-2 bg-white border border-slate-200 rounded-md text-[13px] focus:outline-none focus:border-indigo-500 transition-colors uppercase" 
               />
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-700 tracking-wide">Jabatan</label>
+              <label className="text-[13px] font-medium text-slate-700">Jabatan</label>
               <input 
                 type="text" 
                 placeholder="Engineer, Staff, dll" 
                 value={newUserPosition}
                 onChange={(e) => setNewUserPosition(e.target.value)}
-                className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-blue-400 focus:bg-white transition-all font-medium" 
+                className="w-full px-3 py-2 bg-white border border-slate-200 rounded-md text-[13px] focus:outline-none focus:border-indigo-500 transition-colors" 
               />
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-700 tracking-wide">Departemen</label>
+              <label className="text-[13px] font-medium text-slate-700">Departemen</label>
               <select 
                 value={newUserDept}
                 onChange={(e) => setNewUserDept(e.target.value)}
-                className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-blue-400 focus:bg-white transition-all font-medium appearance-none"
+                className="w-full px-3 py-2 bg-white border border-slate-200 rounded-md text-[13px] focus:outline-none focus:border-indigo-500 transition-colors"
               >
                 <option value="Engineering">Engineering</option>
                 <option value="Human Resource">Human Resource</option>
@@ -654,11 +614,11 @@ export default function UsersPage() {
               </select>
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-700 tracking-wide">Hubungan Kerja</label>
+              <label className="text-[13px] font-medium text-slate-700">Hubungan Kerja</label>
               <select 
                 value={newUserStatusKontrak}
                 onChange={(e) => setNewUserStatusKontrak(e.target.value)}
-                className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-blue-400 focus:bg-white transition-all font-medium appearance-none"
+                className="w-full px-3 py-2 bg-white border border-slate-200 rounded-md text-[13px] focus:outline-none focus:border-indigo-500 transition-colors"
               >
                 <option value="Kontrak (PKWT)">Kontrak (PKWT)</option>
                 <option value="Tetap (PKWTT)">Tetap (PKWTT)</option>
@@ -666,11 +626,11 @@ export default function UsersPage() {
               </select>
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-700 tracking-wide">Tipe Pekerjaan</label>
+              <label className="text-[13px] font-medium text-slate-700">Tipe Pekerjaan</label>
               <select 
                 value={newUserTipe}
                 onChange={(e) => setNewUserTipe(e.target.value)}
-                className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-blue-400 focus:bg-white transition-all font-medium appearance-none"
+                className="w-full px-3 py-2 bg-white border border-slate-200 rounded-md text-[13px] focus:outline-none focus:border-indigo-500 transition-colors"
               >
                 <option value="Full-Time">Full-Time</option>
                 <option value="Part-Time">Part-Time</option>
@@ -678,44 +638,44 @@ export default function UsersPage() {
               </select>
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-700 tracking-wide">Tanggal Bergabung</label>
+              <label className="text-[13px] font-medium text-slate-700">Tanggal Bergabung</label>
               <input 
                 type="date" 
                 value={newUserJoinDate}
                 onChange={(e) => setNewUserJoinDate(e.target.value)}
-                className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-blue-400 focus:bg-white transition-all font-medium" 
+                className="w-full px-3 py-2 bg-white border border-slate-200 rounded-md text-[13px] focus:outline-none focus:border-indigo-500 transition-colors" 
               />
             </div>
             {newUserStatusKontrak !== "Tetap (PKWTT)" && (
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-700 tracking-wide">Akhir Kontrak</label>
+                <label className="text-[13px] font-medium text-slate-700">Akhir Kontrak</label>
                 <input 
                   type="date" 
                   value={newUserEndDate}
                   onChange={(e) => setNewUserEndDate(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-blue-400 focus:bg-white transition-all font-medium animate-in slide-in-from-top-1 duration-150" 
+                  className="w-full px-3 py-2 bg-white border border-slate-200 rounded-md text-[13px] focus:outline-none focus:border-indigo-500 transition-colors" 
                 />
               </div>
             )}
           </div>
 
-          <div className="space-y-3 pt-2">
-            <label className="text-xs font-bold text-slate-700 capitalize tracking-wide block border-t border-slate-100 pt-4">Role Sistem</label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="space-y-3 pt-4 border-t border-slate-200 mt-4">
+            <label className="text-[13px] font-medium text-slate-700">Role Sistem</label>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
               {(Object.keys(ROLE_LABELS) as UserRole[]).map((r) => (
                 <button
                   key={r}
                   type="button"
                   onClick={() => handleNewUserRoleChange(r)}
-                  className={`flex flex-col items-start gap-2 p-3 rounded-xl border transition-all ${
-                    newUserRole === r ? "bg-white border-blue-500 ring-4 ring-blue-50" : "bg-slate-50 border-slate-100 opacity-70 hover:opacity-100 hover:bg-white"
+                  className={`flex flex-col items-start gap-2 p-3 rounded-md border transition-all ${
+                    newUserRole === r ? "bg-indigo-50 border-indigo-500" : "bg-white border-slate-200 hover:border-slate-300"
                   }`}
                 >
-                  <div className={`p-2 rounded-lg ${newUserRole === r ? "bg-blue-600 text-white" : "bg-slate-200 text-slate-500"}`}>
+                  <div className={`p-1.5 rounded-md ${newUserRole === r ? "bg-indigo-600 text-white" : "bg-slate-100 text-slate-500"}`}>
                     {r === "admin" || r === "hr" ? <Shield className="w-4 h-4" /> : <UsersIcon className="w-4 h-4" />}
                   </div>
                   <div className="text-left w-full">
-                    <p className="text-xs font-bold text-slate-800 capitalize">{ROLE_LABELS[r]}</p>
+                    <p className={`text-[13px] font-medium capitalize ${newUserRole === r ? "text-indigo-900" : "text-slate-900"}`}>{ROLE_LABELS[r]}</p>
                   </div>
                 </button>
               ))}

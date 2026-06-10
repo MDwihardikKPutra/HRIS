@@ -45,31 +45,31 @@ export default function MyPayrollPage() {
  }, [userEmail, filterYear, searchQuery]);
 
  return (
-    <div className="flex flex-col h-[calc(100vh-5.5rem)] overflow-hidden w-full pb-2">
+    <div className="flex flex-col h-full overflow-hidden w-full space-y-4">
       {/* Unified Table Dashboard Card */}
-      <div className="flex-1 min-h-0 bg-white border-2 border-slate-100 rounded-2xl flex flex-col overflow-hidden shadow-sm">
+      <div className="flex-1 min-h-0 bg-white border border-slate-200 rounded-xl flex flex-col overflow-hidden">
         
         {/* Top Card Header (Title and description) */}
-        <div className="border-b border-slate-100 p-4 bg-white shrink-0 flex flex-col gap-4">
+        <div className="border-b border-slate-200 p-4 shrink-0 flex flex-col gap-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h1 className="text-lg md:text-xl font-bold text-slate-800 tracking-tight">Slip Gaji Saya</h1>
-              <p className="text-xs font-semibold text-slate-500 mt-1">Pantau riwayat penggajian dan unduh slip gaji bulanan</p>
+              <h1 className="text-lg font-medium text-slate-900">Slip Gaji Saya</h1>
+              <p className="text-[13px] text-slate-500 mt-1">Pantau riwayat penggajian dan unduh slip gaji bulanan</p>
             </div>
           </div>
         </div>
 
         {/* Unified Controls Toolbar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 border-b border-slate-50 bg-white shrink-0">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 border-b border-slate-200 shrink-0">
           <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide">
             {["2026", "2025"].map((year) => (
               <button
                 key={year}
                 onClick={() => setFilterYear(year)}
-                className={`px-3 py-1.5 text-xs font-bold rounded-lg whitespace-nowrap transition-all border ${
+                className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors border ${
                   filterYear === year 
-                    ? "bg-indigo-50 text-indigo-700 border-indigo-100"
-                    : "bg-white text-slate-500 border-slate-100 hover:bg-slate-50"
+                    ? "bg-indigo-50 text-indigo-700 border-indigo-200"
+                    : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
                 }`}
               >
                 Tahun {year}
@@ -78,73 +78,73 @@ export default function MyPayrollPage() {
           </div>
           
           {/* Search Box */}
-          <div className="relative group w-full sm:w-72 shrink-0">
-            <Search className="absolute left-3 top-2.5 w-3.5 h-3.5 text-slate-400 group-focus-within:text-indigo-500" />
+          <div className="relative group min-w-[240px] shrink-0">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input
               type="text"
               placeholder="Cari bulan (misal: Mei)..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-4 py-1.5 bg-slate-50/40 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-indigo-400 focus:bg-white transition-all font-medium"
+              className="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-md text-[13px] focus:outline-none focus:border-indigo-500 transition-colors"
             />
           </div>
         </div>
 
         {/* Table Viewport */}
-        <div className="flex-1 overflow-auto scrollbar-hide">
-          <table className="w-full text-xs">
-            <thead>
-              <tr className="bg-slate-50/50 border-b border-slate-100 font-semibold text-slate-500 tracking-wide text-[10px] sticky top-0 z-10">
-                <th className="text-left py-3 px-4 font-bold">Periode</th>
-                <th className="text-left py-3 px-4 font-bold">Total Pendapatan</th>
-                <th className="text-left py-3 px-4 hidden md:table-cell font-bold">Total Potongan</th>
-                <th className="text-left py-3 px-4 font-bold text-slate-800">Take Home Pay</th>
-                <th className="text-center py-3 px-4 font-bold">Status</th>
-                <th className="text-right py-3 px-4 font-bold">Slip</th>
+        <div className="flex-1 overflow-auto scrollbar-hide bg-white">
+          <table className="w-full text-left border-collapse whitespace-nowrap">
+            <thead className="sticky top-0 bg-white z-10 text-xs font-medium text-slate-500">
+              <tr className="border-b border-slate-200 text-xs font-medium text-slate-500">
+                <th className="py-3 px-4 font-medium">Periode</th>
+                <th className="py-3 px-4 font-medium">Total Pendapatan</th>
+                <th className="py-3 px-4 hidden md:table-cell font-medium">Total Potongan</th>
+                <th className="py-3 px-4 font-medium text-slate-800">Take Home Pay</th>
+                <th className="py-3 px-4 font-medium text-center">Status</th>
+                <th className="py-3 px-4 font-medium text-right">Slip</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-50">
+            <tbody className="divide-y divide-slate-100 text-[13px] text-slate-700">
               {myPayrolls.map((item: any) => (
-                <tr key={item.id} className="group hover:bg-slate-50/40 transition-colors cursor-pointer" onClick={() => openSlipPreview(item)}>
-                  <td className="py-3 px-4">
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-100 flex items-center justify-center text-[10px] font-bold text-emerald-600">
+                <tr key={item.id} className="hover:bg-slate-50/50 transition-colors cursor-pointer group" onClick={() => openSlipPreview(item)}>
+                  <td className="px-4 py-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-xs font-medium text-slate-600">
                         <Banknote className="w-4 h-4" />
                       </div>
                       <div>
-                        <p className="font-semibold text-slate-800 leading-none mb-1">{item.period}</p>
-                        <p className="text-[10px] text-slate-400 font-medium">{item.paymentDate ? new Date(item.paymentDate).toLocaleDateString("id-ID") : '-'}</p>
+                        <p className="font-medium text-slate-900 mb-0.5">{item.period}</p>
+                        <p className="text-xs text-slate-500">{item.paymentDate ? new Date(item.paymentDate).toLocaleDateString("id-ID") : '-'}</p>
                       </div>
                     </div>
                   </td>
-                  <td className="py-3 px-4 font-medium text-slate-600">
+                  <td className="px-4 py-3 font-medium text-slate-700">
                     Rp {(item.baseSalary + item.allowances).toLocaleString('id-ID')}
                   </td>
-                  <td className="py-3 px-4 hidden md:table-cell text-red-500 font-medium">
+                  <td className="px-4 py-3 hidden md:table-cell text-slate-500">
                     - Rp {item.deductions.toLocaleString('id-ID')}
                   </td>
-                  <td className="py-3 px-4 font-bold text-slate-800">
+                  <td className="px-4 py-3 font-medium text-slate-900">
                     Rp {item.netSalary.toLocaleString('id-ID')}
                   </td>
-                  <td className="py-3 px-4 text-center">
-                    <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-lg text-[10px] font-bold border tracking-wide bg-transparent ${item.status === 'paid' ? 'text-emerald-600 border-emerald-200' : 'text-amber-600 border-amber-200'}`}>
+                  <td className="px-4 py-3 text-center">
+                    <span className={`inline-flex px-2 py-0.5 rounded text-xs font-medium border ${item.status === 'paid' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-amber-50 text-amber-700 border-amber-200'}`}>
                       {item.status === 'paid' ? 'Dibayar' : 'Diproses'}
                     </span>
                   </td>
-                  <td className="py-3 px-4 text-right">
+                  <td className="px-4 py-3 text-right">
                     <button 
                       onClick={(e) => { e.stopPropagation(); openSlipPreview(item); }}
-                      className="p-2 text-slate-400 hover:text-indigo-600 transition-colors bg-white hover:bg-indigo-50 border border-slate-100 hover:border-indigo-100 rounded-lg inline-flex"
+                      className="p-1.5 text-slate-500 hover:text-slate-900 transition-colors bg-white hover:bg-slate-50 border border-slate-200 rounded-md inline-flex"
                       title="Lihat Slip"
                     >
-                      <Search className="w-3.5 h-3.5" />
+                      <Search className="w-4 h-4" />
                     </button>
                   </td>
                 </tr>
               ))}
               {myPayrolls.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="py-12 text-center text-slate-400 font-medium text-sm">
+                  <td colSpan={6} className="py-12 text-center text-slate-500 text-[13px]">
                     Tidak ada catatan penggajian ditemukan.
                   </td>
                 </tr>

@@ -3,14 +3,15 @@
 import { useState, useMemo } from "react";
 import { useSession } from "next-auth/react";
 import {
-  spds,
+  purchases,
+  getProjectById,
   formatCurrency, getStatusColor,
 } from "@/lib/data";
 import Modal from "@/components/Modal";
-import { Plane, Printer, Edit, Trash2 } from "lucide-react";
+import { ShoppingCart, Printer, Edit, Trash2 } from "lucide-react";
 import { FilterBar, StatusFilter, TableSearch, StatusBadge, ActionButton } from "@/components/DataTable";
 
-export default function SPDPage() {
+export default function MyPurchasePage() {
   const { data: session } = useSession();
   const userId = session?.user?.id ? parseInt(session.user.id) : null;
 
@@ -19,13 +20,13 @@ export default function SPDPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const currentData = useMemo(() => {
-    return spds.filter((item: any) => {
+    return purchases.filter((item: any) => {
       // 1. Strict filter: Modul is ONLY for individual user requests
       if (item.userId !== userId) return false;
 
       const matchStatus = filterStatus === "Semua" || item.status.toLowerCase() === filterStatus.toLowerCase();
-      const matchSearch = item.spdNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.destination.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchSearch = item.purchaseNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.description.toLowerCase().includes(searchQuery.toLowerCase());
       return matchStatus && matchSearch;
     });
   }, [filterStatus, searchQuery, userId]);
@@ -39,13 +40,13 @@ export default function SPDPage() {
         <div className="border-b border-slate-200 p-4 shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h1 className="text-lg font-medium text-slate-900 flex items-center gap-2">
-              <Plane className="w-5 h-5 text-indigo-600" /> Perjalanan Dinas (SPD)
+              <ShoppingCart className="w-5 h-5 text-indigo-600" /> Pengajuan Pembelian
             </h1>
-            <p className="text-[13px] text-slate-500 mt-1">Daftar pengajuan Surat Perjalanan Dinas Anda</p>
+            <p className="text-[13px] text-slate-500 mt-1">Daftar pengajuan pembelian barang dan jasa Anda</p>
           </div>
           <button
             onClick={() => setIsModalOpen(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-[13px] rounded-md transition-colors shrink-0"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-[13px] rounded-md transition-colors self-start sm:self-center shrink-0"
           >
             <span>+</span> Pengajuan Baru
           </button>
@@ -61,7 +62,7 @@ export default function SPDPage() {
           <TableSearch
             value={searchQuery}
             onChange={setSearchQuery}
-            placeholder="Cari referensi atau tujuan..."
+            placeholder="Cari referensi atau deskripsi..."
           />
         </div>
 
@@ -70,36 +71,41 @@ export default function SPDPage() {
           <table className="w-full text-left border-collapse whitespace-nowrap">
             <thead className="sticky top-0 bg-white z-10 text-xs font-medium text-slate-500">
               <tr className="border-b border-slate-200 text-xs font-medium text-slate-500">
-                <th className="py-3 px-4 font-medium">Referensi SPD</th>
-                <th className="py-3 px-4 hidden sm:table-cell font-medium">Tujuan</th>
+                <th className="py-3 px-4 font-medium">Ref Pembelian</th>
+                <th className="py-3 px-4 hidden sm:table-cell font-medium">Keperluan / Proyek</th>
                 <th className="py-3 px-4 hidden sm:table-cell font-medium">Nominal</th>
                 <th className="py-3 px-4 font-medium text-center">Status</th>
-                <th className="py-3 px-4 font-medium text-right">Opsi</th>
+                <th className="py-3 px-4 font-medium text-right">Aksi</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 text-[13px] text-slate-700 group">
               {currentData.map((item: any) => {
                 const sc = getStatusColor(item.status);
+                const project = item.projectId ? getProjectById(item.projectId) : null;
 
                 return (
                   <tr key={item.id} className="group hover:bg-slate-50/50 transition-colors">
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-600 shrink-0">
-                          <Plane className="w-4 h-4" />
+                          <ShoppingCart className="w-4 h-4" />
                         </div>
                         <div className="min-w-0">
-                          <p className="font-medium text-slate-900 mb-0.5 truncate">{new Date(item.departureDate).toLocaleDateString("id-ID", { day: 'numeric', month: 'short', year: 'numeric' })}</p>
-                          <p className="text-xs text-slate-500 font-mono truncate">#{item.spdNumber}</p>
+                          <p className="font-medium text-slate-900 mb-0.5 truncate">{new Date(item.createdAt).toLocaleDateString("id-ID", { day: 'numeric', month: 'short', year: 'numeric' })}</p>
+                          <p className="text-xs text-slate-500 font-mono truncate">#{item.purchaseNumber}</p>
                         </div>
                       </div>
                     </td>
                     <td className="px-4 py-3 hidden sm:table-cell">
-                      <p className="font-medium text-slate-900 truncate max-w-[150px] lg:max-w-[200px] mb-0.5">{item.destination}</p>
-                      <p className="text-[13px] text-slate-500 truncate max-w-[150px] lg:max-w-[200px]">{item.purpose}</p>
+                      <p className="font-medium text-slate-900 truncate max-w-[150px] lg:max-w-[200px] mb-0.5">{item.description}</p>
+                      {project ? (
+                        <span className="text-xs text-slate-500">PRJ: {project.code}</span>
+                      ) : (
+                        <span className="text-xs text-slate-500">Internal</span>
+                      )}
                     </td>
                     <td className="px-4 py-3 hidden sm:table-cell">
-                      <p className="font-medium text-slate-900">{formatCurrency(item.totalCost)}</p>
+                      <p className="font-medium text-slate-900">{formatCurrency(item.totalPrice)}</p>
                     </td>
                     <td className="px-4 py-3 text-center">
                       <StatusBadge
@@ -138,7 +144,7 @@ export default function SPDPage() {
               {currentData.length === 0 && (
                 <tr>
                   <td colSpan={5} className="py-12 text-center text-slate-500 text-[13px]">
-                    Tidak ada pengajuan SPD ditemukan.
+                    Tidak ada pengajuan Pembelian ditemukan.
                   </td>
                 </tr>
               )}
@@ -151,7 +157,7 @@ export default function SPDPage() {
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title="Buat Pengajuan SPD Baru"
+        title="Buat Pengajuan Pembelian Baru"
         size="md"
         footer={
           <>
@@ -162,26 +168,24 @@ export default function SPDPage() {
       >
         <div className="space-y-4">
           <div>
-            <label className="text-xs text-slate-500 mb-1.5 block">Tujuan Dinas</label>
-            <input type="text" placeholder="Kota/Perusahaan tujuan..." className="w-full px-3 py-2 bg-white border border-slate-200 rounded-md text-[13px] focus:outline-none focus:border-indigo-500 transition-colors" />
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="text-xs text-slate-500 mb-1.5 block">Tgl Berangkat</label>
-              <input type="date" className="w-full px-3 py-2 bg-white border border-slate-200 rounded-md text-[13px] focus:outline-none focus:border-indigo-500 transition-colors" />
-            </div>
-            <div>
-              <label className="text-xs text-slate-500 mb-1.5 block">Tgl Kembali</label>
-              <input type="date" className="w-full px-3 py-2 bg-white border border-slate-200 rounded-md text-[13px] focus:outline-none focus:border-indigo-500 transition-colors" />
-            </div>
+            <label className="text-xs text-slate-500 mb-1.5 block">Terkait Proyek (Opsional)</label>
+            <select className="w-full px-3 py-2 bg-white border border-slate-200 rounded-md text-[13px] focus:outline-none focus:border-indigo-500 transition-colors appearance-none">
+              <option value="">-- Internal / Operasional Karyawan --</option>
+              <option value="1">Alpha (PRJ-001)</option>
+              <option value="2">Beta (PRJ-002)</option>
+            </select>
           </div>
           <div>
-            <label className="text-xs text-slate-500 mb-1.5 block">Estimasi Biaya (Rp)</label>
+            <label className="text-xs text-slate-500 mb-1.5 block">Item Barang/Jasa</label>
+            <input type="text" placeholder="Laptop, Sewa Server, dll" className="w-full px-3 py-2 bg-white border border-slate-200 rounded-md text-[13px] focus:outline-none focus:border-indigo-500 transition-colors" />
+          </div>
+          <div>
+            <label className="text-xs text-slate-500 mb-1.5 block">Estimasi Harga (Rp)</label>
             <input type="number" placeholder="0" className="w-full px-3 py-2 bg-white border border-slate-200 rounded-md text-[13px] focus:outline-none focus:border-indigo-500 transition-colors" />
           </div>
           <div>
-            <label className="text-xs text-slate-500 mb-1.5 block">Catatan/Maksud Perjalanan</label>
-            <textarea rows={3} placeholder="Tujuan spesifik SPD..." className="w-full px-3 py-2 bg-white border border-slate-200 rounded-md text-[13px] focus:outline-none focus:border-indigo-500 transition-colors resize-none" />
+            <label className="text-xs text-slate-500 mb-1.5 block">Tujuan Pengadaan (Deskripsi)</label>
+            <textarea rows={3} placeholder="Alasan membutuhkan barang/jasa ini..." className="w-full px-3 py-2 bg-white border border-slate-200 rounded-md text-[13px] focus:outline-none focus:border-indigo-500 transition-colors resize-none" />
           </div>
         </div>
       </Modal>
